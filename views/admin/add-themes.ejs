@@ -9,10 +9,17 @@
 <main>
   <form
     class="reading-form"
-    action="/admin/add-reading"
+    action="/admin/add-theme"
     method="POST"
   >
-
+  <div class="form-control">
+    <label for="theme">Theme</label>
+    <input
+      type="text"
+      name="theme"
+      id="theme"
+    />
+  </div>
   <div class="form-control">
     <label for="category">Category</label>
     <select type="text" name="category" id="category">
@@ -23,11 +30,11 @@
     </select>
   </div>
     <div class="form-control">
-      <label for="word">Reading</label>
+      <label for="words">Reading</label>
       <input
         type="text"
-        name="word"
-        id="word"
+        name="words"
+        id="words"
       />
     </div>
     

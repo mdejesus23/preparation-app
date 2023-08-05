@@ -12,7 +12,7 @@ const URI = `mongodb://dejesusmelnard:${pass}@ac-rqst6ya-shard-00-00.acl3rer.mon
 const mongoConnect = async (callback) => {
   try {
     const client = await MongoClient.connect(URI);
-    console.log(client);
+    // console.log(client);
     console.log("Database Connected!");
     _db = client.db();
     callback();
