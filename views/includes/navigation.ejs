@@ -1,0 +1,53 @@
+<div class="backdrop"></div>
+<header class="main-header">
+  <button id="side-menu-toggle">Menu</button>
+  <nav class="main-header__nav">
+    <ul class="main-header__item-list">
+      <li class="main-header__item">
+        <a class="<%= path === '/' ? 'active' : '' %>" href="/">Readings</a>
+      </li>
+      <li class="main-header__item">
+        <a class="<%= path === '/themes' ? 'active' : '' %>" href="/themes"
+          >Themes</a
+        >
+      </li>
+      <li class="main-header__item">
+        <a
+          class="<%= path === '/admin/add-reading' ? 'active' : '' %>"
+          href="/admin/add-reading"
+          >Add Reading
+        </a>
+      </li>
+      <li class="main-header__item">
+        <a
+          class="<%= path === '/admin/products' ? 'active' : '' %>"
+          href="/admin/products"
+          >Admin Readings
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<nav class="mobile-nav">
+  <ul class="mobile-nav__item-list">
+    <li class="mobile-nav__item">
+      <a class="<%= path === '/' ? 'active' : '' %>" href="/">Readings</a>
+    </li>
+
+    <li class="mobile-nav__item">
+      <a
+        class="<%= path === '/admin/add-reading' ? 'active' : '' %>"
+        href="/admin/add-reading"
+        >Add Reading
+      </a>
+    </li>
+    <li class="mobile-nav__item">
+      <a
+        class="<%= path === '/admin/readings' ? 'active' : '' %>"
+        href="/admin/readings"
+        >Admin Readings
+      </a>
+    </li>
+  </ul>
+</nav>
