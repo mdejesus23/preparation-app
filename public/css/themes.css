@@ -1,0 +1,25 @@
+.themes-header {
+  text-align: center;
+}
+
+.themes-form {
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+}
+
+.theme-item {
+  width: 20rem;
+  max-width: 95%;
+  margin: 1rem;
+}
+
+.theme-title {
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+.theme-description {
+  text-align: center;
+}

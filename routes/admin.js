@@ -9,6 +9,12 @@ router.get("/add-themes", adminController.getAddTheme);
 
 router.post("/add-theme", adminController.postAddTheme);
 
-router.get("/themes", adminController.getAdminThemes);
+router.get("/edit-theme/:themeId", adminController.getEditTheme);
+
+router.post("/edit-theme", adminController.postEditThemes);
+
+router.get("/themes", adminController.getThemes);
+
+router.post("/delete-theme", adminController.postDeleteTheme);
 
 module.exports = router;
