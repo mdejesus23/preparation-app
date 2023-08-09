@@ -66,24 +66,30 @@ exports.getThemes = async (req, res, next) => {
 };
 
 exports.postEditThemes = (req, res, next) => {
-  const themeId = req.body.themeId;
-  const updatedTitle = req.body.title;
-  const updatedImageUrl = req.body.imageUrl;
-  const updatedDescription = req.body.description;
-  const updatedReadings = [];
+  Theme.findById(req.body.themeId)
+    .then((existingTheme) => {
+      const themeId = req.body.themeId;
+      const updatedTitle = req.body.title;
+      const updatedImageUrl = req.body.imageUrl;
+      const updatedDescription = req.body.description;
+      const updatedReadings = existingTheme.readings;
 
-  const theme = new Theme(
-    updatedTitle,
-    updatedImageUrl,
-    updatedDescription,
-    updatedReadings,
-    themeId
-  );
-  theme
-    .save()
-    .then((result) => {
-      console.log(result);
-      res.redirect("/admin/themes");
+      const theme = new Theme(
+        updatedTitle,
+        updatedImageUrl,
+        updatedDescription,
+        updatedReadings,
+        themeId
+      );
+      theme
+        .save()
+        .then((result) => {
+          console.log(result);
+          res.redirect("/admin/themes");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     })
     .catch((err) => {
       console.log(err);
@@ -98,4 +104,19 @@ exports.postDeleteTheme = async (req, res, next) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+exports.postReading = (req, res, next) => {
+  const reading = req.body.reading;
+  const category = req.body.category;
+  const themeId = req.body.themeId;
+  Theme.addReading(reading, category, themeId)
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  res.redirect("/admin/themes");
 };

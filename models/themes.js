@@ -11,24 +11,6 @@ class Theme {
   }
 
   async save() {
-    // const db = getDb();
-    // let dbOp;
-    // if (this._id) {
-    //   dbOp = db
-    //     .collection("themes")
-    //     .updateOne({ _id: this._id }, { $set: this });
-    // } else {
-    //   dbOp = db.collection("themes").insertOne(this);
-    // }
-
-    // return dbOp
-    //   .then((result) => {
-    //     console.log(result);
-    //   })
-    //   .then((err) => {
-    //     console.log(err);
-    //   });
-
     try {
       const db = getDb();
       let dbOp;
@@ -77,8 +59,37 @@ class Theme {
       const db = getDb();
       await db
         .collection("themes")
+        // the curly braces {} in the deleteOne database query are used to define the filter criteria.
         .deleteOne({ _id: new mongodb.ObjectId(themeId) });
       console.log("theme deleted!");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  static async addReading(reading, category, id) {
+    try {
+      const db = getDb();
+      const theme = await db
+        .collection("themes")
+        .find({ _id: new mongodb.ObjectId(id) })
+        .next();
+      const updatedReadings = [...theme.readings];
+      updatedReadings.push({
+        reading: reading,
+        category: category,
+        voteCount: 0,
+        voters: [],
+      });
+
+      const result = await db
+        .collection("themes")
+        .updateOne(
+          { _id: new mongodb.ObjectId(id) },
+          { $set: { readings: updatedReadings } }
+        );
+
+      return result;
     } catch (err) {
       console.log(err);
     }

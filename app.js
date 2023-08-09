@@ -1,3 +1,5 @@
+const User = require("./models/user");
+
 //  This line imports the built-in path module in Node.js, which provides utilities for working with file and directory paths.
 const path = require("path");
 // This line imports the express module, which is a popular web framework for Node.js.
@@ -27,6 +29,17 @@ const preparationRoutes = require("./routes/preparation");
 app.use(express.urlencoded({ extended: false }));
 // static middleware to serve static files
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(async (req, res, next) => {
+  try {
+    const user = await User.findById("64d24bcb249f689bf2a2b094");
+    // console.log(user);
+    req.user = new User(user.username, user.email, user._id);
+    next();
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 app.use("/admin", adminRoutes);
 app.use(preparationRoutes);

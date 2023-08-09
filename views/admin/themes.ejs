@@ -39,7 +39,7 @@
                             <option value="Gospel">Gospel</option>
                         </select>
                     </div>
-
+                    <input type="hidden" name="themeId" value="<%= theme._id%>"/>
                     <button class="btn" type="submit">Add Reading</button>
                 </form>
                 <form class="reading-form" action="/admin/delete-theme" method="POST">

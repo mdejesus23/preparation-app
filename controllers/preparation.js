@@ -1,7 +1,7 @@
 const Theme = require("../models/themes");
 
 exports.getReadings = (req, res, next) => {
-  res.render("preparation/index", {
+  res.render("/preparation/index", {
     path: "/",
     // readingLists: readings,
     pageTitle: "users List",
