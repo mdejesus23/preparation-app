@@ -4,8 +4,8 @@ const preparationControllers = require("../controllers/preparation");
 
 const router = express.Router();
 
-router.get("/", preparationControllers.getReadings);
+router.get("/", preparationControllers.getThemes);
 
-router.get("/themes", preparationControllers.getThemes);
+router.get("/readings/:themeId", preparationControllers.getReadings);
 
 module.exports = router;

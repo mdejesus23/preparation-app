@@ -1,0 +1,69 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/user.css" />
+    <link rel="stylesheet" href="/css/readings.css" />
+  </head>
+
+  <body>
+  <%- include('../includes/navigation.ejs') %>
+    
+    <main>
+      <h1 class="theme-header"><%= theme.title%></h1>
+      <div class="grid-readings">
+        <ul class="readings-columns">
+          <h2 class="category-header"><%= readings.historical[0].category%></h2>
+          <% readings.historical.forEach(reading => { %>
+            <li class="flex">
+              <p><%= reading.reading%></p>
+              <div class="vote-count"><%= reading.voteCount%></div>
+              <form class="readings-form" action="/readings/vote" method="POST">
+                <button class="btn">Vote</button>
+                <button class="btn">Done</button>
+              </form>
+            </li>
+          <% }) %>  
+        </ul>
+        <ul class="readings-columns">
+          <h2><%= readings.prophetical[0].category%></h2>
+          <% readings.prophetical.forEach(reading => { %>
+            <li class="flex">
+              <p><%= reading.reading%></p>
+              <div class="vote-count"><%= reading.voteCount%></div>
+              <form class="readings-form" action="/readings/vote" method="POST">
+                <button class="btn">Vote</button>
+                <button class="btn">Done</button>
+              </form>
+            </li>
+          <% }) %>  
+        </ul>
+        <ul class="readings-columns">
+          <h2><%= readings.epistle[0].category%></h2>
+          <% readings.epistle.forEach(reading => { %>
+            <li class="flex">
+              <p><%= reading.reading%></p>
+              <div class="vote-count"><%= reading.voteCount%></div>
+              <form class="readings-form" action="/readings/vote" method="POST">
+                <button class="btn">Vote</button>
+                <button class="btn">Done</button>
+              </form>
+            </li>
+          <% }) %>  
+        </ul>
+        <ul class="readings-columns">
+          <h2><%= readings.gospel[0].category%></h2>
+          <% readings.gospel.forEach(reading => { %>
+            <li class="flex">
+              <p><%= reading.reading%></p>
+              <div class="vote-count"><%= reading.voteCount%></div>
+              <form class="readings-form" action="/readings/vote" method="POST">
+                <button class="btn">Vote</button>
+                <button class="btn">Done</button>
+              </form>
+            </li>
+          <% }) %>  
+        </ul>
+      </div>
+
+      
+    </main>
+    <%- include('../includes/end.ejs') %>
+
