@@ -48,3 +48,22 @@ exports.getReadings = async (req, res, next) => {
     console.log(err);
   }
 };
+
+exports.postVote = (req, res, next) => {
+  const readingId = req.params.readingId;
+  const themeId = req.body.themeId;
+
+  Theme.findById(themeId)
+    .then((theme) => {
+      const reading = theme.readings.id({ _id: readingId });
+      reading.voteCount = reading.voteCount + 1;
+      return theme.save();
+    })
+    .then((result) => {
+      // console.log(result);
+      res.redirect(`/readings/${themeId}`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
