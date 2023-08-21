@@ -5,6 +5,7 @@ exports.getAddTheme = (req, res, next) => {
     pageTitle: "Add Themes",
     path: "/admin/add-themes",
     editing: false,
+    isAuthenticated: req.session.isLoggedIn,
   });
 };
 
@@ -19,7 +20,7 @@ exports.postAddTheme = async (req, res, next) => {
     imageUrl: imageUrl,
     description: description,
     readings: readings,
-    userId: req.user,
+    userId: req.session.user,
   });
   theme
     .save()
@@ -59,6 +60,7 @@ exports.getThemes = async (req, res, next) => {
       themes: themes,
       pageTitle: "Admin Themes",
       path: "/admin/themes",
+      isAuthenticated: req.session.isLoggedIn,
     });
   } catch (err) {
     console.log(err);

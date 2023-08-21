@@ -7,6 +7,7 @@ exports.getThemes = async (req, res, next) => {
       themes: themes,
       path: "/",
       pageTitle: "Themes List",
+      isAuthenticated: req.session.isLoggedIn,
     });
   } catch (err) {
     console.log(err);
@@ -43,6 +44,7 @@ exports.getReadings = async (req, res, next) => {
       readings: readings,
       path: "/readings",
       pageTitle: "Readings List",
+      isAuthenticated: req.session.isLoggedIn,
     });
   } catch (err) {
     console.log(err);

@@ -42,3 +42,21 @@ h2 {
 .readings-form {
   display: inline;
 }
+
+@media (max-width: 968px) {
+  .grid-readings {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+    row-gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid-readings {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 1rem;
+    row-gap: 1rem;
+  }
+}
