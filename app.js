@@ -11,6 +11,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
+const csrf = require("csurf");
+const flash = require("express-flash");
 
 const app = express();
 
@@ -18,6 +20,7 @@ const store = new MongoDBStore({
   uri: URI,
   collection: "session",
 });
+const csrfProtecttion = csrf();
 
 //import error controller
 const errorController = require("./controllers/error");
@@ -52,6 +55,8 @@ app.use(
     store: store,
   })
 );
+app.use(csrfProtecttion);
+app.use(flash());
 
 app.use(async (req, res, next) => {
   if (!req.session.user) {
@@ -66,6 +71,12 @@ app.use(async (req, res, next) => {
   }
 });
 
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
 app.use("/admin", adminRoutes);
 app.use(preparationRoutes);
 app.use(authRoutes);
@@ -76,18 +87,6 @@ app.use(errorController.get404);
 mongoose
   .connect(URI)
   .then((result) => {
-    User.findOne().then((user) => {
-      if (!user) {
-        const user = new User({
-          name: "Melnard",
-          email: "dejesusmelnard@gmail.com",
-          result: {
-            themes: [],
-          },
-        });
-        user.save();
-      }
-    });
     app.listen(port, () => {
       console.log(`app.js server is running in port ${port}`);
     });

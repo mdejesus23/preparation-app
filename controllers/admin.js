@@ -60,7 +60,6 @@ exports.getThemes = async (req, res, next) => {
       themes: themes,
       pageTitle: "Admin Themes",
       path: "/admin/themes",
-      isAuthenticated: req.session.isLoggedIn,
     });
   } catch (err) {
     console.log(err);

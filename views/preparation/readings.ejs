@@ -16,6 +16,7 @@
               <p><%= reading.reading%></p>
               <div class="vote-count"><%= reading.voteCount%></div>
               <form class="readings-form" action="/readings/vote/<%= reading._id%>" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
                 <input type="hidden" value="<%= theme._id%>" name="themeId"/>
                 <button type="submit" class="btn">Vote</button>
                 <button class="btn">Done</button>
@@ -30,6 +31,7 @@
               <p><%= reading.reading%></p>
               <div class="vote-count"><%= reading.voteCount%></div>
               <form class="readings-form" action="/readings/vote/<%= reading._id%>" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
                 <input type="hidden" value="<%= theme._id%>" name="themeId"/>
                 <button type="submit" class="btn">Vote</button>
                 <button class="btn">Done</button>
@@ -44,6 +46,7 @@
               <p><%= reading.reading%></p>
               <div class="vote-count"><%= reading.voteCount%></div>
               <form class="readings-form" action="/readings/vote/<%= reading._id%>" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
                 <input type="hidden" value="<%= theme._id%>" name="themeId"/>
                 <button type="submit" class="btn">Vote</button>
                 <button class="btn">Done</button>
@@ -58,6 +61,7 @@
               <p><%= reading.reading%></p>
               <div class="vote-count"><%= reading.voteCount%></div>
               <form class="readings-form" action="/readings/vote/<%= reading._id%>" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
                 <input type="hidden" value="<%= theme._id%>" name="themeId"/>
                 <button type="submit" class="btn">Vote</button>
                 <button class="btn">Done</button>

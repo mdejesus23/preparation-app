@@ -7,6 +7,9 @@
 <%- include('../includes/navigation.ejs') %>
 
 <main>
+  <% if (message) { %>
+    <div class="user-message user-message--error"><%= message %></div>
+  <% } %>
   <form
     class="login-form"
     action="/login"
@@ -28,6 +31,7 @@
         id="password"
       />
     </div>
+    <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
     <button class="btn" type="submit">Login</button>
   </form>
 </main>

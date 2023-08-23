@@ -24,9 +24,11 @@
             <div class="card-content">
                 <p class="theme-description"><%= theme.description%></p>
             </div>
+            <% if (isAuthenticated) { %>
             <div class="card-actions">
               <a class="btn" href="/readings/<%= theme._id%>">Use</a>
             </div>
+            <% } %>
         </article>
 
       <% }) %>
