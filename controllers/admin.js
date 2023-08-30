@@ -55,7 +55,7 @@ exports.getEditTheme = (req, res, next) => {
 
 exports.getThemes = async (req, res, next) => {
   try {
-    const themes = await Theme.find();
+    const themes = await Theme.find({ userId: req.user._id });
     res.render("admin/themes", {
       themes: themes,
       pageTitle: "Admin Themes",
@@ -74,14 +74,16 @@ exports.postEditThemes = (req, res, next) => {
 
   Theme.findById(themeId)
     .then((existingTheme) => {
+      if (existingTheme.userId.toString() !== req.user._id.toString()) {
+        return res.redirect("/");
+      }
       existingTheme.title = updatedTitle;
       existingTheme.imageUrl = updatedImageUrl;
       existingTheme.description = updatedDescription;
-      return existingTheme.save();
-    })
-    .then((result) => {
-      // console.log(result);
-      res.redirect("/admin/themes");
+      return existingTheme.save().then((result) => {
+        // console.log(result);
+        res.redirect("/admin/themes");
+      });
     })
     .catch((err) => {
       console.log(err);
@@ -91,7 +93,7 @@ exports.postEditThemes = (req, res, next) => {
 exports.postDeleteTheme = async (req, res, next) => {
   const themeId = req.body.themeId;
   try {
-    await Theme.findByIdAndRemove(themeId);
+    await Theme.deleteOne({ _id: themeId, userId: req.user._id });
     res.redirect("/admin/themes");
   } catch (err) {
     console.log(err);

@@ -1,8 +1,10 @@
 const User = require("./models/user");
 
-const pass = "zZRK0AgPwk99fW9K";
+const { uri } = require("./uri");
 
-const URI = `mongodb://dejesusmelnard:${pass}@ac-rqst6ya-shard-00-00.acl3rer.mongodb.net:27017,ac-rqst6ya-shard-00-01.acl3rer.mongodb.net:27017,ac-rqst6ya-shard-00-02.acl3rer.mongodb.net:27017/preparation?ssl=true&replicaSet=atlas-17b4b2-shard-0&authSource=admin&retryWrites=true&w=majority`;
+// const pass = "zZRK0AgPwk99fW9K";
+
+// const URI = `mongodb://dejesusmelnard:${pass}@ac-rqst6ya-shard-00-00.acl3rer.mongodb.net:27017,ac-rqst6ya-shard-00-01.acl3rer.mongodb.net:27017,ac-rqst6ya-shard-00-02.acl3rer.mongodb.net:27017/preparation?ssl=true&replicaSet=atlas-17b4b2-shard-0&authSource=admin&retryWrites=true&w=majority`;
 
 //  This line imports the built-in path module in Node.js, which provides utilities for working with file and directory paths.
 const path = require("path");
@@ -17,7 +19,7 @@ const flash = require("express-flash");
 const app = express();
 
 const store = new MongoDBStore({
-  uri: URI,
+  uri: uri,
   collection: "session",
 });
 const csrfProtecttion = csrf();
@@ -59,6 +61,7 @@ app.use(csrfProtecttion);
 app.use(flash());
 
 app.use(async (req, res, next) => {
+  // console.log("app.use middleware is executed!");
   if (!req.session.user) {
     return next();
   }
@@ -85,7 +88,7 @@ app.use(authRoutes);
 app.use(errorController.get404);
 
 mongoose
-  .connect(URI)
+  .connect(uri)
   .then((result) => {
     app.listen(port, () => {
       console.log(`app.js server is running in port ${port}`);

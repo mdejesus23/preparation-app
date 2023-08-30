@@ -17,26 +17,35 @@ exports.getReadings = async (req, res, next) => {
   try {
     const themeId = req.params.themeId;
     const theme = await Theme.findById(themeId);
-    const historical = theme.readings.filter((reading) => {
-      return reading.category == "Historical";
-    });
-    const prophetical = theme.readings.filter((reading) => {
-      return reading.category == "Prophetical";
-    });
-    const epistle = theme.readings.filter((reading) => {
-      return reading.category == "Epistle";
-    });
-    const gospel = theme.readings.filter((reading) => {
-      return reading.category == "Gospel";
-    });
+    let readings;
 
-    // create a copy of all the readings
-    const readings = {
-      historical: historical,
-      prophetical: prophetical,
-      epistle: epistle,
-      gospel: gospel,
-    };
+    if (theme.readings.length > 0) {
+      const historical = theme.readings.filter((reading) => {
+        return reading.category == "Historical";
+      });
+
+      const prophetical = theme.readings.filter((reading) => {
+        return reading.category == "Prophetical";
+      });
+
+      const epistle = theme.readings.filter((reading) => {
+        return reading.category == "Epistle";
+      });
+
+      const gospel = theme.readings.filter((reading) => {
+        return reading.category == "Gospel";
+      });
+
+      // create a copy of all the readings
+      readings = {
+        historical: historical,
+        prophetical: prophetical,
+        epistle: epistle,
+        gospel: gospel,
+      };
+    } else {
+      readings = undefined;
+    }
 
     res.render("preparation/readings", {
       theme: theme,

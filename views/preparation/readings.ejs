@@ -7,6 +7,9 @@
   <%- include('../includes/navigation.ejs') %>
     
     <main>
+      <% if (!readings) { %>
+        <h1>No readings found!</h1>
+      <% } else {  %>
       <h1 class="theme-header"><%= theme.title%></h1>
       <div class="grid-readings">
         <ul class="readings-columns">
@@ -70,8 +73,7 @@
           <% }) %>  
         </ul>
       </div>
-
-      
+      <% } %>
     </main>
     <%- include('../includes/end.ejs') %>
 
