@@ -1,11 +1,21 @@
 const Theme = require("../models/themes");
 
+const { validationResult } = require("express-validator");
+
 exports.getAddTheme = (req, res, next) => {
   res.render("admin/edit-theme", {
     pageTitle: "Add Themes",
     path: "/admin/add-themes",
     editing: false,
-    isAuthenticated: req.session.isLoggedIn,
+    hasError: false,
+    errorMessage: null,
+    theme: {
+      title: "",
+      imageUrl: "",
+      description: "",
+      readings: "",
+    },
+    validationErrors: [],
   });
 };
 
@@ -14,6 +24,24 @@ exports.postAddTheme = async (req, res, next) => {
   const imageUrl = req.body.imageUrl;
   const description = req.body.description;
   const readings = [];
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render("admin/edit-theme", {
+      pageTitle: "Add Themes",
+      path: "/admin/add-themes",
+      editing: false,
+      hasError: true,
+      errorMessage: errors.array()[0].msg,
+      theme: {
+        title: title,
+        imageUrl: imageUrl,
+        description: description,
+        readings: readings,
+      },
+      validationErrors: errors.array(),
+    });
+  }
 
   const theme = new Theme({
     title: title,
@@ -36,6 +64,10 @@ exports.getEditTheme = (req, res, next) => {
   const editMode = req.query.edit;
   const themeId = req.params.themeId;
 
+  if (!editMode) {
+    return res.redirect("/");
+  }
+
   Theme.findById(themeId)
     .then((theme) => {
       if (!theme) {
@@ -46,6 +78,8 @@ exports.getEditTheme = (req, res, next) => {
         path: "/admin/edit-theme",
         editing: editMode,
         theme: theme,
+        errorMessage: null,
+        validationErrors: [],
       });
     })
     .catch((err) => {
@@ -71,6 +105,24 @@ exports.postEditThemes = (req, res, next) => {
   const updatedTitle = req.body.title;
   const updatedImageUrl = req.body.imageUrl;
   const updatedDescription = req.body.description;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render("admin/edit-theme", {
+      pageTitle: "Edit Themes",
+      path: "/admin/edit-themes",
+      editing: true,
+      hasError: true,
+      errorMessage: errors.array()[0].msg,
+      theme: {
+        _id: themeId,
+        title: updatedTitle,
+        imageUrl: updatedImageUrl,
+        description: updatedDescription,
+      },
+      validationErrors: errors.array(),
+    });
+  }
 
   Theme.findById(themeId)
     .then((existingTheme) => {
