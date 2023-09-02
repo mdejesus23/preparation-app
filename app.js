@@ -84,8 +84,18 @@ app.use("/admin", adminRoutes);
 app.use(preparationRoutes);
 app.use(authRoutes);
 
+app.get("/500", errorController.get500);
+
 // this middleware will be catch all the request route that is not define
 app.use(errorController.get404);
+
+app.use((err, req, res, next) => {
+  res.status(500).render("500", {
+    pageTitle: "Error",
+    path: "/500",
+    isAuthenticated: req.session.isLoggedIn,
+  });
+});
 
 mongoose
   .connect(uri)

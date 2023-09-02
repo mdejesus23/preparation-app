@@ -36,6 +36,8 @@ exports.getReadings = async (req, res, next) => {
         return reading.category == "Gospel";
       });
 
+      console.log(historical);
+
       // create a copy of all the readings
       readings = {
         historical: historical,

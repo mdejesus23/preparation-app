@@ -39,10 +39,17 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
+  let message = req.flash("success");
+  if (message.length > 0) {
+    message = message[0];
+  } else {
+    message = null;
+  }
   res.render("auth/signup", {
     path: "/signup",
     pageTitle: "Signup",
     errorMessage: null,
+    successMessage: null,
     prevInput: {
       email: "",
       password: "",
@@ -120,13 +127,14 @@ exports.postSignup = (req, res, next) => {
   const confirmPassword = req.body.confirmPassword;
 
   const errors = validationResult(req); // collect errors in the middleware in the request.
-  // if the errors is not empty.
+  // if errors occur
   if (!errors.isEmpty()) {
     console.log(errors.array());
     return res.status(422).render("auth/signup", {
       path: "/signup",
       pageTitle: "Signup",
       errorMessage: errors.array()[0].msg,
+      successMessage: null,
       prevInput: {
         email: email,
         password: password,
@@ -147,7 +155,20 @@ exports.postSignup = (req, res, next) => {
       return user.save();
     })
     .then((result) => {
-      res.redirect("/login");
+      // req.flash("success", "Signup successfully!");
+      // res.redirect("/signup");
+      res.render("auth/signup", {
+        path: "/signup",
+        pageTitle: "Signup",
+        errorMessage: null,
+        successMessage: "Signup successfully!",
+        prevInput: {
+          email: "",
+          password: "",
+          confirmPassword: "",
+        },
+        validationErrors: [],
+      });
       return transporter.sendMail({
         to: email,
         from: "dejesusmelnard@gmail.com",

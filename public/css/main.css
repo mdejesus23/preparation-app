@@ -252,6 +252,12 @@ form {
   color: red;
 }
 
+.user-message--success {
+  border-color: green;
+  background: rgb(171, 204, 171);
+  color: green;
+}
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;
