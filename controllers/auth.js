@@ -117,7 +117,9 @@ exports.postLogin = (req, res, next) => {
         });
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
     });
 };
 
@@ -150,7 +152,7 @@ exports.postSignup = (req, res, next) => {
       const user = new User({
         email: email,
         password: hashedPassword,
-        result: { themes: [] },
+        votedReadings: [],
       });
       return user.save();
     })
@@ -177,7 +179,9 @@ exports.postSignup = (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
     });
 };
 
@@ -238,7 +242,9 @@ exports.postResetPassword = (req, res, next) => {
         });
       })
       .catch((err) => {
-        console.log(err);
+        const error = new Error(err); // create an error object.
+        error.httpStatusCode = 500; // set error object property
+        return next(error);
       });
   });
 };
@@ -263,7 +269,9 @@ exports.getNewPassword = (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
     });
   //
   let message = req.flash("error");
@@ -294,6 +302,8 @@ exports.postNewPassword = (req, res, next) => {
       res.redirect("/login");
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
     });
 };

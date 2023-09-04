@@ -60,18 +60,27 @@ app.use(
 app.use(csrfProtecttion);
 app.use(flash());
 
-app.use(async (req, res, next) => {
-  // console.log("app.use middleware is executed!");
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+app.use((req, res, next) => {
+  // console.log("sync dummy error");
+  // throw new Error("Sync dummy");
   if (!req.session.user) {
     return next();
   }
-  try {
-    const user = await User.findById(req.session.user._id);
-    req.user = user;
-    next();
-  } catch (err) {
-    console.log(err);
-  }
+  User.findById(req.session.user._id)
+    .then((user) => {
+      // throw new Error("dummy");
+      req.user = user;
+      next();
+    })
+    .catch((err) => {
+      next(new Error(err));
+    });
 });
 
 app.use((req, res, next) => {
@@ -89,12 +98,15 @@ app.get("/500", errorController.get500);
 // this middleware will be catch all the request route that is not define
 app.use(errorController.get404);
 
+// next error handling middleware.
 app.use((err, req, res, next) => {
+  console.log("error handler middleware");
   res.status(500).render("500", {
     pageTitle: "Error",
     path: "/500",
     isAuthenticated: req.session.isLoggedIn,
   });
+  // res.redirect("/500");
 });
 
 mongoose

@@ -9,7 +9,9 @@ exports.getThemes = async (req, res, next) => {
       pageTitle: "Themes List",
     });
   } catch (err) {
-    console.log(err);
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
   }
 };
 
@@ -36,8 +38,6 @@ exports.getReadings = async (req, res, next) => {
         return reading.category == "Gospel";
       });
 
-      console.log(historical);
-
       // create a copy of all the readings
       readings = {
         historical: historical,
@@ -54,27 +54,80 @@ exports.getReadings = async (req, res, next) => {
       readings: readings,
       path: "/readings",
       pageTitle: "Readings List",
+      votedReadings: req.user.votedReadingIds,
     });
   } catch (err) {
-    console.log(err);
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
   }
 };
 
-exports.postVote = (req, res, next) => {
-  const readingId = req.params.readingId;
-  const themeId = req.body.themeId;
+exports.postVoteReading = (req, res, next) => {
+  const themeId = req.params.themeId;
+  const readingId = req.body.readingId;
 
   Theme.findById(themeId)
     .then((theme) => {
+      // throw new Error("Dummy async error");
+      let readings;
+
+      if (theme.readings.length > 0) {
+        const historical = theme.readings.filter((reading) => {
+          return reading.category == "Historical";
+        });
+
+        const prophetical = theme.readings.filter((reading) => {
+          return reading.category == "Prophetical";
+        });
+
+        const epistle = theme.readings.filter((reading) => {
+          return reading.category == "Epistle";
+        });
+
+        const gospel = theme.readings.filter((reading) => {
+          return reading.category == "Gospel";
+        });
+
+        // create a copy of all the readings
+        readings = {
+          historical: historical,
+          prophetical: prophetical,
+          epistle: epistle,
+          gospel: gospel,
+        };
+      } else {
+        readings = undefined;
+      }
+
       const reading = theme.readings.id({ _id: readingId });
-      reading.voteCount = reading.voteCount + 1;
-      return theme.save();
-    })
-    .then((result) => {
-      // console.log(result);
-      res.redirect(`/readings/${themeId}`);
+      // console.log(reading);
+      req.user.voteReading(reading).then((user) => {
+        // console.log(reading);
+        // console.log(user.votedReadingIds);
+
+        // add/minus vote count in the theme collection
+        if (user.votedReadingIds.includes(readingId)) {
+          reading.voteCount = reading.voteCount + 1;
+          theme.save();
+        } else {
+          reading.voteCount = reading.voteCount - 1;
+          theme.save();
+        }
+
+        res.render("preparation/readings", {
+          theme: theme,
+          readings: readings,
+          path: "/readings",
+          pageTitle: "Readings List",
+          votedReadings: user.votedReadingIds,
+        });
+      });
     })
     .catch((err) => {
-      console.log(err);
+      console.log("error");
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
     });
 };

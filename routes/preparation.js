@@ -10,9 +10,9 @@ router.get("/", preparationControllers.getThemes);
 router.get("/readings/:themeId", isAuth, preparationControllers.getReadings);
 
 router.post(
-  "/readings/vote/:readingId",
+  "/readings/:themeId",
   isAuth,
-  preparationControllers.postVote
+  preparationControllers.postVoteReading
 );
 
 module.exports = router;

@@ -258,6 +258,11 @@ form {
   color: green;
 }
 
+.voted {
+  background-color: #7cf08b;
+  margin-bottom: 5px;
+}
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;

@@ -56,7 +56,9 @@ exports.postAddTheme = async (req, res, next) => {
       res.redirect("/admin/themes");
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
     });
 };
 
@@ -83,20 +85,40 @@ exports.getEditTheme = (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
     });
 };
 
 exports.getThemes = async (req, res, next) => {
+  let errMessage = req.flash("error");
+  if (errMessage.length > 0) {
+    errMessage = errMessage[0];
+  } else {
+    errMessage = null;
+  }
+
+  let successMessage = req.flash("success");
+  if (successMessage.length > 0) {
+    successMessage = successMessage[0];
+  } else {
+    successMessage = null;
+  }
+
   try {
     const themes = await Theme.find({ userId: req.user._id });
     res.render("admin/themes", {
       themes: themes,
       pageTitle: "Admin Themes",
       path: "/admin/themes",
+      errorMessage: errMessage,
+      successMessage: successMessage,
     });
   } catch (err) {
-    console.log(err);
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
   }
 };
 
@@ -138,7 +160,9 @@ exports.postEditThemes = (req, res, next) => {
       });
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
     });
 };
 
@@ -148,7 +172,9 @@ exports.postDeleteTheme = async (req, res, next) => {
     await Theme.deleteOne({ _id: themeId, userId: req.user._id });
     res.redirect("/admin/themes");
   } catch (err) {
-    console.log(err);
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
   }
 };
 
@@ -157,6 +183,11 @@ exports.postReading = (req, res, next) => {
   const category = req.body.category;
   let initialVote = 0;
   const themeId = req.body.themeId;
+
+  if (!word) {
+    req.flash("error", "Reading is not valid!");
+    return res.redirect("/admin/themes");
+  }
 
   Theme.findById(themeId)
     // .select("readings -_id")
@@ -169,9 +200,12 @@ exports.postReading = (req, res, next) => {
       return theme.save();
     })
     .then(() => {
+      req.flash("success", "Reading added successfully!");
       res.redirect("/admin/themes");
     })
     .catch((err) => {
-      console.log(err);
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
     });
 };
