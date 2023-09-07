@@ -45,14 +45,14 @@
                             <option value="Gospel">Gospel</option>
                         </select>
                     </div>
-                    <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+                    <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
                     <input type="hidden" name="themeId" value="<%= theme._id%>"/>
                     <button class="btn" type="submit">Add Reading</button>
                 </form>
                 <form class="reading-form" action="/admin/delete-theme" method="POST">
                     <div class="form-control">
                         <a href="/admin/edit-theme/<%= theme._id%>?edit=true" class="btn">Edit</a>
-                        <input type="hidden" name="_csrf" value="<%= csrfToken%>" />
+                        <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
                         <input type="hidden" name="themeId" value="<%= theme._id%>" />
                         <button class="btn" type="submit">Delete</button>
                     </div>

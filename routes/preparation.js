@@ -15,4 +15,10 @@ router.post(
   preparationControllers.postVoteReading
 );
 
+router.get(
+  "/readings/consolidated/:themeId",
+  isAuth,
+  preparationControllers.getConsolidatedReadings
+);
+
 module.exports = router;

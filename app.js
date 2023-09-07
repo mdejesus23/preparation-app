@@ -13,8 +13,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-const csrf = require("csurf");
+// const csrf = require("csurf");
+const { csrfSync } = require("csrf-sync");
 const flash = require("express-flash");
+
+const { csrfSynchronisedProtection } = csrfSync({
+  getTokenFromRequest: (req) => req.body.csrfToken,
+});
 
 const app = express();
 
@@ -22,7 +27,7 @@ const store = new MongoDBStore({
   uri: uri,
   collection: "session",
 });
-const csrfProtecttion = csrf();
+// const csrfProtecttion = csrf();
 
 //import error controller
 const errorController = require("./controllers/error");
@@ -57,7 +62,8 @@ app.use(
     store: store,
   })
 );
-app.use(csrfProtecttion);
+// app.use(csrfProtecttion);
+app.use(csrfSynchronisedProtection);
 app.use(flash());
 
 app.use((req, res, next) => {
@@ -83,11 +89,11 @@ app.use((req, res, next) => {
     });
 });
 
-app.use((req, res, next) => {
-  res.locals.isAuthenticated = req.session.isLoggedIn;
-  res.locals.csrfToken = req.csrfToken();
-  next();
-});
+// app.use((req, res, next) => {
+//   res.locals.isAuthenticated = req.session.isLoggedIn;
+//   res.locals.csrfToken = req.csrfToken();
+//   next();
+// });
 
 app.use("/admin", adminRoutes);
 app.use(preparationRoutes);
@@ -101,6 +107,8 @@ app.use(errorController.get404);
 // next error handling middleware.
 app.use((err, req, res, next) => {
   console.log("error handler middleware");
+  console.log(err);
+
   res.status(500).render("500", {
     pageTitle: "Error",
     path: "/500",
