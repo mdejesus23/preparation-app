@@ -21,9 +21,29 @@ exports.getAddTheme = (req, res, next) => {
 
 exports.postAddTheme = async (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  const image = req.file;
   const description = req.body.description;
   const readings = [];
+
+  console.log(image);
+
+  if (!image) {
+    return res.status(422).render("admin/edit-theme", {
+      pageTitle: "Add Themes",
+      path: "/admin/add-themes",
+      editing: false,
+      hasError: true,
+      theme: {
+        title: title,
+        description: description,
+        readings: readings,
+      },
+      errorMessage: "Attached file is not an image",
+      validationErrors: [],
+    });
+  }
+
+  const imageUrl = image.path; // image path is a path to the file system with image directory.
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -35,7 +55,6 @@ exports.postAddTheme = async (req, res, next) => {
       errorMessage: errors.array()[0].msg,
       theme: {
         title: title,
-        imageUrl: imageUrl,
         description: description,
         readings: readings,
       },

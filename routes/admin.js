@@ -18,7 +18,6 @@ router.post(
       .isLength({ min: 3 })
       .trim()
       .withMessage("Please enter a valid title min of 3 characters"),
-    body("imageUrl").isURL().withMessage("Please enter a valid URL"),
   ],
   isAuth,
   adminController.postAddTheme
@@ -34,7 +33,6 @@ router.post(
       .isLength({ min: 3 })
       .trim()
       .withMessage("Please enter a valid title min of 3 characters"),
-    body("imageUrl").isURL().withMessage("Please enter a valid URL"),
   ],
   isAuth,
   adminController.postEditThemes
