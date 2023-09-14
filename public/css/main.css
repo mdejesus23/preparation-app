@@ -4,10 +4,13 @@
 :root {
   --primary-color: #2b7eb6;
   --secondary-color: #f5eca1fb;
+  --third-color: #40f01dfb;
   --danger-color: red;
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -32,6 +35,10 @@ form {
 
 .image {
   height: 20rem;
+}
+
+li {
+  margin: 0.85rem;
 }
 
 .image img {
@@ -259,7 +266,7 @@ form {
 }
 
 .voted {
-  background-color: #7cf08b;
+  background-color: var(--third-color);
   margin-bottom: 5px;
 }
 

@@ -289,4 +289,28 @@ exports.postAddReading = (req, res, next) => {
     });
 };
 
-exports.postDeleteReading = (req, res, next) => {};
+exports.postDeleteReading = (req, res, next) => {
+  const themeId = req.params.themeId;
+  const readingId = req.body.readingId;
+
+  Theme.findById(themeId)
+    .then((theme) => {
+      // need to assign to a new variable to get the return result.
+      const updatedReadings = theme.readings.filter((reading) => {
+        return reading._id.toString() !== readingId.toString();
+      });
+
+      console.log(updatedReadings);
+
+      theme.readings = updatedReadings;
+      return theme.save();
+    })
+    .then(() => {
+      res.redirect(`/admin/add-readings/${themeId}`);
+    })
+    .catch((err) => {
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
+    });
+};

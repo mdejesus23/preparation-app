@@ -41,7 +41,8 @@
           <% readings.historical.forEach(reading => { %>
             <li class="flex">
               <p><%= reading.reading%></p>
-              <form action="/admin/delete-reading/" method="POST">
+              <form action="/admin/delete-reading/<%= theme._id%>" method="POST">
+                <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
                 <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
                 <button class="btn" type="submit">Delete</button>
               </form>
@@ -55,7 +56,8 @@
           <% readings.prophetical.forEach(reading => { %>
             <li class="flex">
               <p><%= reading.reading%></p>
-              <form action="/admin/delete-reading/" method="POST">
+              <form action="/admin/delete-reading/<%= theme._id%>" method="POST">
+                <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
                 <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
                 <button class="btn" type="submit">Delete</button>
               </form>
@@ -69,7 +71,8 @@
           <% readings.epistle.forEach(reading => { %>
             <li class="flex">
               <p><%= reading.reading%></p>
-              <form action="/admin/delete-reading/" method="POST">
+              <form action="/admin/delete-reading/<%= theme._id%>"  method="POST">
+                <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
                 <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
                 <button class="btn" type="submit">Delete</button>
               </form>
@@ -83,7 +86,8 @@
           <% readings.gospel.forEach(reading => { %>
             <li class="flex">
               <p><%= reading.reading%></p>
-              <form action="/admin/delete-reading/" method="POST">
+              <form action="/admin/delete-reading/<%= theme._id%>"  method="POST">
+                <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
                 <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
                 <button class="btn" type="submit">Delete</button>
               </form>
