@@ -42,6 +42,8 @@ router.get("/themes", isAuth, adminController.getThemes);
 
 router.post("/delete-theme", isAuth, adminController.postDeleteTheme);
 
-router.post("/add-reading", isAuth, adminController.postReading);
+router.get("/add-readings/:themeId", isAuth, adminController.getAddReading);
+
+router.post("/add-readings/:themeId", isAuth, adminController.postAddReading);
 
 module.exports = router;

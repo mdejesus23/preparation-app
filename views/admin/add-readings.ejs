@@ -1,0 +1,99 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/user.css" />
+    <link rel="stylesheet" href="/css/readings.css" />
+  </head>
+
+  <body>
+  <%- include('../includes/navigation.ejs') %>
+    
+    <main>
+      <h1 class="theme-header"><%= theme.title%></h1>
+      <form class="reading-form" action="/admin/add-readings/<%= theme._id%>" method="POST">
+        <div class="form-control">
+            <label for="reading">Reading</label>
+            <input type="text" name="reading" id="reading" />
+        </div>
+
+        <div class="form-control">
+            <label for="category">Category</label>
+            <select name="category" id="category">
+                <option value="">(Select One)</option>
+                <option value="Historical">Historical</option>
+                <option value="Prophetical">Propetical</option>
+                <option value="Epistle">Epistle</option>
+                <option value="Gospel">Gospel</option>
+            </select>
+        </div>
+        <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+        <div class="form-control">
+          <button class="btn" type="submit">Add Reading</button>
+        </div>
+      </form>
+      <% if (!readings) { %>
+        <h2>No readings found!</h2>
+     
+      <% } else {  %>
+
+      <div class="grid-readings">
+        <% if (readings.historical) { %>
+        <ul class="readings-columns">
+          <h3 class="category-header">Historical</h3>
+          <% readings.historical.forEach(reading => { %>
+            <li class="flex">
+              <p><%= reading.reading%></p>
+              <form action="/admin/delete-reading/" method="POST">
+                <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
+                <button class="btn" type="submit">Delete</button>
+              </form>
+            </li>
+          <% }) %>  
+        </ul>
+        <% } %>
+        <% if (readings.prophetical) { %>
+        <ul class="readings-columns">
+          <h3 class="category-header">Prophetical</h3>
+          <% readings.prophetical.forEach(reading => { %>
+            <li class="flex">
+              <p><%= reading.reading%></p>
+              <form action="/admin/delete-reading/" method="POST">
+                <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
+                <button class="btn" type="submit">Delete</button>
+              </form>
+            </li>
+          <% }) %>  
+        </ul>
+        <% } %>
+        <% if (readings.epistle) { %>
+        <ul class="readings-columns">
+          <h3 class="category-header">Epistle</h3>
+          <% readings.epistle.forEach(reading => { %>
+            <li class="flex">
+              <p><%= reading.reading%></p>
+              <form action="/admin/delete-reading/" method="POST">
+                <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
+                <button class="btn" type="submit">Delete</button>
+              </form>
+            </li>
+          <% }) %>  
+        </ul>
+        <% } %>
+        <% if (readings.gospel) { %>
+        <ul class="readings-columns">
+          <h3>Gospel</h3>
+          <% readings.gospel.forEach(reading => { %>
+            <li class="flex">
+              <p><%= reading.reading%></p>
+              <form action="/admin/delete-reading/" method="POST">
+                <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
+                <button class="btn" type="submit">Delete</button>
+              </form>
+            </li>
+          <% }) %>  
+        </ul>
+        <% } %>
+      </div>
+      <% } %>
+      
+    </main>
+    <%- include('../includes/end.ejs') %>
+

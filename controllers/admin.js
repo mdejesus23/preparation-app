@@ -1,5 +1,7 @@
 const Theme = require("../models/themes");
 
+const fileHelper = require("../util/file");
+
 const { validationResult } = require("express-validator");
 
 exports.getAddTheme = (req, res, next) => {
@@ -144,7 +146,7 @@ exports.getThemes = async (req, res, next) => {
 exports.postEditThemes = (req, res, next) => {
   const themeId = req.body.themeId;
   const updatedTitle = req.body.title;
-  const updatedImageUrl = req.body.imageUrl;
+  const image = req.file;
   const updatedDescription = req.body.description;
 
   const errors = validationResult(req);
@@ -158,7 +160,6 @@ exports.postEditThemes = (req, res, next) => {
       theme: {
         _id: themeId,
         title: updatedTitle,
-        imageUrl: updatedImageUrl,
         description: updatedDescription,
       },
       validationErrors: errors.array(),
@@ -171,10 +172,14 @@ exports.postEditThemes = (req, res, next) => {
         return res.redirect("/");
       }
       existingTheme.title = updatedTitle;
-      existingTheme.imageUrl = updatedImageUrl;
       existingTheme.description = updatedDescription;
+      // if user attached file image to change current image.
+      if (image) {
+        fileHelper.deleteFile(existingTheme.imageUrl);
+        existingTheme.imageUrl = image.path;
+      }
       return existingTheme.save().then((result) => {
-        // console.log(result);
+        console.log("UPDATED THEME!");
         res.redirect("/admin/themes");
       });
     })
@@ -188,7 +193,13 @@ exports.postEditThemes = (req, res, next) => {
 exports.postDeleteTheme = async (req, res, next) => {
   const themeId = req.body.themeId;
   try {
+    const theme = await Theme.findById(themeId);
+    if (!theme) {
+      return next(new Error("Product not found!"));
+    }
+    fileHelper.deleteFile(theme.imageUrl);
     await Theme.deleteOne({ _id: themeId, userId: req.user._id });
+    console.log("Theme Deleted!");
     res.redirect("/admin/themes");
   } catch (err) {
     const error = new Error(err); // create an error object.
@@ -197,11 +208,60 @@ exports.postDeleteTheme = async (req, res, next) => {
   }
 };
 
-exports.postReading = (req, res, next) => {
+exports.getAddReading = (req, res, next) => {
+  const themeId = req.params.themeId;
+
+  Theme.findById(themeId)
+    .then((theme) => {
+      let readings;
+      if (theme.readings.length > 0) {
+        const historical = theme.readings.filter((reading) => {
+          return reading.category == "Historical";
+        });
+
+        const prophetical = theme.readings.filter((reading) => {
+          return reading.category == "Prophetical";
+        });
+
+        const epistle = theme.readings.filter((reading) => {
+          return reading.category == "Epistle";
+        });
+
+        const gospel = theme.readings.filter((reading) => {
+          return reading.category == "Gospel";
+        });
+
+        // create a copy of all the readings
+        readings = {
+          historical: historical,
+          prophetical: prophetical,
+          epistle: epistle,
+          gospel: gospel,
+        };
+      } else {
+        readings = undefined;
+      }
+
+      res.render("admin/add-readings", {
+        theme: theme,
+        readings: readings,
+        path: "/readings",
+        pageTitle: "Readings List",
+        votedReadings: req.user.votedReadingIds,
+      });
+    })
+    .catch((err) => {
+      const error = new Error(err); // create an error object.
+      error.httpStatusCode = 500; // set error object property
+      return next(error);
+    });
+};
+
+exports.postAddReading = (req, res, next) => {
   const word = req.body.reading;
   const category = req.body.category;
   let initialVote = 0;
-  const themeId = req.body.themeId;
+  const themeId = req.params.themeId;
 
   if (!word) {
     req.flash("error", "Reading is not valid!");
@@ -220,7 +280,7 @@ exports.postReading = (req, res, next) => {
     })
     .then(() => {
       req.flash("success", "Reading added successfully!");
-      res.redirect("/admin/themes");
+      res.redirect(`/admin/add-readings/${themeId}`);
     })
     .catch((err) => {
       const error = new Error(err); // create an error object.
@@ -228,3 +288,5 @@ exports.postReading = (req, res, next) => {
       return next(error);
     });
 };
+
+exports.postDeleteReading = (req, res, next) => {};

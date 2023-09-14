@@ -1,21 +1,40 @@
-.theme-header {
+h1,
+h2,
+h3 {
   text-align: center;
+}
+
+/* add readings form */
+.reading-form {
+}
+
+.reading-form .form-control {
+  width: 25%;
+  margin: 1rem auto;
+}
+
+label {
+  display: block;
+}
+
+.reading-form input,
+.reading-form select,
+.reading-form button {
+  width: 100%;
+  min-height: 2em;
 }
 
 .grid-readings {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   column-gap: 1rem;
+  margin: 2rem;
 }
 
 .readings-columns {
   border: 1px solid black;
   margin: 0;
   padding: 0.25rem;
-}
-
-h2 {
-  text-align: center;
 }
 
 .flex {
@@ -39,10 +58,6 @@ h2 {
   color: white;
 }
 
-.readings-form {
-  display: inline;
-}
-
 .consolidated-form {
   display: flex;
   justify-content: center;
@@ -64,5 +79,10 @@ h2 {
     grid-template-columns: 1fr;
     column-gap: 1rem;
     row-gap: 1rem;
+  }
+
+  .reading-form .form-control {
+    width: 90%;
+    margin: 1rem auto;
   }
 }

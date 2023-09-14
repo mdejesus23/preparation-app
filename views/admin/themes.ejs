@@ -30,7 +30,7 @@
                 <p class="theme-description"><%= theme.description%></p>
             </div>
             <div class="card-actions">
-                <form class="reading-form" action="/admin/add-reading" method="POST">
+                <!-- <form class="reading-form" action="/admin/add-reading" method="POST">
                     <div class="form-control">
                         <label for="reading">Reading</label>
                         <input type="text" name="reading" id="reading" />
@@ -48,7 +48,7 @@
                     <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
                     <input type="hidden" name="themeId" value="<%= theme._id%>"/>
                     <button class="btn" type="submit">Add Reading</button>
-                </form>
+                </form> -->
                 <form class="reading-form" action="/admin/delete-theme" method="POST">
                     <div class="form-control">
                         <a href="/admin/edit-theme/<%= theme._id%>?edit=true" class="btn">Edit</a>
@@ -57,6 +57,7 @@
                         <button class="btn" type="submit">Delete</button>
                     </div>
                 </form>
+                <a href="/admin/add-readings/<%= theme._id%>" class="btn">Add Readings</a>
             </div>
         </article>
 
