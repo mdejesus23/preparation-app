@@ -295,7 +295,7 @@ exports.postDeleteReading = (req, res, next) => {
 
   Theme.findById(themeId)
     .then((theme) => {
-      // need to assign to a new variable to get the return result.
+      // need to assign to a new variable to get the return result thru filter method.
       const updatedReadings = theme.readings.filter((reading) => {
         return reading._id.toString() !== readingId.toString();
       });
