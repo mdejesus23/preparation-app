@@ -190,8 +190,8 @@ exports.postEditThemes = (req, res, next) => {
     });
 };
 
-exports.postDeleteTheme = async (req, res, next) => {
-  const themeId = req.body.themeId;
+exports.deleteTheme = async (req, res, next) => {
+  const themeId = req.params.themeId;
   try {
     const theme = await Theme.findById(themeId);
     if (!theme) {
@@ -200,11 +200,9 @@ exports.postDeleteTheme = async (req, res, next) => {
     fileHelper.deleteFile(theme.imageUrl);
     await Theme.deleteOne({ _id: themeId, userId: req.user._id });
     console.log("Theme Deleted!");
-    res.redirect("/admin/themes");
+    res.status(200).json({ message: "Success" });
   } catch (err) {
-    const error = new Error(err); // create an error object.
-    error.httpStatusCode = 500; // set error object property
-    return next(error);
+    res.status(500).json({ message: "Deleting product failed!" });
   }
 };
 

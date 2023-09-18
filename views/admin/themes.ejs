@@ -30,33 +30,12 @@
                 <p class="theme-description"><%= theme.description%></p>
             </div>
             <div class="card-actions">
-                <!-- <form class="reading-form" action="/admin/add-reading" method="POST">
-                    <div class="form-control">
-                        <label for="reading">Reading</label>
-                        <input type="text" name="reading" id="reading" />
-                    </div>
-
-                    <div class="form-control">
-                        <label for="category">Category</label>
-                        <select name="category" id="category">
-                            <option value="Historical">Historical</option>
-                            <option value="Prophetical">Propetical</option>
-                            <option value="Epistle">Epistle</option>
-                            <option value="Gospel">Gospel</option>
-                        </select>
-                    </div>
-                    <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-                    <input type="hidden" name="themeId" value="<%= theme._id%>"/>
-                    <button class="btn" type="submit">Add Reading</button>
-                </form> -->
-                <form class="reading-form" action="/admin/delete-theme" method="POST">
                     <div class="form-control">
                         <a href="/admin/edit-theme/<%= theme._id%>?edit=true" class="btn">Edit</a>
                         <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
                         <input type="hidden" name="themeId" value="<%= theme._id%>" />
-                        <button class="btn" type="submit">Delete</button>
+                        <button onclick="deleteTheme(this)" class="btn" type="button">Delete</button>
                     </div>
-                </form>
                 <a href="/admin/add-readings/<%= theme._id%>" class="btn">Add Readings</a>
             </div>
         </article>
@@ -68,3 +47,5 @@
     <% } %>
   </main>
   <%- include('../includes/end.ejs') %>
+
+  <script src="/js/admin.js"></script>

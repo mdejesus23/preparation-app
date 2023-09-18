@@ -23,11 +23,14 @@ const User = require("./models/user");
 //import error controller
 const errorController = require("./controllers/error");
 
-const { csrfSynchronisedProtection } = csrfSync({
-  getTokenFromRequest: (req) => req.body.csrfToken,
-});
-
 const app = express();
+
+// Used to retrieve the token submitted by the user in a form or in the header thru fetch api.
+const { csrfSynchronisedProtection } = csrfSync({
+  getTokenFromRequest: (req) => {
+    return req.body["csrfToken"] || req.headers["csrf-token"];
+  },
+});
 
 const store = new MongoDBStore({
   uri: uri,

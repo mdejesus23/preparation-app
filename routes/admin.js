@@ -40,7 +40,7 @@ router.post(
 
 router.get("/themes", isAuth, adminController.getThemes);
 
-router.post("/delete-theme", isAuth, adminController.postDeleteTheme);
+router.delete("/theme/:themeId", isAuth, adminController.deleteTheme);
 
 router.get("/add-readings/:themeId", isAuth, adminController.getAddReading);
 
