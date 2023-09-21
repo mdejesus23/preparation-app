@@ -25,7 +25,7 @@ const errorController = require("./controllers/error");
 
 const app = express();
 
-// Used to retrieve the token submitted by the user in a form or in the header thru fetch api.
+// Used to retrieve the token submitted by the user in a form or in the header thru fetch api in the request body.
 const { csrfSynchronisedProtection } = csrfSync({
   getTokenFromRequest: (req) => {
     return req.body["csrfToken"] || req.headers["csrf-token"];
@@ -76,6 +76,8 @@ const authRoutes = require("./routes/auth");
 
 // parsing middleware. it is use to parse data from form the request
 app.use(express.urlencoded({ extended: false }));
+
+app.use(express.json()); // Middleware to parse JSON request bodies
 
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")

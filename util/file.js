@@ -9,4 +9,3 @@ const deleteFile = (filePath) => {
 };
 exports.deleteFile = deleteFile;
 
-// dont memorize but understand

@@ -41,11 +41,11 @@
           <% readings.historical.forEach(reading => { %>
             <li class="flex">
               <p><%= reading.reading%></p>
-              <form action="/admin/delete-reading/<%= theme._id%>" method="POST">
+              <!-- <form action="/admin/delete-reading/<%= theme._id%>" method="POST"> -->
                 <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+                <input type="hidden" name="themeId" value="<%= theme._id%>" />
                 <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
-                <button class="btn" type="submit">Delete</button>
-              </form>
+                <button onclick="deleteReading(this)" class="btn" type="button">Delete</button>
             </li>
           <% }) %>  
         </ul>
@@ -56,11 +56,10 @@
           <% readings.prophetical.forEach(reading => { %>
             <li class="flex">
               <p><%= reading.reading%></p>
-              <form action="/admin/delete-reading/<%= theme._id%>" method="POST">
                 <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+                <input type="hidden" name="themeId" value="<%= theme._id%>" />
                 <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
-                <button class="btn" type="submit">Delete</button>
-              </form>
+                <button onclick="deleteReading(this)" class="btn" type="button">Delete</button>
             </li>
           <% }) %>  
         </ul>
@@ -71,11 +70,10 @@
           <% readings.epistle.forEach(reading => { %>
             <li class="flex">
               <p><%= reading.reading%></p>
-              <form action="/admin/delete-reading/<%= theme._id%>"  method="POST">
                 <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+                <input type="hidden" name="themeId" value="<%= theme._id%>" />
                 <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
-                <button class="btn" type="submit">Delete</button>
-              </form>
+                <button onclick="deleteReading(this)" class="btn" type="button">Delete</button>
             </li>
           <% }) %>  
         </ul>
@@ -86,11 +84,10 @@
           <% readings.gospel.forEach(reading => { %>
             <li class="flex">
               <p><%= reading.reading%></p>
-              <form action="/admin/delete-reading/<%= theme._id%>"  method="POST">
                 <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+                <input type="hidden" name="themeId" value="<%= theme._id%>" />
                 <input type="hidden" name="readingId" id="readingId" value="<%= reading._id%>"/>
-                <button class="btn" type="submit">Delete</button>
-              </form>
+                <button onclick="deleteReading(this)" class="btn" type="button">Delete</button>
             </li>
           <% }) %>  
         </ul>
@@ -100,4 +97,8 @@
       
     </main>
     <%- include('../includes/end.ejs') %>
+
+  <script src="/js/admin.js"></script>
+
+
 

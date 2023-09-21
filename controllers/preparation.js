@@ -78,78 +78,35 @@ exports.getReadings = async (req, res, next) => {
   }
 };
 
-exports.postVoteReading = (req, res, next) => {
+exports.voteReading = (req, res, next) => {
   const themeId = req.params.themeId;
-  const readingId = req.body.readingId;
+  const readingId = req.header("X-Request-ID");
 
   Theme.findById(themeId)
     .then((theme) => {
-      // throw new Error("Dummy async error");
-      let readings;
-
-      if (theme.readings.length > 0) {
-        const historical = theme.readings.filter((reading) => {
-          return reading.category == "Historical";
-        });
-
-        const prophetical = theme.readings.filter((reading) => {
-          return reading.category == "Prophetical";
-        });
-
-        const epistle = theme.readings.filter((reading) => {
-          return reading.category == "Epistle";
-        });
-
-        const gospel = theme.readings.filter((reading) => {
-          return reading.category == "Gospel";
-        });
-
-        // create a copy of all the readings
-        readings = {
-          historical: historical,
-          prophetical: prophetical,
-          epistle: epistle,
-          gospel: gospel,
-        };
-      } else {
-        readings = undefined;
-      }
-
       const reading = theme.readings.id({ _id: readingId });
-      // console.log(reading);
+
       req.user
         .voteReading(reading)
         .then((user) => {
-          // console.log(reading);
-          // console.log(user.votedReadingIds);
-
           // add/minus vote count in the theme collection
           if (user.votedReadingIds.includes(readingId)) {
-            reading.voteCount = reading.voteCount + 1;
-            theme.save();
+            reading.voteCount += 1;
           } else {
-            reading.voteCount = reading.voteCount - 1;
-            theme.save();
+            reading.voteCount -= 1;
           }
-
-          res.render("preparation/readings", {
-            theme: theme,
-            readings: readings,
-            path: "/readings",
-            pageTitle: "Readings List",
-            votedReadings: user.votedReadingIds,
-          });
+          return theme.save();
         })
         .catch((err) => {
           console.log(err);
           res.redirect(`/readings/${themeId}`);
         });
     })
+    .then(() => {
+      res.status(200).json({ message: "Vote counted" });
+    })
     .catch((err) => {
-      console.log("error");
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
+      res.status(500).json({ message: "Voting failed" });
     });
 };
 

@@ -197,6 +197,7 @@ exports.deleteTheme = async (req, res, next) => {
     if (!theme) {
       return next(new Error("Product not found!"));
     }
+    // fileHelper is a function use to delete image file using file system
     fileHelper.deleteFile(theme.imageUrl);
     await Theme.deleteOne({ _id: themeId, userId: req.user._id });
     console.log("Theme Deleted!");
@@ -287,9 +288,9 @@ exports.postAddReading = (req, res, next) => {
     });
 };
 
-exports.postDeleteReading = (req, res, next) => {
+exports.deleteReading = (req, res, next) => {
   const themeId = req.params.themeId;
-  const readingId = req.body.readingId;
+  const readingId = req.header("X-Request-ID");
 
   Theme.findById(themeId)
     .then((theme) => {
@@ -304,11 +305,9 @@ exports.postDeleteReading = (req, res, next) => {
       return theme.save();
     })
     .then(() => {
-      res.redirect(`/admin/add-readings/${themeId}`);
+      res.status(200).json({ message: "Success deleting reading" });
     })
     .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
+      res.status(500).json({ message: "Deleting reading failed!" });
     });
 };

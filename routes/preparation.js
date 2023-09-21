@@ -9,10 +9,10 @@ router.get("/", preparationControllers.getThemes);
 
 router.get("/readings/:themeId", isAuth, preparationControllers.getReadings);
 
-router.post(
-  "/readings/:themeId",
+router.put(
+  "/readings/vote/:themeId",
   isAuth,
-  preparationControllers.postVoteReading
+  preparationControllers.voteReading
 );
 
 router.get(

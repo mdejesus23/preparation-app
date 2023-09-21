@@ -46,10 +46,10 @@ router.get("/add-readings/:themeId", isAuth, adminController.getAddReading);
 
 router.post("/add-readings/:themeId", isAuth, adminController.postAddReading);
 
-router.post(
+router.delete(
   "/delete-reading/:themeId",
   isAuth,
-  adminController.postDeleteReading
+  adminController.deleteReading
 );
 
 module.exports = router;

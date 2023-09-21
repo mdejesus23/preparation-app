@@ -17,14 +17,11 @@
           <h2 class="category-header">Historical</h2>
           <% readings.historical.forEach(reading => { %>
             <li class="flex <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
-              <p class="<%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>"><%= reading.reading%></p>
-              <!-- <div class="vote-count"><%= reading.voteCount%></div> -->
-              <form class="readings-form" action="/readings/<%= theme._id%>" method="POST">
+              <p><%= reading.reading%></p>
                 <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+                <input type="hidden" value="<%= theme._id%>" name="themeId"/>
                 <input type="hidden" value="<%= reading._id%>" name="readingId"/>
-                <button type="submit" class="btn vote-btn"><%= votedReadings.includes(reading._id.toString()) ? 'Unvote' : 'Vote'%></button>
-                <!-- <button class="btn">Done</button> -->
-              </form>
+                <button onclick="voteReading(this)" type="button" class="btn vote-btn"><%= votedReadings.includes(reading._id.toString()) ? 'Unvote' : 'Vote'%></button>
             </li>
           <% }) %>  
         </ul>
@@ -34,14 +31,11 @@
           <h2 class="category-header">Prophetical</h2>
           <% readings.prophetical.forEach(reading => { %>
             <li class="flex <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
-              <p class="<%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>"><%= reading.reading%></p>
-              <!-- <div class="vote-count"><%= reading.voteCount%></div> -->
-              <form class="readings-form" action="/readings/<%= theme._id%>" method="POST">
+              <p><%= reading.reading%></p>
                 <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+                <input type="hidden" value="<%= theme._id%>" name="themeId"/>
                 <input type="hidden" value="<%= reading._id%>" name="readingId"/>
-                <button type="submit" class="btn vote-btn"><%= votedReadings.includes(reading._id.toString()) ? 'Unvote' : 'Vote'%></button>
-                <!-- <button class="btn">Done</button> -->
-              </form>
+                <button onclick="voteReading(this)" type="button" class="btn vote-btn"><%= votedReadings.includes(reading._id.toString()) ? 'Unvote' : 'Vote'%></button>
             </li>
           <% }) %>  
         </ul>
@@ -51,14 +45,11 @@
           <h2 class="category-header">Epistle</h2>
           <% readings.epistle.forEach(reading => { %>
             <li class="flex <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
-              <p class="<%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>"><%= reading.reading%></p>
-              <!-- <div class="vote-count"><%= reading.voteCount%></div> -->
-              <form class="readings-form" action="/readings/<%= theme._id%>" method="POST">
+              <p><%= reading.reading%></p>
                 <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+                <input type="hidden" value="<%= theme._id%>" name="themeId"/>
                 <input type="hidden" value="<%= reading._id%>" name="readingId"/>
-                <button type="submit" class="btn vote-btn"><%= votedReadings.includes(reading._id.toString()) ? 'Unvote' : 'Vote'%></button>
-                <!-- <button class="btn">Done</button> -->
-              </form>
+                <button onclick="voteReading(this)" type="button" class="btn vote-btn"><%= votedReadings.includes(reading._id.toString()) ? 'Unvote' : 'Vote'%></button>
             </li>
           <% }) %>  
         </ul>
@@ -68,14 +59,11 @@
           <h2>Gospel</h2>
           <% readings.gospel.forEach(reading => { %>
             <li class="flex <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
-              <p class="<%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>"><%= reading.reading%></p>
-              <!-- <div class="vote-count"><%= reading.voteCount%></div> -->
-              <form class="readings-form" action="/readings/<%= theme._id%>" method="POST">
+              <p><%= reading.reading%></p>
                 <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+                <input type="hidden" value="<%= theme._id%>" name="themeId"/>
                 <input type="hidden" value="<%= reading._id%>" name="readingId"/>
-                <button type="submit" class="btn vote-btn"><%= votedReadings.includes(reading._id.toString()) ? 'Unvote' : 'Vote'%></button>
-               
-              </form>
+                <button onclick="voteReading(this)" type="button" class="btn vote-btn"><%= votedReadings.includes(reading._id.toString()) ? 'Unvote' : 'Vote'%></button>
             </li>
           <% }) %>  
         </ul>
@@ -87,4 +75,6 @@
       </div>
     </main>
     <%- include('../includes/end.ejs') %>
+
+  <script src="/js/prep.js"></script>
 

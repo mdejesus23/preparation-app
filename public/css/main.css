@@ -292,7 +292,7 @@ li {
 }
 
 .voted {
-  background-color: var(--primary-color);
+  background-color: var(--third-color);
   margin-bottom: 5px;
 }
 
