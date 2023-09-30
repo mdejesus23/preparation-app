@@ -71,19 +71,18 @@ exports.postAddTheme = async (req, res, next) => {
     readings: readings,
     userId: req.session.user,
   });
-  theme
-    .save()
-    .then((result) => {
-      res.redirect("/admin/themes");
-    })
-    .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
-    });
+
+  try {
+    await theme.save();
+    res.redirect("/admin/themes");
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
 };
 
-exports.getEditTheme = (req, res, next) => {
+exports.getEditTheme = async (req, res, next) => {
   const editMode = req.query.edit;
   const themeId = req.params.themeId;
 
@@ -91,25 +90,24 @@ exports.getEditTheme = (req, res, next) => {
     return res.redirect("/");
   }
 
-  Theme.findById(themeId)
-    .then((theme) => {
-      if (!theme) {
-        return res.redirect("/");
-      }
-      res.render("admin/edit-theme", {
-        pageTitle: "Edit Theme",
-        path: "/admin/edit-theme",
-        editing: editMode,
-        theme: theme,
-        errorMessage: null,
-        validationErrors: [],
-      });
-    })
-    .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
+  try {
+    const theme = await Theme.findById(themeId);
+    if (!theme) {
+      return res.redirect("/");
+    }
+    res.render("admin/edit-theme", {
+      pageTitle: "Edit Theme",
+      path: "/admin/edit-theme",
+      editing: editMode,
+      theme: theme,
+      errorMessage: null,
+      validationErrors: [],
     });
+  } catch (er) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
 };
 
 exports.getThemes = async (req, res, next) => {
@@ -143,7 +141,7 @@ exports.getThemes = async (req, res, next) => {
   }
 };
 
-exports.postEditThemes = (req, res, next) => {
+exports.postEditThemes = async (req, res, next) => {
   const themeId = req.body.themeId;
   const updatedTitle = req.body.title;
   const image = req.file;
@@ -166,28 +164,26 @@ exports.postEditThemes = (req, res, next) => {
     });
   }
 
-  Theme.findById(themeId)
-    .then((existingTheme) => {
-      if (existingTheme.userId.toString() !== req.user._id.toString()) {
-        return res.redirect("/");
-      }
-      existingTheme.title = updatedTitle;
-      existingTheme.description = updatedDescription;
-      // if user attached file image to change current image.
-      if (image) {
-        fileHelper.deleteFile(existingTheme.imageUrl);
-        existingTheme.imageUrl = image.path;
-      }
-      return existingTheme.save().then((result) => {
-        console.log("UPDATED THEME!");
-        res.redirect("/admin/themes");
-      });
-    })
-    .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
-    });
+  try {
+    const existingTheme = await Theme.findById(themeId);
+    if (existingTheme.userId.toString() !== req.user._id.toString()) {
+      return res.redirect("/");
+    }
+    existingTheme.title = updatedTitle;
+    existingTheme.description = updatedDescription;
+    // if user attached file image to change current image.
+    if (image) {
+      fileHelper.deleteFile(existingTheme.imageUrl);
+      existingTheme.imageUrl = image.path;
+    }
+    await existingTheme.save();
+    console.log("UPDATED THEME!");
+    res.redirect("/admin/themes");
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
 };
 
 exports.deleteTheme = async (req, res, next) => {
@@ -207,56 +203,55 @@ exports.deleteTheme = async (req, res, next) => {
   }
 };
 
-exports.getAddReading = (req, res, next) => {
+exports.getAddReading = async (req, res, next) => {
   const themeId = req.params.themeId;
 
-  Theme.findById(themeId)
-    .then((theme) => {
-      let readings;
-      if (theme.readings.length > 0) {
-        const historical = theme.readings.filter((reading) => {
-          return reading.category == "Historical";
-        });
-
-        const prophetical = theme.readings.filter((reading) => {
-          return reading.category == "Prophetical";
-        });
-
-        const epistle = theme.readings.filter((reading) => {
-          return reading.category == "Epistle";
-        });
-
-        const gospel = theme.readings.filter((reading) => {
-          return reading.category == "Gospel";
-        });
-
-        // create a copy of all the readings
-        readings = {
-          historical: historical,
-          prophetical: prophetical,
-          epistle: epistle,
-          gospel: gospel,
-        };
-      } else {
-        readings = undefined;
-      }
-
-      res.render("admin/add-readings", {
-        theme: theme,
-        readings: readings,
-        path: "/readings",
-        pageTitle: "Readings List",
-        votedReadings: req.user.votedReadingIds,
+  try {
+    const theme = await Theme.findById(themeId);
+    let readings;
+    if (theme.readings.length > 0) {
+      const historical = theme.readings.filter((reading) => {
+        return reading.category == "Historical";
       });
-    })
-    .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
+
+      const prophetical = theme.readings.filter((reading) => {
+        return reading.category == "Prophetical";
+      });
+
+      const epistle = theme.readings.filter((reading) => {
+        return reading.category == "Epistle";
+      });
+
+      const gospel = theme.readings.filter((reading) => {
+        return reading.category == "Gospel";
+      });
+
+      // create a copy of all the readings
+      readings = {
+        historical: historical,
+        prophetical: prophetical,
+        epistle: epistle,
+        gospel: gospel,
+      };
+    } else {
+      readings = undefined;
+    }
+
+    res.render("admin/add-readings", {
+      theme: theme,
+      readings: readings,
+      path: "/readings",
+      pageTitle: "Readings List",
+      votedReadings: req.user.votedReadingIds,
     });
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
 };
 
-exports.postAddReading = (req, res, next) => {
+exports.postAddReading = async (req, res, next) => {
   const word = req.body.reading;
   const category = req.body.category;
   let initialVote = 0;
@@ -267,47 +262,43 @@ exports.postAddReading = (req, res, next) => {
     return res.redirect("/admin/themes");
   }
 
-  Theme.findById(themeId)
-    // .select("readings -_id")
-    .then((theme) => {
-      theme.readings.push({
-        reading: word,
-        category: category,
-        voteCount: initialVote,
-      });
-      return theme.save();
-    })
-    .then(() => {
-      req.flash("success", "Reading added successfully!");
-      res.redirect(`/admin/add-readings/${themeId}`);
-    })
-    .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
+  try {
+    const theme = await Theme.findById(themeId);
+
+    theme.readings.push({
+      reading: word,
+      category: category,
+      voteCount: initialVote,
     });
+    await theme.save();
+
+    req.flash("success", "Reading added successfully!");
+    res.redirect(`/admin/add-readings/${themeId}`);
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
 };
 
-exports.deleteReading = (req, res, next) => {
+exports.deleteReading = async (req, res, next) => {
   const themeId = req.params.themeId;
   const readingId = req.header("X-Request-ID");
 
-  Theme.findById(themeId)
-    .then((theme) => {
-      // need to assign to a new variable to get the return result thru filter method.
-      const updatedReadings = theme.readings.filter((reading) => {
-        return reading._id.toString() !== readingId.toString();
-      });
+  try {
+    const theme = await Theme.findById(themeId);
 
-      console.log(updatedReadings);
-
-      theme.readings = updatedReadings;
-      return theme.save();
-    })
-    .then(() => {
-      res.status(200).json({ message: "Success deleting reading" });
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Deleting reading failed!" });
+    // need to assign to a new variable to get the return result thru filter method.
+    const updatedReadings = theme.readings.filter((reading) => {
+      return reading._id.toString() !== readingId.toString();
     });
+
+    console.log(updatedReadings);
+
+    theme.readings = updatedReadings;
+    await theme.save();
+    res.status(200).json({ message: "Success deleting reading" });
+  } catch (err) {
+    res.status(500).json({ message: "Deleting reading failed!" });
+  }
 };

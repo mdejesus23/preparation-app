@@ -78,92 +78,84 @@ exports.getReadings = async (req, res, next) => {
   }
 };
 
-exports.voteReading = (req, res, next) => {
+exports.voteReading = async (req, res, next) => {
   const themeId = req.params.themeId;
   const readingId = req.header("X-Request-ID");
 
-  Theme.findById(themeId)
-    .then((theme) => {
-      const reading = theme.readings.id({ _id: readingId });
+  try {
+    const theme = await Theme.findById(themeId);
 
-      req.user
-        .voteReading(reading)
-        .then((user) => {
-          // add/minus vote count in the theme collection
-          if (user.votedReadingIds.includes(readingId)) {
-            reading.voteCount += 1;
-          } else {
-            reading.voteCount -= 1;
-          }
-          return theme.save();
-        })
-        .catch((err) => {
-          console.log(err);
-          res.redirect(`/readings/${themeId}`);
-        });
-    })
-    .then(() => {
-      res.status(200).json({ message: "Vote counted" });
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Voting failed" });
-    });
+    const reading = theme.readings.id({ _id: readingId });
+
+    const user = await req.user.voteReading(reading);
+    // add/minus vote count in the theme collection
+    if (user.votedReadingIds.includes(readingId)) {
+      reading.voteCount += 1;
+    } else {
+      reading.voteCount -= 1;
+    }
+    await theme.save();
+
+    res.status(200).json({ message: "Vote counted" });
+  } catch (err) {
+    res.status(500).json({ message: "Voting failed" });
+  }
 };
 
-exports.getConsolidatedReadings = (req, res, next) => {
+exports.getConsolidatedReadings = async (req, res, next) => {
   const themeId = req.params.themeId;
 
-  Theme.findById(themeId)
-    .then((theme) => {
-      let readings;
+  try {
+    const theme = await Theme.findById(themeId);
 
-      if (theme.readings.length > 0) {
-        let historical = theme.readings
-          .filter((reading) => {
-            return reading.category == "Historical";
-          })
-          .sort((a, b) => b.voteCount - a.voteCount);
+    let readings;
 
-        let prophetical = theme.readings
-          .filter((reading) => {
-            return reading.category == "Prophetical";
-          })
-          .sort((a, b) => b.voteCount - a.voteCount);
+    if (theme.readings.length > 0) {
+      let historical = theme.readings
+        .filter((reading) => {
+          return reading.category == "Historical";
+        })
+        .sort((a, b) => b.voteCount - a.voteCount);
 
-        let epistle = theme.readings
-          .filter((reading) => {
-            return reading.category == "Epistle";
-          })
-          .sort((a, b) => b.voteCount - a.voteCount);
+      let prophetical = theme.readings
+        .filter((reading) => {
+          return reading.category == "Prophetical";
+        })
+        .sort((a, b) => b.voteCount - a.voteCount);
 
-        let gospel = theme.readings
-          .filter((reading) => {
-            return reading.category == "Gospel";
-          })
-          .sort((a, b) => b.voteCount - a.voteCount);
+      let epistle = theme.readings
+        .filter((reading) => {
+          return reading.category == "Epistle";
+        })
+        .sort((a, b) => b.voteCount - a.voteCount);
 
-        // create a copy of all the readings
-        readings = {
-          historical: historical,
-          prophetical: prophetical,
-          epistle: epistle,
-          gospel: gospel,
-        };
-      } else {
-        readings = undefined;
-      }
+      let gospel = theme.readings
+        .filter((reading) => {
+          return reading.category == "Gospel";
+        })
+        .sort((a, b) => b.voteCount - a.voteCount);
 
-      res.render("preparation/consolidated", {
-        theme: theme,
-        readings: readings,
-        path: "/readings",
-        pageTitle: "Consolidated List",
-        votedReadings: req.user.votedReadingIds,
-      });
-    })
-    .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
+      // create a copy of all the readings
+      readings = {
+        historical: historical,
+        prophetical: prophetical,
+        epistle: epistle,
+        gospel: gospel,
+      };
+    } else {
+      readings = undefined;
+    }
+
+    res.render("preparation/consolidated", {
+      theme: theme,
+      readings: readings,
+      path: "/readings",
+      pageTitle: "Consolidated List",
+      votedReadings: req.user.votedReadingIds,
     });
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
 };

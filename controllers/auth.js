@@ -8,7 +8,6 @@ const sendgridTransport = require("nodemailer-sendgrid-transport");
 const { validationResult } = require("express-validator");
 
 const User = require("../models/user");
-const user = require("../models/user");
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
@@ -59,7 +58,7 @@ exports.getSignup = (req, res, next) => {
   });
 };
 
-exports.postLogin = (req, res, next) => {
+exports.postLogin = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -77,53 +76,45 @@ exports.postLogin = (req, res, next) => {
     });
   }
 
-  User.findOne({ email: email })
-    .then((user) => {
-      // if the user email is not find. means the user email not yet registered.
-      if (!user) {
-        req.flash("error", "Invalid email");
-        return res.redirect("/login");
-      }
+  try {
+    const user = await User.findOne({ email: email });
+    // if the user email is not find. means the user email not yet registered.
+    if (!user) {
+      req.flash("error", "Invalid email");
+      return res.redirect("/login");
+    }
 
-      bcrypt
-        .compare(password, user.password)
-        .then((doMatch) => {
-          // doMatch will have value of true or false
-          if (doMatch) {
-            req.session.user = user;
-            req.session.isLoggedIn = true;
-            return req.session.save((err) => {
-              console.log(err);
-              res.redirect("/");
-            });
-          }
+    const doMatch = await bcrypt.compare(password, user.password);
+    // doMatch will have value of true or false
+    if (doMatch) {
+      req.session.user = user;
+      req.session.isLoggedIn = true;
+      return req.session.save((err) => {
+        console.log(err);
+        res.redirect("/");
+      });
+    }
 
-          // if password didn't match
-          // req.flash("error", "Invalid email or password"); // takes a key 1st arg. and then the message.
-          res.status(422).render("auth/login", {
-            path: "/login",
-            pageTitle: "Login",
-            errorMessage: "Invalid email or password",
-            prevInput: {
-              email: email,
-              password: password,
-            },
-            validationErrors: [],
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          res.redirect("login");
-        });
-    })
-    .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
+    // if password didn't match
+    // req.flash("error", "Invalid email or password"); // takes a key 1st arg. and then the message.
+    res.status(422).render("auth/login", {
+      path: "/login",
+      pageTitle: "Login",
+      errorMessage: "Invalid email or password",
+      prevInput: {
+        email: email,
+        password: password,
+      },
+      validationErrors: [],
     });
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
 };
 
-exports.postSignup = (req, res, next) => {
+exports.postSignup = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
@@ -146,43 +137,41 @@ exports.postSignup = (req, res, next) => {
     });
   }
 
-  bcrypt
-    .hash(password, 12)
-    .then((hashedPassword) => {
-      const user = new User({
-        email: email,
-        password: hashedPassword,
-        votedReadings: [],
-      });
-      return user.save();
-    })
-    .then((result) => {
-      // req.flash("success", "Signup successfully!");
-      // res.redirect("/signup");
-      res.render("auth/signup", {
-        path: "/signup",
-        pageTitle: "Signup",
-        errorMessage: null,
-        successMessage: "Signup successfully!",
-        prevInput: {
-          email: "",
-          password: "",
-          confirmPassword: "",
-        },
-        validationErrors: [],
-      });
-      return transporter.sendMail({
-        to: email,
-        from: "dejesusmelnard@gmail.com",
-        subject: "Signup Succeeded",
-        html: "<h1>You successfully signed up</h1>",
-      });
-    })
-    .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
+  try {
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    const user = new User({
+      email: email,
+      password: hashedPassword,
+      votedReadings: [],
     });
+    await user.save();
+
+    // req.flash("success", "Signup successfully!");
+    // res.redirect("/signup");
+    res.render("auth/signup", {
+      path: "/signup",
+      pageTitle: "Signup",
+      errorMessage: null,
+      successMessage: "Signup successfully!",
+      prevInput: {
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
+      validationErrors: [],
+    });
+    return transporter.sendMail({
+      to: email,
+      from: "dejesusmelnard@gmail.com",
+      subject: "Signup Succeeded",
+      html: "<h1>You successfully signed up</h1>",
+    });
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
 };
 
 exports.postLogout = (req, res, next) => {
@@ -249,61 +238,62 @@ exports.postResetPassword = (req, res, next) => {
   });
 };
 
-exports.getNewPassword = (req, res, next) => {
+exports.getNewPassword = async (req, res, next) => {
   const token = req.params.token;
-
-  User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
-    .then((user) => {
-      if (message.length > 0) {
-        message = message[0];
-      } else {
-        message = null;
-      }
-
-      res.render("auth/new-password", {
-        path: "/new-password",
-        pageTitle: "New Password",
-        errorMessage: message,
-        userId: user._id.toString(), // we can get user data because of the middleware in the app.js which assign user.
-        passwordToken: token,
-      });
-    })
-    .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
-    });
-  //
   let message = req.flash("error");
+
+  try {
+    const user = await User.findOne({
+      resetToken: token,
+      resetTokenExpiration: { $gt: Date.now() },
+    });
+
+    if (message.length > 0) {
+      message = message[0];
+    } else {
+      message = null;
+    }
+
+    res.render("auth/new-password", {
+      path: "/new-password",
+      pageTitle: "New Password",
+      errorMessage: message,
+      userId: user._id.toString(), // we can get user data because of the middleware in the app.js which assign user.
+      passwordToken: token,
+    });
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
+  //
 };
 
-exports.postNewPassword = (req, res, next) => {
+exports.postNewPassword = async (req, res, next) => {
   const newPassword = req.body.password;
   const userId = req.body.userId;
   const passwordToken = req.body.passwordToken;
   let resetUser;
 
-  User.findOne({
-    _id: userId,
-    resetToken: passwordToken,
-    resetTokenExpiration: { $gt: Date.now() },
-  })
-    .then((user) => {
-      resetUser = user;
-      return bcrypt.hash(newPassword, 12);
-    })
-    .then((hashedPassword) => {
-      resetUser.password = hashedPassword;
-      resetUser.resetToken = undefined;
-      resetUser.resetTokenExpiration = undefined;
-      resetUser.save();
-    })
-    .then((result) => {
-      res.redirect("/login");
-    })
-    .catch((err) => {
-      const error = new Error(err); // create an error object.
-      error.httpStatusCode = 500; // set error object property
-      return next(error);
+  try {
+    const user = await User.findOne({
+      _id: userId,
+      resetToken: passwordToken,
+      resetTokenExpiration: { $gt: Date.now() },
     });
+
+    resetUser = user;
+    const hashedPassword = await bcrypt.hash(newPassword, 12);
+
+    resetUser.password = hashedPassword;
+    resetUser.resetToken = undefined;
+    resetUser.resetTokenExpiration = undefined;
+    await resetUser.save();
+
+    res.redirect("/login");
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
 };

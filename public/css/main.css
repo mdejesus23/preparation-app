@@ -269,7 +269,6 @@ li {
   width: 50%;
   text-align: center;
   margin: 2rem auto 0 auto;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 1rem;
   border-radius: 1.5rem;
 }
@@ -281,7 +280,6 @@ li {
   text-decoration: none;
   margin: 0 0.6rem;
   padding: 0.8rem;
-  border-radius: 50%;
 }
 
 .pagination a:hover,

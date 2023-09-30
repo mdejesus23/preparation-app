@@ -2,12 +2,24 @@
   <link rel="stylesheet" href="/css/user.css" />
   <link rel="stylesheet" href="/css/themes.css" />
   <link rel="stylesheet" href="/css/forms.css" />
+  <link rel="stylesheet" href="/css/modal.css" />
+
 </head>
 
 <body>
   <%- include('../includes/navigation.ejs') %>
 
   <main>
+    <div id="backdrop" class="modal-backdrop">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Are you sure you want to delete this theme?</p>
+        <div class="modal-control">
+          <button>Yes</button>
+          <button>Cancel</button>
+        </div>
+      </div>
+    </div>
     <% if (errorMessage) { %>
         <div class="user-message user-message--error"><%= errorMessage %></div>
     <% } else if (successMessage) { %>
