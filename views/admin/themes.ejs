@@ -8,18 +8,19 @@
 
 <body>
   <%- include('../includes/navigation.ejs') %>
-
-  <main>
-    <div id="backdrop" class="modal-backdrop">
-      <div class="modal-content">
-        <span class="close">&times;</span>
-        <p>Are you sure you want to delete this theme?</p>
-        <div class="modal-control">
-          <button>Yes</button>
-          <button>Cancel</button>
-        </div>
+  <div onclick="closeModal()" id="backdrop" class="modal-backdrop">
+    <div class="modal-content">
+      <span onclick="closeModal()" class="close">&times;</span>
+      <p>Are you sure you want to delete this theme?</p>
+      <div class="modal-control">
+        <button class="btn" onclick="deleteTheme()">Yes</button>
+        <button class="btn">Cancel</button>
       </div>
     </div>
+  </div>
+
+  <main>
+    
     <% if (errorMessage) { %>
         <div class="user-message user-message--error"><%= errorMessage %></div>
     <% } else if (successMessage) { %>
@@ -28,10 +29,13 @@
 
     <% if (themes.length > 0) { %>
     <h1 class="themes-header">Themes</h1>
+    
 
     <div class="grid">
       <% themes.forEach((theme) => { %>
         <article class="card theme-item">
+          <!--modal-->
+            
             <header class="card-header">
                 <h2 class="theme-title"><%= theme.title %></h2>
             </header>
@@ -44,9 +48,9 @@
             <div class="card-actions">
                     <div class="form-control">
                         <a href="/admin/edit-theme/<%= theme._id%>?edit=true" class="btn">Edit</a>
-                        <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-                        <input type="hidden" name="themeId" value="<%= theme._id%>" />
-                        <button onclick="deleteTheme(this)" class="btn" type="button">Delete</button>
+                        <input type="hidden" id="csrfToken" name="csrfToken" value="<%= csrfToken%>" />
+                        <input type="hidden" id="themeId" name="themeId" value="<%= theme._id%>" />
+                        <button class="btn" onclick="showModal(this)">Delete</button>
                     </div>
                 <a href="/admin/add-readings/<%= theme._id%>" class="btn">Add Readings</a>
             </div>

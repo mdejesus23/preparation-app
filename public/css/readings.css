@@ -4,8 +4,23 @@ h3 {
   text-align: center;
 }
 
-/* add readings form */
-.reading-form {
+.category-nav {
+  display: none;
+  justify-content: center;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category-list li {
+  list-style: none;
+  margin: 0;
+  padding: 0.6rem 1rem;
+  cursor: pointer;
 }
 
 .reading-form .form-control {
@@ -44,7 +59,7 @@ label {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-  
+
   /* margin-bottom: 5px; */
 }
 
@@ -76,6 +91,14 @@ label {
 }
 
 @media (max-width: 768px) {
+  .category-nav {
+    display: flex;
+  }
+
+  .category-list li {
+    padding: 0.5rem 0.7rem;
+  }
+
   .grid-readings {
     display: grid;
     grid-template-columns: 1fr;

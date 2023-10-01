@@ -58,16 +58,7 @@
 .modal-control button:first-child {
   background-color: red;
   color: white;
-}
-
-.modal-control button {
-  width: 100px;
-  font: inherit;
-  padding: 0.25rem 1rem;
-  background: white;
-  border-radius: 3px;
-  cursor: pointer;
-  border: 1px solid black;
+  margin-right: 1rem;
 }
 
 .modal-control button:hover,
@@ -83,5 +74,19 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+  }
+
+  .modal-control {
+    width: 60%;
+  }
+
+  .modal-control button:first-child {
+    margin-right: 0.7rem;
   }
 }

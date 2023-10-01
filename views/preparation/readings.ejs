@@ -11,9 +11,20 @@
         <h1>No readings found!</h1>
       <% } else {  %>
       <h1 class="theme-header"><%= theme.title%></h1>
+
+      <nav class="category-nav">
+        <ul class="category-list">
+          <li class="btn">All</li>
+          <li class="btn">Historical</li>
+          <li class="btn">Prophetical</li>
+          <li class="btn">Epistle</li>
+          <li class="btn">Gospel</li>
+        </ul>
+      </nav>
+      
       <div class="grid-readings">
         <% if (readings.historical) { %>
-        <ul class="readings-columns">
+        <ul id="h1" class="readings-columns">
           <h2 class="category-header">Historical</h2>
           <% readings.historical.forEach(reading => { %>
             <li class="flex <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
@@ -27,7 +38,7 @@
         </ul>
         <% } %>
         <% if (readings.prophetical) { %>
-        <ul class="readings-columns">
+        <ul id="p1" class="readings-columns">
           <h2 class="category-header">Prophetical</h2>
           <% readings.prophetical.forEach(reading => { %>
             <li class="flex <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
@@ -41,7 +52,7 @@
         </ul>
         <% } %>
         <% if (readings.epistle) { %>
-        <ul class="readings-columns">
+        <ul id="e1" class="readings-columns">
           <h2 class="category-header">Epistle</h2>
           <% readings.epistle.forEach(reading => { %>
             <li class="flex <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
@@ -55,7 +66,7 @@
         </ul>
         <% } %>
         <% if (readings.gospel) { %>
-        <ul class="readings-columns">
+        <ul id="g1" class="readings-columns">
           <h2>Gospel</h2>
           <% readings.gospel.forEach(reading => { %>
             <li class="flex <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">

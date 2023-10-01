@@ -1,10 +1,26 @@
-const deleteTheme = (button) => {
-  const themeId = button.parentNode.querySelector("[name=themeId]").value;
-  const csrf = button.parentNode.querySelector("[name=csrfToken]").value;
+let themeElement;
+let themeId;
+let csrf;
 
-  console.log(csrf);
+//modal element
+const modalBackdrop = document.getElementById("backdrop");
 
-  const themeElement = button.closest("article");
+const showModal = (button) => {
+  modalBackdrop.style.display = "flex";
+
+  themeElement = button.closest("article");
+  themeId = themeElement.querySelector("#themeId").value;
+  csrf = themeElement.querySelector("#csrfToken").value;
+};
+
+const closeModal = () => {
+  modalBackdrop.style.display = "none";
+};
+
+const deleteTheme = () => {
+  // const themeElement = button.closest("article");
+  // const themeId = themeElement.querySelector("#themeId").value;
+  // const csrf = themeElement.querySelector("#csrfToken").value;
 
   const url = "/admin/theme/" + themeId;
 
@@ -21,7 +37,7 @@ const deleteTheme = (button) => {
     })
     .then((data) => {
       console.log(data);
-      themeElement.parentNode.removeChild(themeElement);
+      themeElement.remove(); // remove themeElement in the DOM
     })
     .catch((err) => {
       console.log(err);
