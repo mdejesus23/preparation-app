@@ -1,0 +1,20 @@
+.final-reading-control {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-result {
+  margin: 1rem auto;
+  text-align: center;
+}
+
+.result-form {
+  display: none;
+  width: 80%;
+}
+
+.add-result-control input {
+  width: 100%;
+}

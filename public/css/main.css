@@ -74,6 +74,10 @@ li {
   padding: 0;
 }
 
+.username {
+  color: white;
+}
+
 .main-header__item a,
 .main-header__item button {
   font: inherit;
