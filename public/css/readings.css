@@ -47,6 +47,7 @@ label {
 }
 
 .readings-columns {
+  position: relative;
   border: 1px solid black;
   margin: 0;
   padding: 0.25rem;
@@ -59,8 +60,7 @@ label {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-
-  /* margin-bottom: 5px; */
+  border-radius: 10px;
 }
 
 .flex p {
@@ -69,10 +69,8 @@ label {
 
 .vote-count {
   display: inline;
-  padding: 3px 5px;
-  border-radius: 40%;
-  background-color: red;
-  color: white;
+  color: var(--vote-count-color);
+  font-weight: bold;
 }
 
 .consolidated-form {

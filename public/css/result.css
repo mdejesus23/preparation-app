@@ -1,0 +1,18 @@
+.result-item {
+  padding: 1rem;
+  margin: 1.5rem 0;
+}
+
+.result-content {
+  display: flex;
+  border: 1px solid black;
+  padding: 0.5rem;
+}
+
+.result-content p {
+}
+
+.result-content p:first-child {
+  font-weight: bold;
+  margin-right: 1.5rem;
+}

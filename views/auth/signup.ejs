@@ -23,6 +23,18 @@
                     value="<%= prevInput.email%>"
                 >
             </div>
+
+            <div class="form-control">
+                <label for="username">Username</label>
+                <input 
+                    class="<%= validationErrors.find(err => err.path === 'username') ? 'invalid' : ''%>" 
+                    type="username" 
+                    name="username" 
+                    id="username" 
+                    value="<%= prevInput.username%>"
+                >
+            </div>
+
             <div class="form-control">
                 <label for="password">Password</label>
                 <input 
@@ -33,6 +45,7 @@
                     value="<%= prevInput.password%>"
                 >
             </div>
+            
             <div class="form-control">
                 <label for="confirmPassword">Confirm Password</label>
                 <input

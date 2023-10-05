@@ -52,6 +52,7 @@ exports.getSignup = (req, res, next) => {
     prevInput: {
       email: "",
       password: "",
+      username: "",
       confirmPassword: "",
     },
     validationErrors: [],
@@ -61,6 +62,7 @@ exports.getSignup = (req, res, next) => {
 exports.postLogin = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
+  const username = req.body.username;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -71,6 +73,7 @@ exports.postLogin = async (req, res, next) => {
       prevInput: {
         email: email,
         password: password,
+        username: username,
       },
       validationErrors: errors.array(),
     });
@@ -116,6 +119,7 @@ exports.postLogin = async (req, res, next) => {
 
 exports.postSignup = async (req, res, next) => {
   const email = req.body.email;
+  const username = req.body.username;
   const password = req.body.password;
   const confirmPassword = req.body.confirmPassword;
 
@@ -130,6 +134,7 @@ exports.postSignup = async (req, res, next) => {
       successMessage: null,
       prevInput: {
         email: email,
+        username: username,
         password: password,
         confirmPassword: confirmPassword,
       },
@@ -142,6 +147,7 @@ exports.postSignup = async (req, res, next) => {
 
     const user = new User({
       email: email,
+      username: username,
       password: hashedPassword,
       votedReadings: [],
     });
@@ -156,6 +162,7 @@ exports.postSignup = async (req, res, next) => {
       successMessage: "Signup successfully!",
       prevInput: {
         email: "",
+        username: "",
         password: "",
         confirmPassword: "",
       },

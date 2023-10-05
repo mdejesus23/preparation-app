@@ -1,5 +1,6 @@
 const Theme = require("../models/themes");
 const Result = require("../models/result");
+const User = require("../models/user");
 
 const { validationResult } = require("express-validator");
 
@@ -107,6 +108,16 @@ exports.voteReading = async (req, res, next) => {
 
 exports.getConsolidatedReadings = async (req, res, next) => {
   const themeId = req.params.themeId;
+  const themeTitle = req.body.themeTitle;
+  const entranceSong = req.body.entranceSong;
+  const firstReading = req.body.firstReading;
+  const firstPsalm = req.body.firstPsalm;
+  const secondReading = req.body.secondReading;
+  const secondPsalm = req.body.secondPsalm;
+  const thirdReading = req.body.thirdReading;
+  const thirdPsalm = req.body.thirdPsalm;
+  const gospelReading = req.body.gospelReading;
+  const finalSong = req.body.finalSong;
 
   try {
     const theme = await Theme.findById(themeId);
@@ -155,8 +166,20 @@ exports.getConsolidatedReadings = async (req, res, next) => {
       path: "/readings",
       pageTitle: "Consolidated List",
       votedReadings: req.user.votedReadingIds,
+      hasError: false,
       errorMessage: "",
       validationErrors: [],
+      result: {
+        entranceSong,
+        firstReading,
+        firstPsalm,
+        secondReading,
+        secondPsalm,
+        thirdReading,
+        thirdPsalm,
+        gospelReading,
+        finalSong,
+      },
     });
   } catch (err) {
     const error = new Error(err); // create an error object.
@@ -183,13 +206,13 @@ exports.getResult = async (req, res, next) => {
 exports.postAddResult = async (req, res, next) => {
   const themeId = req.body.themeId;
   const themeTitle = req.body.themeTitle;
-  const entranceSong = req.body.eSong;
+  const entranceSong = req.body.entranceSong;
   const firstReading = req.body.firstReading;
   const firstPsalm = req.body.firstPsalm;
   const secondReading = req.body.secondReading;
   const secondPsalm = req.body.secondPsalm;
   const thirdReading = req.body.thirdReading;
-  const thirdPsalm = req.body.psalm - 3;
+  const thirdPsalm = req.body.thirdPsalm;
   const gospelReading = req.body.gospelReading;
   const finalSong = req.body.finalSong;
 
@@ -243,8 +266,44 @@ exports.postAddResult = async (req, res, next) => {
         votedReadings: req.user.votedReadingIds,
         errorMessage: errors.array()[0].msg,
         validationErrors: errors.array(),
+        hasError: true,
+        result: {
+          entranceSong,
+          firstReading,
+          firstPsalm,
+          secondReading,
+          secondPsalm,
+          thirdReading,
+          thirdPsalm,
+          gospelReading,
+          finalSong,
+        },
       });
     }
+
+    const result = new Result({
+      title: themeTitle,
+      entranceSong,
+      firstReading,
+      firstPsalm,
+      secondReading,
+      secondPsalm,
+      thirdReading,
+      thirdPsalm,
+      gospel: gospelReading,
+      finalSong,
+      userId: req.user._id,
+    });
+
+    await result.save();
+    const user = await User.findById(req.user._id);
+    console.log(user);
+
+    // reset user votedReadings record
+    user.votedReadings = [];
+    await user.save();
+
+    res.redirect("/results");
   } catch (err) {
     const error = new Error(err); // create an error object.
     error.httpStatusCode = 500; // set error object property

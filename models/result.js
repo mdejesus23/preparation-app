@@ -48,6 +48,10 @@ const resultSchema = new Schema({
     ref: "User",
     required: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now, // This sets the default value to the current date and time
+  },
 });
 
 module.exports = mongoose.model("Result", resultSchema);

@@ -36,7 +36,8 @@
             <input class="<%= validationErrors.find(err => err.path === 'entranceSong') ? 'invalid' : ''%>"
              type="text" 
              name="entranceSong" 
-             id="entranceSong" />
+             id="entranceSong"
+             value="<% if (hasError) { %><%= result.entranceSong%><% } %>" />
           </div>
           <!-- first reading -->
           <div class="form-control add-result-control">
@@ -44,15 +45,17 @@
               <input class="<%= validationErrors.find(err => err.path === 'firstReading') ? 'invalid' : ''%>"
               type="text" 
               name="firstReading" 
-              id="firstReading" />
+              id="firstReading"
+              value="<% if (hasError) { %><%= result.firstReading%><% } %>" />
           </div>
           <!-- psalm 1 -->
           <div class="form-control add-result-control">
-            <label for="firstPsalm">Entrance Song</label>
+            <label for="firstPsalm">1st psalm</label>
             <input class="<%= validationErrors.find(err => err.path === 'firstPsalm') ? 'invalid' : ''%>"
             type="text"
             name="firstPsalm" 
-            id="firstPsalm" />
+            id="firstPsalm"
+            value="<% if (hasError) { %><%= result.firstPsalm%><% } %>" />
           </div>
           <!-- second reading -->
           <div class="form-control add-result-control">
@@ -60,15 +63,17 @@
             <input class="<%= validationErrors.find(err => err.path === 'secondReading') ? 'invalid' : ''%>"
             type="text" 
             name="secondReading" 
-            id="secondReading" />
+            id="secondReading"
+            value="<% if (hasError) { %><%= result.secondReading%><% } %>" />
           </div>
           <!-- psalm 2 -->
           <div class="form-control add-result-control">
-            <label for="secondPsalm">Entrance Song</label>
+            <label for="secondPsalm">2nd psalm</label>
             <input class="<%= validationErrors.find(err => err.path === 'secondPsalm') ? 'invalid' : ''%>"
               type="text" 
               name="secondPsalm" 
-              id="secondPsalm" />
+              id="secondPsalm"
+              value="<% if (hasError) { %><%= result.secondPsalm%><% } %>" />
           </div>
           <!-- third reading -->
           <div class="form-control add-result-control">
@@ -76,15 +81,17 @@
             <input class="<%= validationErrors.find(err => err.path === 'thirdReading') ? 'invalid' : ''%>"
              type="text" 
              name="thirdReading" 
-             id="thirdReading" />
+             id="thirdReading"
+             value="<% if (hasError) { %><%= result.thirdReading%><% } %>"  />
           </div>
           <!-- psalm 3 -->
           <div class="form-control add-result-control">
-            <label for="thirdPsalm">Third Psalm</label>
+            <label for="thirdPsalm">3rd Psalm</label>
             <input class="<%= validationErrors.find(err => err.path === 'thirdPsalm') ? 'invalid' : ''%>"
              type="text" 
              name="thirdPsalm" 
-             id="thirdPsalm" />
+             id="thirdPsalm"
+             value="<% if (hasError) { %><%= result.thirdPsalm%><% } %>"  />
           </div>
           <!-- gopel reading -->
           <div class="form-control add-result-control">
@@ -92,7 +99,8 @@
             <input class="<%= validationErrors.find(err => err.path === 'gospelReading') ? 'invalid' : ''%>"
                type="text" 
                name="gospelReading" 
-               id="gospelReading" />
+               id="gospelReading"
+               value="<% if (hasError) { %><%= result.gospelReading%><% } %>" />
           </div>
 
           <!-- final song -->
@@ -101,7 +109,8 @@
             <input class="<%= validationErrors.find(err => err.path === 'finalSong') ? 'invalid' : ''%>"
              type="text" 
              name="finalSong" 
-             id="finalSong" />
+             id="finalSong"
+             value="<% if (hasError) { %><%= result.finalSong%><% } %>" />
           </div>
           <input type="hidden" name="themeId" value="<%= theme._id%>" />
           <input type="hidden" name="themeTitle" value="<%= theme.title%>" />
@@ -117,6 +126,7 @@
         <% if (readings.historical) { %>
         <ul id="h1" class="readings-columns">
           <h2 class="category-header">Historical</h2>
+          <spam class="first-popup">Picked first reading.</spam>
           <% readings.historical.forEach(reading => { %>
             <li class="flex reading-1 <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
               <p class="<%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>"><%= reading.reading%></p>
@@ -128,6 +138,8 @@
         <% if (readings.prophetical) { %>
         <ul id="p1" class="readings-columns">
           <h2 class="category-header">Prophetical</h2>
+          <spam class="second-popup">Picked second reading.</spam>
+
           <% readings.prophetical.forEach(reading => { %>
             <li class="flex reading-2 <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
               <p class="<%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>"><%= reading.reading%></p>
@@ -139,6 +151,8 @@
         <% if (readings.epistle) { %>
         <ul id="e1" class="readings-columns">
           <h2 class="category-header">Epistle</h2>
+          <spam class="third-popup">Picked third reading.</spam>
+
           <% readings.epistle.forEach(reading => { %>
             <li class="flex reading-3 <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
               <p class="<%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>"><%= reading.reading%></p>
@@ -150,6 +164,8 @@
         <% if (readings.gospel) { %>
         <ul id="g1" class="readings-columns">
           <h2>Gospel</h2>
+          <spam class="gospel-popup">Picked gospel reading.</spam>
+
           <% readings.gospel.forEach(reading => { %>
             <li class="flex gospel <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
               <p class="<%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>"><%= reading.reading%></p>

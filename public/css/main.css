@@ -4,8 +4,10 @@
 :root {
   --primary-color: #2b7eb6;
   --secondary-color: #f5eca1fb;
-  --third-color: #40f01dfb;
+  --third-color: #8cfa76fb;
+  --fourth-color: rgb(240, 240, 240);
   --danger-color: red;
+  --vote-count-color: red;
 }
 
 * {

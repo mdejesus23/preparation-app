@@ -12,13 +12,46 @@ toggleShowForm.addEventListener("click", function () {
   }
 });
 
-const bumpAddResultBtn = () => {
-  const addResultButton = document.getElementById("add-result-button");
+// first reading popup message.
+const popupMessage = () => {
+  const popup = document.querySelector(".first-popup");
 
-  addResultButton.classList.add("bump");
+  popup.classList.add("show-popup");
   setTimeout(() => {
-    addResultButton.classList.remove("bump");
-  }, 300);
+    popup.classList.remove("show-popup");
+  }, 2000);
+};
+
+// second reading popup message.
+const secondReadingPopup = () => {
+  const popup = document.querySelector(".second-popup");
+
+  popup.classList.add("show-popup");
+  setTimeout(() => {
+    popup.classList.remove("show-popup");
+  }, 2000);
+};
+
+//  third reading popup message.
+const thirdReadingPopup = () => {
+  const popup = document.querySelector(".third-popup");
+
+  popup.classList.add("show-popup");
+  setTimeout(() => {
+    popup.classList.remove("show-popup");
+  }, 2000);
+};
+
+// gospel reading popup message.
+const gospelReadingPopup = () => {
+  const popup = document.querySelector(".gospel-popup");
+
+  console.log(popup);
+
+  popup.classList.add("show-popup");
+  setTimeout(() => {
+    popup.classList.remove("show-popup");
+  }, 2000);
 };
 
 const firstReadingList = document.querySelectorAll(".reading-1");
@@ -33,7 +66,7 @@ firstReadingList.forEach((rl) => {
     const firstReading = rl.querySelector("p"); // select p element inside li element
     readingInput.value = "";
     readingInput.value = firstReading.innerText;
-    bumpAddResultBtn();
+    popupMessage();
   });
 });
 
@@ -44,7 +77,7 @@ secondReadingList.forEach((rl) => {
     const secondReading = rl.querySelector("p");
     readingInput.value = "";
     readingInput.value = secondReading.innerText;
-    bumpAddResultBtn();
+    secondReadingPopup();
   });
 });
 
@@ -55,7 +88,7 @@ thirdReadingList.forEach((rl) => {
     const thirdReading = rl.querySelector("p");
     readingInput.value = "";
     readingInput.value = thirdReading.innerText;
-    bumpAddResultBtn();
+    thirdReadingPopup();
   });
 });
 
@@ -66,6 +99,6 @@ gospelReadingList.forEach((rl) => {
     const gospel = rl.querySelector("p");
     readingInput.value = "";
     readingInput.value = gospel.innerText;
-    bumpAddResultBtn();
+    gospelReadingPopup();
   });
 });

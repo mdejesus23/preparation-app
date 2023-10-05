@@ -1,7 +1,6 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/user.css" />
     <link rel="stylesheet" href="/css/themes.css" />
-    <link rel="stylesheet" href="/css/forms.css" />
+    <link rel="stylesheet" href="/css/result.css" />
   </head>
 
   <body>
@@ -10,7 +9,7 @@
 
   <main>
      <% if (results.length > 0) { %>
-    <h1 class="themes-header">Result</h1>
+    <h1 class="themes-header">Results</h1>
 
     <div class="grid">
       <% results.forEach((result) => { %>
@@ -19,42 +18,58 @@
                 <h2 class="theme-title"><%= result.title %></h2>
             </header>
 
-            <div class="card-content">
+            <div class="result-content">
+                <p>Preparation Date:</p>
+                <p class=""><%= result.createdAt%></p>
+            </div>
+
+            <div class="result-content">
+                <p>Entrance Song:</p>
                 <p class=""><%= result.entranceSong%></p>
             </div>
 
-            <div class="card-content">
-                <p class=""><%= result.first-reading%></p>
+            <div class="result-content">
+                <p>First reading:</p>
+                <p class=""><%= result.firstReading%></p>
             </div>
-            <div class="card-content">
+
+            <div class="result-content">
+                <p>First psalm:</p>
                 <p class=""><%= result.firstPsalm%></p>
             </div>
 
-            <div class="card-content">
-                <p class=""><%= result.second-reading%></p>
+            <div class="result-content">
+                <p>Second reading:</p>
+                <p class=""><%= result.secondReading%></p>
             </div>
-            <div class="card-content">
+
+            <div class="result-content">
+                <p>Second psalm:</p>
                 <p class=""><%= result.secondPsalm%></p>
             </div>
 
-            <div class="card-content">
-                <p class=""><%= result.third-reading%></p>
+            <div class="result-content">
+                <p>Third reading:</p>
+                <p class=""><%= result.thirdReading%></p>
             </div>
-            <div class="card-content">
+
+            <div class="result-content">
+                <p>Third psalm:</p>
                 <p class=""><%= result.thirdPsalm%></p>
             </div>
 
-            <div class="card-content">
-                <p class=""><%= result.gospel-reading%></p>
+            <div class="result-content">
+                <p>Gospel:</p>
+                <p class=""><%= result.gospel%></p>
             </div>
-            <div class="card-content">
+            <div class="result-content">
+                <p>Final Song:</p>
                 <p class=""><%= result.finalSong%></p>
             </div>
         </article>
 
       <% }) %>
     </div>
-    <%- include('../includes/pagination.ejs') %>
     <% } else { %>
         <h1>No Results Found!</h1>
     <% } %> 
