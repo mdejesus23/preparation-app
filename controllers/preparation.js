@@ -1,4 +1,7 @@
 const Theme = require("../models/themes");
+const Result = require("../models/result");
+
+const { validationResult } = require("express-validator");
 
 const ITEMS_PER_PAGE = 2;
 
@@ -152,7 +155,96 @@ exports.getConsolidatedReadings = async (req, res, next) => {
       path: "/readings",
       pageTitle: "Consolidated List",
       votedReadings: req.user.votedReadingIds,
+      errorMessage: "",
+      validationErrors: [],
     });
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
+};
+
+exports.getResult = async (req, res, next) => {
+  try {
+    const results = await Result.find({ userId: req.user._id });
+    res.render("preparation/result", {
+      results: results,
+      pageTitle: "Preparation Result",
+      path: "/result",
+    });
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error); // call next to proceeds to the next error handler middleware
+  }
+};
+
+exports.postAddResult = async (req, res, next) => {
+  const themeId = req.body.themeId;
+  const themeTitle = req.body.themeTitle;
+  const entranceSong = req.body.eSong;
+  const firstReading = req.body.firstReading;
+  const firstPsalm = req.body.firstPsalm;
+  const secondReading = req.body.secondReading;
+  const secondPsalm = req.body.secondPsalm;
+  const thirdReading = req.body.thirdReading;
+  const thirdPsalm = req.body.psalm - 3;
+  const gospelReading = req.body.gospelReading;
+  const finalSong = req.body.finalSong;
+
+  try {
+    const theme = await Theme.findById(themeId);
+    let readings;
+
+    if (theme.readings.length > 0) {
+      let historical = theme.readings
+        .filter((reading) => {
+          return reading.category == "Historical";
+        })
+        .sort((a, b) => b.voteCount - a.voteCount);
+
+      let prophetical = theme.readings
+        .filter((reading) => {
+          return reading.category == "Prophetical";
+        })
+        .sort((a, b) => b.voteCount - a.voteCount);
+
+      let epistle = theme.readings
+        .filter((reading) => {
+          return reading.category == "Epistle";
+        })
+        .sort((a, b) => b.voteCount - a.voteCount);
+
+      let gospel = theme.readings
+        .filter((reading) => {
+          return reading.category == "Gospel";
+        })
+        .sort((a, b) => b.voteCount - a.voteCount);
+
+      // create a copy of all the readings
+      readings = {
+        historical: historical,
+        prophetical: prophetical,
+        epistle: epistle,
+        gospel: gospel,
+      };
+    } else {
+      readings = undefined;
+    }
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).render("preparation/consolidated", {
+        theme: theme,
+        readings: readings,
+        path: "/readings",
+        pageTitle: "Consolidated List",
+        votedReadings: req.user.votedReadingIds,
+        errorMessage: errors.array()[0].msg,
+        validationErrors: errors.array(),
+      });
+    }
   } catch (err) {
     const error = new Error(err); // create an error object.
     error.httpStatusCode = 500; // set error object property

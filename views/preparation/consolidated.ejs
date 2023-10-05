@@ -11,6 +11,9 @@
       <% if (!readings) { %>
         <h1>No readings found!</h1>
       <% } else {  %>
+        <% if (errorMessage) { %>
+          <div class="user-message user-message--error"><%= errorMessage %></div>
+        <% } %>
       <h1 class="theme-header"><%= theme.title%></h1>
 
       <nav class="category-nav">
@@ -26,28 +29,82 @@
 
       <div class="final-reading-control">
           <button id="add-result-button" class="btn add-result">Add result</button>
-        <form id="add-result-form" class="reading-form result-form" action="/admin/add-readings/<%= theme._id%>" method="POST">
+        <form id="add-result-form" class="reading-form result-form" action="/results" method="POST">
+          <!-- entrance song -->
+          <div class="form-control add-result-control">
+            <label for="entranceSong">Entrance Song</label>
+            <input class="<%= validationErrors.find(err => err.path === 'entranceSong') ? 'invalid' : ''%>"
+             type="text" 
+             name="entranceSong" 
+             id="entranceSong" />
+          </div>
           <!-- first reading -->
           <div class="form-control add-result-control">
-              <label for="first-reading">1st reading</label>
-              <input type="text" name="first-reading" id="first-reading" />
+              <label for="firstReading">1st reading</label>
+              <input class="<%= validationErrors.find(err => err.path === 'firstReading') ? 'invalid' : ''%>"
+              type="text" 
+              name="firstReading" 
+              id="firstReading" />
+          </div>
+          <!-- psalm 1 -->
+          <div class="form-control add-result-control">
+            <label for="firstPsalm">Entrance Song</label>
+            <input class="<%= validationErrors.find(err => err.path === 'firstPsalm') ? 'invalid' : ''%>"
+            type="text"
+            name="firstPsalm" 
+            id="firstPsalm" />
           </div>
           <!-- second reading -->
           <div class="form-control add-result-control">
-            <label for="second-reading">2nd reading</label>
-            <input type="text" name="second-reading" id="second-reading" />
+            <label for="secondReading">2nd reading</label>
+            <input class="<%= validationErrors.find(err => err.path === 'secondReading') ? 'invalid' : ''%>"
+            type="text" 
+            name="secondReading" 
+            id="secondReading" />
+          </div>
+          <!-- psalm 2 -->
+          <div class="form-control add-result-control">
+            <label for="secondPsalm">Entrance Song</label>
+            <input class="<%= validationErrors.find(err => err.path === 'secondPsalm') ? 'invalid' : ''%>"
+              type="text" 
+              name="secondPsalm" 
+              id="secondPsalm" />
           </div>
           <!-- third reading -->
           <div class="form-control add-result-control">
-            <label for="third-reading">3rd reading</label>
-            <input type="text" name="third-reading" id="third-reading" />
+            <label for="thirdReading">3rd reading</label>
+            <input class="<%= validationErrors.find(err => err.path === 'thirdReading') ? 'invalid' : ''%>"
+             type="text" 
+             name="thirdReading" 
+             id="thirdReading" />
+          </div>
+          <!-- psalm 3 -->
+          <div class="form-control add-result-control">
+            <label for="thirdPsalm">Third Psalm</label>
+            <input class="<%= validationErrors.find(err => err.path === 'thirdPsalm') ? 'invalid' : ''%>"
+             type="text" 
+             name="thirdPsalm" 
+             id="thirdPsalm" />
           </div>
           <!-- gopel reading -->
           <div class="form-control add-result-control">
-            <label for="gospel-reading">Gospel</label>
-            <input type="text" name="gospel-reading" id="gospel-reading" />
+            <label for="gospelReading">Gospel</label>
+            <input class="<%= validationErrors.find(err => err.path === 'gospelReading') ? 'invalid' : ''%>"
+               type="text" 
+               name="gospelReading" 
+               id="gospelReading" />
           </div>
-  
+
+          <!-- final song -->
+          <div class="form-control add-result-control">
+            <label for="finalSong">Final Song</label>
+            <input class="<%= validationErrors.find(err => err.path === 'finalSong') ? 'invalid' : ''%>"
+             type="text" 
+             name="finalSong" 
+             id="finalSong" />
+          </div>
+          <input type="hidden" name="themeId" value="<%= theme._id%>" />
+          <input type="hidden" name="themeTitle" value="<%= theme.title%>" />
           <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
           <div class="form-control">
             <button class="btn" type="submit">Confirm</button>

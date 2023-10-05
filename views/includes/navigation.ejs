@@ -7,11 +7,15 @@
         <a class="<%= path === '/' ? 'active' : '' %>" href="/">Themes</a>
       </li>
       <% if (isAuthenticated) { %>
-      <!-- <li class="main-header__item">
-        <a class="<%= path === '/readings' ? 'active' : '' %>" href="/readings"
-          >Readings</a
+
+      <li class="main-header__item">
+        <a
+          class="<%= path === '/readings/result' ? 'active' : '' %>"
+          href="/results"
+          >Result</a
         >
-      </li> -->
+      </li>
+
       <li class="main-header__item">
         <a
           class="<%= path === '/admin/add-themes' ? 'active' : '' %>"
@@ -60,8 +64,10 @@
     </li>
     <% if (isAuthenticated) { %>
     <li class="mobile-nav__item">
-      <a class="<%= path === '/readings' ? 'active' : '' %>" href="/readings"
-        >Readings</a
+      <a
+        class="<%= path === '/readings/result' ? 'active' : '' %>"
+        href="/results"
+        >Result</a
       >
     </li>
     <li class="mobile-nav__item">
