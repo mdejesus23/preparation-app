@@ -2,12 +2,14 @@
 
 /* CSS variable definition */
 :root {
-  --primary-color: #2b7eb6;
+  --primary-color: rgb(44, 114, 89);
   --secondary-color: #f5eca1fb;
-  --third-color: #8cfa76fb;
+  --third-color: rgb(156, 156, 156);
   --fourth-color: rgb(240, 240, 240);
   --danger-color: red;
   --vote-count-color: red;
+  --primary-font-color: rgb(228, 223, 223);
+  --secondary-font-color: rgb(48, 46, 46);
 }
 
 * {
@@ -314,5 +316,9 @@ li {
 @media (max-width: 768px) {
   html {
     font-size: 12px;
+  }
+
+  .username {
+    color: black;
   }
 }

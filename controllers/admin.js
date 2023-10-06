@@ -11,6 +11,7 @@ exports.getAddTheme = (req, res, next) => {
     editing: false,
     hasError: false,
     errorMessage: null,
+    username: req.user.username,
     theme: {
       title: "",
       imageUrl: "",
@@ -55,6 +56,7 @@ exports.postAddTheme = async (req, res, next) => {
       editing: false,
       hasError: true,
       errorMessage: errors.array()[0].msg,
+      username: req.user.username,
       theme: {
         title: title,
         description: description,
@@ -102,6 +104,7 @@ exports.getEditTheme = async (req, res, next) => {
       theme: theme,
       errorMessage: null,
       validationErrors: [],
+      username: req.user.username,
     });
   } catch (er) {
     const error = new Error(err); // create an error object.
@@ -133,6 +136,7 @@ exports.getThemes = async (req, res, next) => {
       path: "/admin/themes",
       errorMessage: errMessage,
       successMessage: successMessage,
+      username: req.user.username,
     });
   } catch (err) {
     const error = new Error(err); // create an error object.
@@ -161,6 +165,7 @@ exports.postEditThemes = async (req, res, next) => {
         description: updatedDescription,
       },
       validationErrors: errors.array(),
+      username: req.user.username,
     });
   }
 
@@ -243,6 +248,7 @@ exports.getAddReading = async (req, res, next) => {
       path: "/readings",
       pageTitle: "Readings List",
       votedReadings: req.user.votedReadingIds,
+      username: req.user.username,
     });
   } catch (err) {
     const error = new Error(err); // create an error object.

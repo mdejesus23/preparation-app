@@ -1,0 +1,40 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.hero {
+  height: 95vh;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(212, 211, 211, 0.5),
+      rgba(48, 46, 46, 0.5)
+    ),
+    url(..//images/bible2.jpg);
+  background-size: cover;
+  background-position-x: 50%;
+  background-position-y: 50%;
+}
+
+.banner-container {
+  height: 100%;
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.banner-container h1 {
+  font-weight: 500;
+  font-size: 1.8rem;
+  text-align: center;
+  color: var(--primary-font-color);
+  line-height: 1.7;
+}
+
+.banner-container h2 {
+  color: rvar(--secondary-font-color);
+  font-size: 1.6rem;
+}

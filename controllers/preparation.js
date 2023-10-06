@@ -6,6 +6,14 @@ const { validationResult } = require("express-validator");
 
 const ITEMS_PER_PAGE = 2;
 
+exports.getHomePage = (req, res, next) => {
+  res.render("preparation/index", {
+    path: "/",
+    pageTitle: "Home",
+    username: req.user ? req.user.username : null,
+  });
+};
+
 exports.getThemes = async (req, res, next) => {
   const page = +req.query.page || 1; // if there is no query parameter the default value will be 1.
   let totalItems;
@@ -16,9 +24,9 @@ exports.getThemes = async (req, res, next) => {
     const themes = await Theme.find()
       .skip((page - 1) * ITEMS_PER_PAGE) // Skip the previous pages with the items per page.
       .limit(ITEMS_PER_PAGE); // Limit the result to the current page's items
-    res.render("preparation/index", {
+    res.render("preparation/themes", {
       themes: themes,
-      path: "/",
+      path: "/themes",
       pageTitle: "Themes List",
       currentPage: page,
       hasNextPage: ITEMS_PER_PAGE * page < totalItems, // true if the number of docs fetch is greater than ITEMS_PER_PAGE * page.
@@ -26,6 +34,7 @@ exports.getThemes = async (req, res, next) => {
       nextPage: page + 1,
       previousPage: page - 1,
       lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE), //  Math.ceil() increases the integer part of the number by 1 to round it up to the next higher integer.
+      username: req.user.username,
     });
   } catch (err) {
     const error = new Error(err); // create an error object.
@@ -74,6 +83,7 @@ exports.getReadings = async (req, res, next) => {
       path: "/readings",
       pageTitle: "Readings List",
       votedReadings: req.user.votedReadingIds,
+      username: req.user.username,
     });
   } catch (err) {
     const error = new Error(err); // create an error object.
@@ -169,6 +179,7 @@ exports.getConsolidatedReadings = async (req, res, next) => {
       hasError: false,
       errorMessage: "",
       validationErrors: [],
+      username: req.user.username,
       result: {
         entranceSong,
         firstReading,
@@ -195,6 +206,7 @@ exports.getResult = async (req, res, next) => {
       results: results,
       pageTitle: "Preparation Result",
       path: "/result",
+      username: req.user.username,
     });
   } catch (err) {
     const error = new Error(err); // create an error object.
@@ -267,6 +279,7 @@ exports.postAddResult = async (req, res, next) => {
         errorMessage: errors.array()[0].msg,
         validationErrors: errors.array(),
         hasError: true,
+        username: req.user.username,
         result: {
           entranceSong,
           firstReading,
@@ -308,5 +321,22 @@ exports.postAddResult = async (req, res, next) => {
     const error = new Error(err); // create an error object.
     error.httpStatusCode = 500; // set error object property
     return next(error);
+  }
+};
+
+exports.deleteResult = async (req, res, next) => {
+  const resultId = req.params.resultId;
+
+  try {
+    const result = await Result.findById(resultId);
+    if (!result) {
+      return next(new Error("Product not found"));
+    }
+
+    await result.deleteOne({ _id: resultId, userId: req.user._id });
+    console.log("result deleted!");
+    res.status(200).json({ message: "Success" });
+  } catch (err) {
+    res.status(500).json({ message: "Deleting product failed!" });
   }
 };

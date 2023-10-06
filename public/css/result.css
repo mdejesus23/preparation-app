@@ -9,7 +9,10 @@
   padding: 0.5rem;
 }
 
-.result-content p {
+.result-item div:last-child {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .result-content p:first-child {

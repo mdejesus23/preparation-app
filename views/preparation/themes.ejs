@@ -1,0 +1,42 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/user.css" />
+    <link rel="stylesheet" href="/css/themes.css" />
+    <link rel="stylesheet" href="/css/forms.css" />
+  </head>
+
+  <body>
+  <%- include('../includes/navigation.ejs') %>
+    
+
+  <main>
+    <% if (themes.length > 0) { %>
+    <h1 class="themes-header">Themes</h1>
+
+    <div class="grid">
+      <% themes.forEach((theme) => { %>
+        <article class="card theme-item">
+            <header class="card-header">
+                <h2 class="theme-title"><%= theme.title %></h2>
+            </header>
+            <div class="card-image">
+                <img src="/<%= theme.imageUrl %>" alt="<%= theme.title%>" />
+            </div>
+            <div class="card-content">
+                <p class="theme-description"><%= theme.description%></p>
+            </div>
+            <% if (isAuthenticated) { %>
+            <div class="card-actions">
+              <a class="btn" href="/readings/<%= theme._id%>">Use</a>
+            </div>
+            <% } %>
+        </article>
+
+      <% }) %>
+    </div>
+    <%- include('../includes/pagination.ejs') %>
+    <% } else { %>
+        <h1>No Themes Found!</h1>
+    <% } %>
+  </main>
+    <%- include('../includes/end.ejs') %>
+

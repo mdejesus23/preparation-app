@@ -7,7 +7,9 @@ const isAuth = require("../routesProtector/is-auth");
 
 const router = express.Router();
 
-router.get("/", preparationControllers.getThemes);
+router.get("/", preparationControllers.getHomePage);
+
+router.get("/themes", isAuth, preparationControllers.getThemes);
 
 router.get("/readings/:themeId", isAuth, preparationControllers.getReadings);
 
@@ -67,6 +69,12 @@ router.post(
   ],
   isAuth,
   preparationControllers.postAddResult
+);
+
+router.delete(
+  "/results/:resultId",
+  isAuth,
+  preparationControllers.deleteResult
 );
 
 module.exports = router;

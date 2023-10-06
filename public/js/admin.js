@@ -1,5 +1,5 @@
 let themeElement;
-let themeId;
+let resultId;
 let csrf;
 
 //modal element
@@ -9,7 +9,7 @@ const showModal = (button) => {
   modalBackdrop.style.display = "flex";
 
   themeElement = button.closest("article");
-  themeId = themeElement.querySelector("#themeId").value;
+  resultId = themeElement.querySelector("#themeId").value;
   csrf = themeElement.querySelector("#csrfToken").value;
 };
 
@@ -18,13 +18,7 @@ const closeModal = () => {
 };
 
 const deleteTheme = () => {
-  // const themeElement = button.closest("article");
-  // const themeId = themeElement.querySelector("#themeId").value;
-  // const csrf = themeElement.querySelector("#csrfToken").value;
-
-  const url = "/admin/theme/" + themeId;
-
-  // const url = `/admin/theme/${themeId}`;
+  const url = "/admin/theme/" + resultId;
 
   fetch(url, {
     method: "DELETE",
