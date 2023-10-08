@@ -2,15 +2,15 @@ exports.get404 = (req, res, next) => {
   res.status(404).render("404", {
     pageTitle: "Page Not Found!",
     path: "",
-    username: req.user.username,
+    username: req.user ? req.user.username : null,
   });
 };
 
-exports.get500 = (reqw, res, next) => {
+exports.get500 = (req, res, next) => {
   res.status(500).render("500", {
     pageTitle: "Error",
     path: "/500",
     isAuthenticated: req.session.isLoggedIn,
-    username: req.user.username,
+    username: req.user ? req.user.username : null,
   });
 };

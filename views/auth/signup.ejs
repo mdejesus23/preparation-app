@@ -1,6 +1,5 @@
 <%- include('../includes/head.ejs') %>
     <link rel="stylesheet" href="/css/forms.css">
-    <link rel="stylesheet" href="/css/auth.css">
 </head>
 
 <body>
@@ -12,54 +11,57 @@
         <% } else if (successMessage) { %>
             <div class="user-message user-message--success"><%= successMessage %></div>
         <% } %>
-        <form class="login-form" action="/signup" method="POST">
-            <div class="form-control">
-                <label for="email">E-Mail</label>
-                <input 
-                    class="<%= validationErrors.find(err => err.path === 'email') ? 'invalid' : ''%>" 
-                    type="email" 
-                    name="email" 
-                    id="email" 
-                    value="<%= prevInput.email%>"
-                >
-            </div>
-
-            <div class="form-control">
-                <label for="username">Username</label>
-                <input 
-                    class="<%= validationErrors.find(err => err.path === 'username') ? 'invalid' : ''%>" 
-                    type="username" 
-                    name="username" 
-                    id="username" 
-                    value="<%= prevInput.username%>"
-                >
-            </div>
-
-            <div class="form-control">
-                <label for="password">Password</label>
-                <input 
-                    class="<%= validationErrors.find(err => err.path === 'password') ? 'invalid' : ''%>" 
-                    type="password" 
-                    name="password" 
-                    id="password" 
-                    value="<%= prevInput.password%>"
-                >
-            </div>
-            
-            <div class="form-control">
-                <label for="confirmPassword">Confirm Password</label>
-                <input
-                    class="<%= validationErrors.find(err => err.path === 'confirmPassword') ? 'invalid' : ''%>" 
-                    type="password" 
-                    name="confirmPassword" 
-                    id="confirmPassword" 
-                    value="<%= 
-                    prevInput.confirmPassword%>"
-                >
-            </div>
-            <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-            <button class="btn" type="submit">Signup</button>
-        </form>
+        <div class="card-form">
+            <h1>Create an account</h1>
+            <form class="signup-form" action="/signup" method="POST">
+                <div class="form-control">
+                    <input 
+                        class="<%= validationErrors.find(err => err.path === 'username') ? 'invalid' : ''%>" 
+                        type="username" 
+                        name="username" 
+                        id="username" 
+                        value="<%= prevInput.username%>"
+                        placeholder="Username"
+                    >
+                </div>
+    
+                <div class="form-control">
+                    <input 
+                        class="<%= validationErrors.find(err => err.path === 'email') ? 'invalid' : ''%>" 
+                        type="email" 
+                        name="email" 
+                        id="email" 
+                        value="<%= prevInput.email%>"
+                        placeholder="E-mail"
+                    >
+                </div>
+    
+                <div class="form-control">
+                    <input 
+                        class="<%= validationErrors.find(err => err.path === 'password') ? 'invalid' : ''%>" 
+                        type="password" 
+                        name="password" 
+                        id="password" 
+                        value="<%= prevInput.password%>"
+                        placeholder="Password"
+                    >
+                </div>
+                
+                <div class="form-control">
+                    <input
+                        class="<%= validationErrors.find(err => err.path === 'confirmPassword') ? 'invalid' : ''%>" 
+                        type="password" 
+                        name="confirmPassword" 
+                        id="confirmPassword" 
+                        value="<%= 
+                        prevInput.confirmPassword%>"
+                        placeholder="Confirm-password"
+                    >
+                </div>
+                <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+                <button class="btn btn-signup" type="submit">Signup</button>
+            </form>
+        </div>
     </main>
 <%- include('../includes/end.ejs') %>
 

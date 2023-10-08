@@ -10,36 +10,40 @@
   <% if (errorMessage) { %>
     <div class="user-message user-message--error"><%= errorMessage %></div>
   <% } %>
-  <form
-    class="login-form"
-    action="/login"
-    method="POST"
-  >
-    <div class="form-control">
-      <label for="email">E-mail</label>
-      <input
-        class="<%= validationErrors.find(err => err.path === 'email') ? 'invalid' : ''%>"
-        type="email"
-        name="email"
-        id="email"
-        value="<%= prevInput.email%>"
-      />
+  <div class="card-form">
+    <h1 class="form-header">Log in</h1>
+    <form
+      class="login-form"
+      action="/login"
+      method="POST"
+    >
+      <div class="form-control">
+        <input
+          class="<%= validationErrors.find(err => err.path === 'email') ? 'invalid' : ''%>"
+          type="email"
+          name="email"
+          id="email"
+          value="<%= prevInput.email%>"
+          placeholder="E-mail"
+        />
+      </div>
+      <div class="form-control">
+        <input
+          class="<%= validationErrors.find(err => err.path === 'password') ? 'invalid' : ''%>"
+          type="password"
+          name="password"
+          id="password"
+          value="<%= prevInput.password%>"
+          placeholder="Password"
+        />
+      </div>
+      <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+      <button class="btn btn-login" type="submit">Login</button>
+    </form>
+
+    <div class="centered">
+      <a href="/reset">Forgot Password</a>
     </div>
-    <div class="form-control">
-      <label for="password">Password</label>
-      <input
-        class="<%= validationErrors.find(err => err.path === 'password') ? 'invalid' : ''%>"
-        type="password"
-        name="password"
-        id="password"
-        value="<%= prevInput.password%>"
-      />
-    </div>
-    <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-    <button class="btn" type="submit">Login</button>
-  </form>
-  <div class="centered">
-    <a href="/reset">Forgot Password</a>
   </div>
 </main>
 <%- include('../includes/end.ejs') %>

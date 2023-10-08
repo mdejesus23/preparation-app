@@ -43,6 +43,7 @@ exports.postAddTheme = async (req, res, next) => {
       },
       errorMessage: "Attached file is not an image",
       validationErrors: [],
+      username: req.user.username,
     });
   }
 
@@ -211,6 +212,20 @@ exports.deleteTheme = async (req, res, next) => {
 exports.getAddReading = async (req, res, next) => {
   const themeId = req.params.themeId;
 
+  let errMessage = req.flash("error");
+  if (errMessage.length > 0) {
+    errMessage = errMessage[0];
+  } else {
+    errMessage = null;
+  }
+
+  let successMessage = req.flash("success");
+  if (successMessage.length > 0) {
+    successMessage = successMessage[0];
+  } else {
+    successMessage = null;
+  }
+
   try {
     const theme = await Theme.findById(themeId);
     let readings;
@@ -249,6 +264,8 @@ exports.getAddReading = async (req, res, next) => {
       pageTitle: "Readings List",
       votedReadings: req.user.votedReadingIds,
       username: req.user.username,
+      errorMessage: errMessage,
+      successMessage: successMessage,
     });
   } catch (err) {
     const error = new Error(err); // create an error object.
@@ -265,7 +282,12 @@ exports.postAddReading = async (req, res, next) => {
 
   if (!word) {
     req.flash("error", "Reading is not valid!");
-    return res.redirect("/admin/themes");
+    return res.redirect("/admin/add-readings/" + themeId);
+  }
+
+  if (!category) {
+    req.flash("error", "Category is not valid!");
+    return res.redirect("/admin/add-readings/" + themeId);
   }
 
   try {

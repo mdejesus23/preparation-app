@@ -1,6 +1,6 @@
 .card-form {
   border: 0.4rem solid #f8f9fa;
-  max-width: 400px; /* Set a maximum width for the card */
+  max-width: 700px; /* Set a maximum width for the card */
   margin: 1rem auto;
   padding: 1rem;
 }
@@ -19,8 +19,7 @@
 
 .form-control label,
 .form-control input,
-.form-control textarea,
-.form-control select {
+.form-control textarea {
   display: block;
   margin-bottom: 0.25rem;
   width: 100%;
@@ -41,14 +40,11 @@
 }
 
 .form-control input:focus,
-.form-control select:focus {
+.form-control select:focus,
+.form-control textarea:focus {
   outline-color: var(--primary-color);
 }
 
 .form-control input.invalid {
   border-color: red;
-}
-
-.card-form .btn-signup {
-  width: 100%;
 }

@@ -30,6 +30,11 @@ router.post(
 router.post(
   "/signup",
   [
+    body("username")
+      .isString()
+      .isLength({ min: 3 })
+      .trim()
+      .withMessage("Please enter a valid username min of 3 characters"),
     body("email")
       .isEmail()
       .withMessage("Please enter a valid email")

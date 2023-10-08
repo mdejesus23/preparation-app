@@ -133,8 +133,8 @@ exports.postSignup = async (req, res, next) => {
       errorMessage: errors.array()[0].msg,
       successMessage: null,
       prevInput: {
-        email: email,
         username: username,
+        email: email,
         password: password,
         confirmPassword: confirmPassword,
       },

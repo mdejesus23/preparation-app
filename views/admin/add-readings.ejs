@@ -1,5 +1,5 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/user.css" />
+    <link rel="stylesheet" href="/css/forms.css" />
     <link rel="stylesheet" href="/css/readings.css" />
   </head>
 
@@ -7,36 +7,54 @@
   <%- include('../includes/navigation.ejs') %>
     
     <main>
-      <h1 class="theme-header"><%= theme.title%></h1>
-      <form class="reading-form" action="/admin/add-readings/<%= theme._id%>" method="POST">
-        <div class="form-control">
-            <label for="reading">Reading</label>
-            <input type="text" name="reading" id="reading" />
-        </div>
+      <% if (errorMessage) { %>
+        <div class="user-message user-message--error"><%= errorMessage %></div>
+      <% } else if (successMessage) { %>
+          <div class="user-message user-message--success"><%= successMessage %></div>
+      <% } %>
 
-        <div class="form-control">
-            <label for="category">Category</label>
-            <select name="category" id="category">
-                <option value="">(Select One)</option>
-                <option value="Historical">Historical</option>
-                <option value="Prophetical">Propetical</option>
-                <option value="Epistle">Epistle</option>
-                <option value="Gospel">Gospel</option>
-            </select>
-        </div>
-        <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-        <div class="form-control">
-          <button class="btn" type="submit">Add Reading</button>
-        </div>
-      </form>
+      
+
+      <h1 class="theme-header"><%= theme.title%></h1>
+      <div class="card-form">
+        <form class="reading-form" action="/admin/add-readings/<%= theme._id%>" method="POST">
+          <div class="form-control">
+              <input type="text" name="reading" id="reading" placeholder="Reading" />
+          </div>
+  
+          <div class="form-control">
+              <label for="category">Category</label>
+              <select name="category" id="category">
+                  <option value="">(Select One)</option>
+                  <option value="Historical">Historical</option>
+                  <option value="Prophetical">Propetical</option>
+                  <option value="Epistle">Epistle</option>
+                  <option value="Gospel">Gospel</option>
+              </select>
+          </div>
+          <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+          <div class="form-control">
+            <button class="btn" type="submit">Add Reading</button>
+          </div>
+        </form>
+      </div>
       <% if (!readings) { %>
         <h2>No readings found!</h2>
      
       <% } else {  %>
+        <nav class="category-nav">
+          <ul class="category-list">
+            <li class="btn">All</li>
+            <li class="btn">Historical</li>
+            <li class="btn">Prophetical</li>
+            <li class="btn">Epistle</li>
+            <li class="btn">Gospel</li>
+          </ul>
+        </nav>
 
       <div class="grid-readings">
         <% if (readings.historical) { %>
-        <ul class="readings-columns">
+        <ul id="h1" class="readings-columns">
           <h3 class="category-header">Historical</h3>
           <% readings.historical.forEach(reading => { %>
             <li class="flex">
@@ -51,7 +69,7 @@
         </ul>
         <% } %>
         <% if (readings.prophetical) { %>
-        <ul class="readings-columns">
+        <ul id="p1" class="readings-columns">
           <h3 class="category-header">Prophetical</h3>
           <% readings.prophetical.forEach(reading => { %>
             <li class="flex">
@@ -65,7 +83,7 @@
         </ul>
         <% } %>
         <% if (readings.epistle) { %>
-        <ul class="readings-columns">
+        <ul id="e1" class="readings-columns">
           <h3 class="category-header">Epistle</h3>
           <% readings.epistle.forEach(reading => { %>
             <li class="flex">
@@ -79,7 +97,7 @@
         </ul>
         <% } %>
         <% if (readings.gospel) { %>
-        <ul class="readings-columns">
+        <ul id="g1" class="readings-columns">
           <h3>Gospel</h3>
           <% readings.gospel.forEach(reading => { %>
             <li class="flex">
@@ -99,6 +117,7 @@
     <%- include('../includes/end.ejs') %>
 
   <script src="/js/admin.js"></script>
+  <script src="/js/prep.js"></script>
 
 
 

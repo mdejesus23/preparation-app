@@ -23,22 +23,6 @@ h3 {
   cursor: pointer;
 }
 
-.reading-form .form-control {
-  width: 25%;
-  margin: 1rem auto;
-}
-
-label {
-  display: block;
-}
-
-.reading-form input,
-.reading-form select,
-.reading-form button {
-  width: 100%;
-  min-height: 2em;
-}
-
 .grid-readings {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -102,10 +86,5 @@ label {
     grid-template-columns: 1fr;
     column-gap: 1rem;
     row-gap: 1rem;
-  }
-
-  .reading-form .form-control {
-    width: 90%;
-    margin: 1rem auto;
   }
 }

@@ -1,6 +1,6 @@
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/forms.css" />
-<link rel="stylesheet" href="/css/themes.css" />
+<link rel="stylesheet" href="/css/add-theme.css" />
+<!-- <link rel="stylesheet" href="/css/themes.css" /> -->
 </head>
 
 <body>
@@ -10,45 +10,48 @@
   <% if (errorMessage) { %>
     <div class="user-message user-message--error"><%= errorMessage %></div>
   <% } %>
-  <form
-    class="themes-form"
-    action="/admin/<% if (editing) { %>edit-theme<% } else { %>add-theme<% } %>"
-    method="POST"
-    enctype="multipart/form-data"  
-  >
-  <div class="form-control">
-    <label for="title">Theme</label>
-    <input
-      class="<%= validationErrors.find(err => err.path === 'title') ? 'invalid' : ''%>" 
-      type="text"
-      name="title"
-      id="title"
-      value="<% if (editing || hasError) { %><%= theme.title %><% } %>"
-    />
+  <div class="card-form">
+    <h1>Add Themes</h1>
+    <form
+      class="themes-form"
+      action="/admin/<% if (editing) { %>edit-theme<% } else { %>add-theme<% } %>"
+      method="POST"
+      enctype="multipart/form-data"  
+    >
+    <div class="form-control">
+      <label for="title">Theme</label>
+      <input
+        class="<%= validationErrors.find(err => err.path === 'title') ? 'invalid' : ''%>" 
+        type="text"
+        name="title"
+        id="title"
+        value="<% if (editing || hasError) { %><%= theme.title %><% } %>"
+      />
+    </div>
+  
+    <div class="form-control">
+      <label for="image">Image</label>
+      <input
+        type="file"
+        name="image"
+        id="image"
+      />
+    </div>
+  
+    <div class="form-control">
+      <label for="description">Description</label>
+      <textarea name="description" id="description" rows="5"><% if (editing || hasError) { %><%= theme.description%><% } %></textarea>
+    </div>
+  
+    <% if (editing ) { %>
+      <input type="hidden" value="<%= theme._id %>" name="themeId"/>
+    <% } %>
+      <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+      <button class="btn" type="submit">
+        <% if (editing) { %>Update Theme<% } else { %>Add Theme <% } %>
+      </button>
+    </form>
   </div>
-
-  <div class="form-control">
-    <label for="image">Image</label>
-    <input
-      type="file"
-      name="image"
-      id="image"
-    />
-  </div>
-
-  <div class="form-control">
-    <label for="description">Description</label>
-    <textarea name="description" id="description" rows="5"><% if (editing || hasError) { %><%= theme.description%><% } %></textarea>
-  </div>
-
-  <% if (editing ) { %>
-    <input type="hidden" value="<%= theme._id %>" name="themeId"/>
-  <% } %>
-    <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-    <button class="btn" type="submit">
-      <% if (editing) { %>Update Theme<% } else { %>Add Theme <% } %>
-    </button>
-  </form>
 </main>
 <%- include('../includes/end.ejs') %>
 </body>
