@@ -32,9 +32,14 @@ h3 {
 
 .readings-columns {
   position: relative;
-  border: 1px solid black;
   margin: 0;
   padding: 0.25rem;
+  border: 0.4rem solid #f8f9fa;
+  border-radius: 5%;
+}
+
+.readings-columns li:nth-child(even) {
+  background-color: var(--bg-color-reading);
 }
 
 .flex {
@@ -44,7 +49,7 @@ h3 {
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-  border-radius: 10px;
+  margin: 0;
 }
 
 .flex p {

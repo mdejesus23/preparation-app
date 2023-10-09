@@ -27,12 +27,23 @@
   animation: slide-down 300ms ease-out forwards;
 }
 
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header h3 {
+  color: red;
+}
+
 /* The Close Button */
 .close {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .close:hover,
@@ -44,21 +55,20 @@
 
 .modal-content p {
   margin-top: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .modal-control {
-  margin: 0 auto;
-  width: 40%;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: right;
+  margin-top: 1rem;
 }
 
-.modal-control button:first-child {
+.modal-control button:last-child {
   background-color: red;
   color: white;
-  margin-right: 1rem;
+  margin-left: 0.5rem;
 }
 
 .modal-control button:hover,
@@ -82,11 +92,11 @@
     width: 90%;
   }
 
-  .modal-control {
+  /* .modal-control {
     width: 60%;
-  }
+  } */
 
-  .modal-control button:first-child {
+  /* .modal-control button:first-child {
     margin-right: 0.7rem;
-  }
+  } */
 }

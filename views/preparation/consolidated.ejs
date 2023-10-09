@@ -1,5 +1,5 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/user.css" />
+    <link rel="stylesheet" href="/css/forms.css" />
     <link rel="stylesheet" href="/css/readings.css" />
     <link rel="stylesheet" href="/css/consolidated.css" />
   </head>
@@ -27,13 +27,12 @@
       </nav>
 
 
-      <div class="final-reading-control">
+      <div class="final-reading-control card-form">
           <button id="add-result-button" class="btn add-result">Add result</button>
         <form id="add-result-form" class="reading-form result-form" action="/results" method="POST">
           <!-- entrance song -->
           <div class="form-control add-result-control">
-            <label for="entranceSong">Entrance Song</label>
-            <input class="<%= validationErrors.find(err => err.path === 'entranceSong') ? 'invalid' : ''%>"
+            <input placeholder="Entrance Song" class="<%= validationErrors.find(err => err.path === 'entranceSong') ? 'invalid' : ''%>"
              type="text" 
              name="entranceSong" 
              id="entranceSong"
@@ -41,8 +40,7 @@
           </div>
           <!-- first reading -->
           <div class="form-control add-result-control">
-              <label for="firstReading">1st reading</label>
-              <input class="<%= validationErrors.find(err => err.path === 'firstReading') ? 'invalid' : ''%>"
+              <input placeholder="1st Reading" class="<%= validationErrors.find(err => err.path === 'firstReading') ? 'invalid' : ''%>"
               type="text" 
               name="firstReading" 
               id="firstReading"
@@ -50,8 +48,7 @@
           </div>
           <!-- psalm 1 -->
           <div class="form-control add-result-control">
-            <label for="firstPsalm">1st psalm</label>
-            <input class="<%= validationErrors.find(err => err.path === 'firstPsalm') ? 'invalid' : ''%>"
+            <input placeholder="1st psalm" class="<%= validationErrors.find(err => err.path === 'firstPsalm') ? 'invalid' : ''%>"
             type="text"
             name="firstPsalm" 
             id="firstPsalm"
@@ -59,8 +56,7 @@
           </div>
           <!-- second reading -->
           <div class="form-control add-result-control">
-            <label for="secondReading">2nd reading</label>
-            <input class="<%= validationErrors.find(err => err.path === 'secondReading') ? 'invalid' : ''%>"
+            <input placeholder="2nd Reading" class="<%= validationErrors.find(err => err.path === 'secondReading') ? 'invalid' : ''%>"
             type="text" 
             name="secondReading" 
             id="secondReading"
@@ -68,8 +64,7 @@
           </div>
           <!-- psalm 2 -->
           <div class="form-control add-result-control">
-            <label for="secondPsalm">2nd psalm</label>
-            <input class="<%= validationErrors.find(err => err.path === 'secondPsalm') ? 'invalid' : ''%>"
+            <input placeholder="2nd psalm" class="<%= validationErrors.find(err => err.path === 'secondPsalm') ? 'invalid' : ''%>"
               type="text" 
               name="secondPsalm" 
               id="secondPsalm"
@@ -77,8 +72,7 @@
           </div>
           <!-- third reading -->
           <div class="form-control add-result-control">
-            <label for="thirdReading">3rd reading</label>
-            <input class="<%= validationErrors.find(err => err.path === 'thirdReading') ? 'invalid' : ''%>"
+            <input placeholder="3rd Reading" class="<%= validationErrors.find(err => err.path === 'thirdReading') ? 'invalid' : ''%>"
              type="text" 
              name="thirdReading" 
              id="thirdReading"
@@ -86,8 +80,7 @@
           </div>
           <!-- psalm 3 -->
           <div class="form-control add-result-control">
-            <label for="thirdPsalm">3rd Psalm</label>
-            <input class="<%= validationErrors.find(err => err.path === 'thirdPsalm') ? 'invalid' : ''%>"
+            <input placeholder="3rd Psalm" class="<%= validationErrors.find(err => err.path === 'thirdPsalm') ? 'invalid' : ''%>"
              type="text" 
              name="thirdPsalm" 
              id="thirdPsalm"
@@ -95,8 +88,7 @@
           </div>
           <!-- gopel reading -->
           <div class="form-control add-result-control">
-            <label for="gospelReading">Gospel</label>
-            <input class="<%= validationErrors.find(err => err.path === 'gospelReading') ? 'invalid' : ''%>"
+            <input placeholder="Gospel" class="<%= validationErrors.find(err => err.path === 'gospelReading') ? 'invalid' : ''%>"
                type="text" 
                name="gospelReading" 
                id="gospelReading"
@@ -105,8 +97,7 @@
 
           <!-- final song -->
           <div class="form-control add-result-control">
-            <label for="finalSong">Final Song</label>
-            <input class="<%= validationErrors.find(err => err.path === 'finalSong') ? 'invalid' : ''%>"
+            <input placeholder="Final Song" class="<%= validationErrors.find(err => err.path === 'finalSong') ? 'invalid' : ''%>"
              type="text" 
              name="finalSong" 
              id="finalSong"

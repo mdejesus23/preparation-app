@@ -17,7 +17,7 @@ const closeModal = () => {
   modalBackdrop.style.display = "none";
 };
 
-const deleteTheme = () => {
+const deleteResult = () => {
   const url = "/results/" + resultId;
 
   fetch(url, {
