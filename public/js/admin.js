@@ -13,6 +13,14 @@ const showModal = (button) => {
   csrf = themeElement.querySelector("#csrfToken").value;
 };
 
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = (event) => {
+  if (event.target == modalBackdrop) {
+    modalBackdrop.style.display = "none";
+  }
+};
+
+// close modal
 const closeModal = () => {
   modalBackdrop.style.display = "none";
 };
@@ -32,6 +40,7 @@ const deleteTheme = () => {
     .then((data) => {
       console.log(data);
       themeElement.remove(); // remove themeElement in the DOM
+      closeModal();
     })
     .catch((err) => {
       console.log(err);

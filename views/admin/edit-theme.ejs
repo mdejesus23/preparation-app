@@ -42,6 +42,15 @@
       <label for="description">Description</label>
       <textarea name="description" id="description" rows="5"><% if (editing || hasError) { %><%= theme.description%><% } %></textarea>
     </div>
+
+    <div class="form-control">
+      <label for="passcode">Passcode</label>
+      <input
+        type="password"
+        name="passcode"
+        id="passcode"
+      />
+    </div>
   
     <% if (editing ) { %>
       <input type="hidden" value="<%= theme._id %>" name="themeId"/>

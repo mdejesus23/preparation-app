@@ -8,7 +8,7 @@
 
 <body>
   <%- include('../includes/navigation.ejs') %>
-  <div onclick="closeModal()" id="backdrop" class="modal-backdrop">
+  <div  id="backdrop" class="modal-backdrop">
     <div class="modal-content">
         <div class="modal-header">
             <h3>Attention!</h3>
@@ -19,7 +19,7 @@
       <hr>
       <div class="modal-control">
         <button class="btn" onclick="deleteTheme()">Yes</button>
-        <button class="btn">Cancel</button>
+        <button onclick="closeModal()" class="btn">Cancel</button>
       </div>
     </div>
   </div>

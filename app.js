@@ -107,8 +107,6 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  // console.log("sync dummy error");
-  // throw new Error("Sync dummy");
   if (!req.session.user) {
     return next();
   }
@@ -122,12 +120,6 @@ app.use((req, res, next) => {
       next(new Error(err));
     });
 });
-
-// app.use((req, res, next) => {
-//   res.locals.isAuthenticated = req.session.isLoggedIn;
-//   res.locals.csrfToken = req.csrfToken();
-//   next();
-// });
 
 app.use("/admin", adminRoutes);
 app.use(preparationRoutes);
@@ -147,6 +139,7 @@ app.use((err, req, res, next) => {
     pageTitle: "Error",
     path: "/500",
     isAuthenticated: req.session.isLoggedIn,
+    username: req.user ? req.user.username : null,
   });
   // res.redirect("/500");
 });

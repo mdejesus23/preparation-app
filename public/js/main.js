@@ -13,16 +13,5 @@ function menuToggleClickHandler() {
   sideDrawer.classList.add("open");
 }
 
-// voteButtons.forEach((button) => {
-//   button.addEventListener("click", () => {
-//     if (button.innerText == "Vote") {
-//       console.log("inner text equal to vote.");
-//       button.innerText = "Unvote";
-//     } else if (button.innerText == "Unvote") {
-//       button.innerText = "Vote";
-//     }
-//   });
-// });
-
 backdrop.addEventListener("click", backdropClickHandler);
 menuToggle.addEventListener("click", menuToggleClickHandler);

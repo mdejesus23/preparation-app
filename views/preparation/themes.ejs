@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="/css/user.css" />
     <link rel="stylesheet" href="/css/themes.css" />
     <link rel="stylesheet" href="/css/forms.css" />
+    <link rel="stylesheet" href="/css/modal.css" />
   </head>
 
   <body>
@@ -9,11 +10,39 @@
     
 
   <main>
+   
+    <div id="passcode-error" class="user-message user-message--error">Invalid Theme Passcode</div>
+
+
+    <!-- modal -->
+    <div id="backdrop" class="modal-backdrop">
+      <div class="modal-content">
+          <div class="modal-header">
+            <h3>Enter passcode</h3>
+            <span onclick="closeModal()" class="close">&times;</span>
+        </div>
+          
+            <div class="form-control">
+              <input
+                type="password"
+                name="passcode"
+                id="passcode"
+                placeholder="passcode"
+              />
+            </div>
+           
+            <button class="btn" onclick="postPasscode()">Submit</button>
+          </form>
+      </div>
+    </div>
+      
+   
     <% if (themes.length > 0) { %>
     <h1 class="themes-header">Themes</h1>
 
     <div class="grid">
       <% themes.forEach((theme) => { %>
+
         <article class="card theme-item">
             <header class="card-header">
                 <h2 class="theme-title"><%= theme.title %></h2>
@@ -26,7 +55,9 @@
             </div>
             <% if (isAuthenticated) { %>
             <div class="card-actions">
-              <a class="btn" href="/readings/<%= theme._id%>">Use</a>
+              <input type="hidden" name="themeId" value="<%= theme._id%>" />
+              <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+              <button class="btn" onclick="showModal(this)">Use</button>
             </div>
             <% } %>
         </article>
@@ -39,4 +70,6 @@
     <% } %>
   </main>
     <%- include('../includes/end.ejs') %>
+
+    <script src="/js/themes.js"></script>
 

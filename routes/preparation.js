@@ -4,6 +4,7 @@ const { body } = require("express-validator");
 
 const preparationControllers = require("../controllers/preparation");
 const isAuth = require("../routesProtector/is-auth");
+const isThemeGetAccess = require("../routesProtector/is-themeGetAccess");
 
 const router = express.Router();
 
@@ -12,6 +13,15 @@ router.get("/", preparationControllers.getHomePage);
 router.get("/themes", isAuth, preparationControllers.getThemes);
 
 router.get("/readings/:themeId", isAuth, preparationControllers.getReadings);
+
+router.get(
+  "/readings/:themeId",
+  isAuth,
+  isThemeGetAccess,
+  preparationControllers.getReadings
+);
+
+router.post("/readings/:themeId", isAuth, preparationControllers.checkPasscode);
 
 router.put(
   "/readings/vote/:themeId",

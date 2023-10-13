@@ -26,6 +26,7 @@ exports.postAddTheme = async (req, res, next) => {
   const title = req.body.title;
   const image = req.file;
   const description = req.body.description;
+  const passcode = req.body.passcode;
   const readings = [];
 
   console.log(image);
@@ -71,6 +72,7 @@ exports.postAddTheme = async (req, res, next) => {
     title: title,
     imageUrl: imageUrl,
     description: description,
+    passcode: passcode,
     readings: readings,
     userId: req.session.user,
   });

@@ -16,12 +16,6 @@ const voteReading = (button) => {
   const readingElement = button.closest("li");
   let url = `/readings/vote/${themeId}`;
 
-  //   if (btn.innerText === "Vote") {
-  //     url = `/readings/vote/${themeId}`;
-  //   } else if (btn.innerText === "Unvote") {
-  //     url = `/readings/unvote/${themeId}`;
-  //   }
-
   fetch(url, {
     method: "PUT",
     headers: {

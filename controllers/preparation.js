@@ -17,6 +17,7 @@ exports.getHomePage = (req, res, next) => {
 exports.getThemes = async (req, res, next) => {
   const page = +req.query.page || 1; // if there is no query parameter the default value will be 1.
   let totalItems;
+
   try {
     const numThemes = await Theme.find().countDocuments(); // Count all documents in the "Product" collection
     totalItems = numThemes; // total number of documents fetched in the database.
@@ -44,9 +45,12 @@ exports.getThemes = async (req, res, next) => {
 };
 
 exports.getReadings = async (req, res, next) => {
+  const themeId = req.params.themeId;
+  console.log(req.themeAccess);
+
   try {
-    const themeId = req.params.themeId;
     const theme = await Theme.findById(themeId);
+
     let readings;
 
     if (theme.readings.length > 0) {
@@ -85,6 +89,33 @@ exports.getReadings = async (req, res, next) => {
       votedReadings: req.user.votedReadingIds,
       username: req.user.username,
     });
+  } catch (err) {
+    const error = new Error(err); // create an error object.
+    error.httpStatusCode = 500; // set error object property
+    return next(error);
+  }
+};
+
+exports.checkPasscode = async (req, res, next) => {
+  const themeId = req.params.themeId;
+  const passcode = req.body.passcode;
+
+  try {
+    const theme = await Theme.findById(themeId);
+    if (!theme) {
+      const error = new Error("Theme not found.");
+      error.httpStatusCode = 404; // Set appropriate status code for "Not Found"
+      return next(error);
+    }
+
+    if (theme.passcode !== passcode) {
+      console.log("passcode did match!");
+      res.status(401).json({ message: "Passcode does not match" });
+    } else {
+      // if the passcode did match
+      req.themeAccess = true;
+      res.status(202).json({ message: "passcode did match" });
+    }
   } catch (err) {
     const error = new Error(err); // create an error object.
     error.httpStatusCode = 500; // set error object property

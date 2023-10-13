@@ -15,6 +15,10 @@ const themeSchema = new Schema({
     type: String,
     required: true,
   },
+  passcode: {
+    type: String,
+    required: true,
+  },
   readings: [
     {
       reading: {
@@ -39,5 +43,3 @@ const themeSchema = new Schema({
 });
 
 module.exports = mongoose.model("Theme", themeSchema);
-
-
