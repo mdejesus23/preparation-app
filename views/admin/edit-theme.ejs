@@ -7,9 +7,12 @@
 <%- include('../includes/navigation.ejs') %>
 
 <main>
+  <div id="loader"></div>
+
   <% if (errorMessage) { %>
     <div class="user-message user-message--error"><%= errorMessage %></div>
   <% } %>
+
   <div class="card-form">
     <h1>Add Themes</h1>
     <form
@@ -63,4 +66,6 @@
   </div>
 </main>
 <%- include('../includes/end.ejs') %>
+
+<script src="/js/main.js"></script>
 </body>

@@ -10,6 +10,13 @@
   text-align: center;
 }
 
+.add-result-button-cont {
+  margin: 0 auto;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+}
+
 .first-popup {
   visibility: hidden;
   width: 160px;
@@ -89,7 +96,6 @@
 }
 
 .result-form {
-  display: none;
   width: 80%;
 }
 

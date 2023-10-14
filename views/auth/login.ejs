@@ -10,6 +10,9 @@
   <% if (errorMessage) { %>
     <div class="user-message user-message--error"><%= errorMessage %></div>
   <% } %>
+
+  <div id="loader"></div>
+
   <div class="card-form">
     <h1 class="form-header">Log in</h1>
     <form
@@ -47,4 +50,6 @@
   </div>
 </main>
 <%- include('../includes/end.ejs') %>
+
+<script src="/js/main.js"></script>
 </body>

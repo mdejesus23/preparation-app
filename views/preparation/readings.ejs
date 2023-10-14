@@ -7,6 +7,7 @@
   <%- include('../includes/navigation.ejs') %>
     
     <main>
+      <div id="loader"></div>
       <% if (!readings) { %>
         <h1>No readings found!</h1>
       <% } else {  %>
@@ -84,8 +85,11 @@
       <div class="consolidated-form">
         <a class="btn" href="/readings/consolidated/<%= theme._id%>">Consolidate</a>
       </div>
+      <!-- back to top button -->
+      <button onclick="backToTop()" id="scroll-top">Top</button>
     </main>
     <%- include('../includes/end.ejs') %>
 
   <script src="/js/prep.js"></script>
+  <script src="/js/main.js"></script>
 

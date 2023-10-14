@@ -11,6 +11,8 @@
         <% } else if (successMessage) { %>
             <div class="user-message user-message--success"><%= successMessage %></div>
         <% } %>
+
+        <div id="loader"></div>
         <div class="card-form">
             <h1>Create an account</h1>
             <form class="signup-form" action="/signup" method="POST">
@@ -65,4 +67,5 @@
     </main>
 <%- include('../includes/end.ejs') %>
 
+<script src="/js/main.js"></script>
 

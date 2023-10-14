@@ -13,7 +13,7 @@
           <div class="user-message user-message--success"><%= successMessage %></div>
       <% } %>
 
-      
+      <div id="loader"></div>
 
       <h1 class="theme-header"><%= theme.title%></h1>
       <div class="card-form">
@@ -112,12 +112,13 @@
         <% } %>
       </div>
       <% } %>
-      
+      <button onclick="backToTop()" id="scroll-top">Top</button>
     </main>
     <%- include('../includes/end.ejs') %>
 
   <script src="/js/admin.js"></script>
   <script src="/js/prep.js"></script>
+  <script src="/js/main.js"></script>
 
 
 

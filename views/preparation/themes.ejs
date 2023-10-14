@@ -7,13 +7,11 @@
 
   <body>
   <%- include('../includes/navigation.ejs') %>
+
+  <div id="loader"></div>
     
-
   <main>
-   
     <div id="passcode-error" class="user-message user-message--error">Invalid Theme Passcode</div>
-
-
     <!-- modal -->
     <div id="backdrop" class="modal-backdrop">
       <div class="modal-content">
@@ -72,4 +70,5 @@
     <%- include('../includes/end.ejs') %>
 
     <script src="/js/themes.js"></script>
+    <script src="/js/main.js"></script>
 

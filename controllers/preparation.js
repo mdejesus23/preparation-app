@@ -109,17 +109,14 @@ exports.checkPasscode = async (req, res, next) => {
     }
 
     if (theme.passcode !== passcode) {
-      console.log("passcode did match!");
+      console.log("passcode did not match!");
       res.status(401).json({ message: "Passcode does not match" });
     } else {
       // if the passcode did match
-      req.themeAccess = true;
       res.status(202).json({ message: "passcode did match" });
     }
   } catch (err) {
-    const error = new Error(err); // create an error object.
-    error.httpStatusCode = 500; // set error object property
-    return next(error);
+    res.status(500).json({ message: "Theme not found" });
   }
 };
 
@@ -231,12 +228,28 @@ exports.getConsolidatedReadings = async (req, res, next) => {
 };
 
 exports.getResult = async (req, res, next) => {
+  const page = +req.query.page || 1; // if there is no query parameter the default value will be 1.
+  let totalItems;
+
   try {
-    const results = await Result.find({ userId: req.user._id });
+    const numResults = await Result.find({
+      userId: req.user._id,
+    }).countDocuments();
+    totalItems = numResults; // total number of documents fetched in the database.
+
+    const results = await Result.find({ userId: req.user._id })
+      .skip((page - 1) * ITEMS_PER_PAGE) // Skip the previous pages with the items per page.
+      .limit(ITEMS_PER_PAGE); // Limit the result to the current page's items
     res.render("preparation/result", {
       results: results,
       pageTitle: "Preparation Result",
       path: "/result",
+      currentPage: page,
+      hasNextPage: ITEMS_PER_PAGE * page < totalItems, // true if the number of docs fetch is greater than ITEMS_PER_PAGE * page.
+      hasPreviousPage: page > 1, // true if current page is greater than 1
+      nextPage: page + 1,
+      previousPage: page - 1,
+      lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE), //  Math.ceil() increases the integer part of the number by 1 to round it up to the next higher integer.
       username: req.user.username,
     });
   } catch (err) {

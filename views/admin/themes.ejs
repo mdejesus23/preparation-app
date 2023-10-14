@@ -32,10 +32,10 @@
         <div class="user-message user-message--success"><%= successMessage %></div>
     <% } %>
 
+    <div id="loader"></div>
+
     <% if (themes.length > 0) { %>
     <h1 class="themes-header">Themes</h1>
-    
-
     <div class="grid">
       <% themes.forEach((theme) => { %>
         <article class="card theme-item">
@@ -63,6 +63,7 @@
 
       <% }) %>
     </div>
+    <%- include('../includes/pagination.ejs') %>
     <% } else { %>
         <h1>No Themes Found!</h1>
     <% } %>
@@ -70,3 +71,4 @@
   <%- include('../includes/end.ejs') %>
 
   <script src="/js/admin.js"></script>
+  <script src="/js/main.js"></script>

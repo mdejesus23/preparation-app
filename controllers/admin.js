@@ -4,6 +4,8 @@ const fileHelper = require("../util/file");
 
 const { validationResult } = require("express-validator");
 
+const ITEMS_PER_PAGE = 2;
+
 exports.getAddTheme = (req, res, next) => {
   res.render("admin/edit-theme", {
     pageTitle: "Add Themes",
@@ -117,6 +119,9 @@ exports.getEditTheme = async (req, res, next) => {
 };
 
 exports.getThemes = async (req, res, next) => {
+  const page = +req.query.page || 1; // if there is no query parameter the default value will be 1.
+  let totalItems;
+
   let errMessage = req.flash("error");
   if (errMessage.length > 0) {
     errMessage = errMessage[0];
@@ -132,13 +137,26 @@ exports.getThemes = async (req, res, next) => {
   }
 
   try {
-    const themes = await Theme.find({ userId: req.user._id });
+    const numThemes = await Theme.find({
+      userId: req.user._id,
+    }).countDocuments();
+    totalItems = numThemes; // total number of documents fetched in the database.
+
+    const themes = await Theme.find({ userId: req.user._id })
+      .skip((page - 1) * ITEMS_PER_PAGE) // Skip the previous pages with the items per page.
+      .limit(ITEMS_PER_PAGE); // Limi
     res.render("admin/themes", {
       themes: themes,
       pageTitle: "Admin Themes",
       path: "/admin/themes",
       errorMessage: errMessage,
       successMessage: successMessage,
+      currentPage: page,
+      hasNextPage: ITEMS_PER_PAGE * page < totalItems, // true if the number of docs fetch is greater than ITEMS_PER_PAGE * page.
+      hasPreviousPage: page > 1, // true if current page is greater than 1
+      nextPage: page + 1,
+      previousPage: page - 1,
+      lastPage: Math.ceil(totalItems / ITEMS_PER_PAGE), //  Math.ceil() increases the integer part of the number by 1 to round it up to the next higher integer.
       username: req.user.username,
     });
   } catch (err) {
