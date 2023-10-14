@@ -1,27 +1,18 @@
 const { uri } = require("./uri");
 
-//set port
 const port = 3002;
 
-// const pass = "zZRK0AgPwk99fW9K";
-
-// const URI = `mongodb://dejesusmelnard:${pass}@ac-rqst6ya-shard-00-00.acl3rer.mongodb.net:27017,ac-rqst6ya-shard-00-01.acl3rer.mongodb.net:27017,ac-rqst6ya-shard-00-02.acl3rer.mongodb.net:27017/preparation?ssl=true&replicaSet=atlas-17b4b2-shard-0&authSource=admin&retryWrites=true&w=majority`;
-
-//  This line imports the built-in path module in Node.js, which provides utilities for working with file and directory paths.
-const path = require("path");
-// This line imports the express module, which is a popular web framework for Node.js.
-const express = require("express");
+const path = require("path"); //  This line imports the built-in path module in Node.js, which provides utilities for working with file and directory paths.
+const express = require("express"); // This line imports the express module, which is a popular web framework for Node.js.
 const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
-// const csrf = require("csurf");
 const { csrfSync } = require("csrf-sync");
 const flash = require("express-flash");
 const multer = require("multer");
-
 const User = require("./models/user");
-//import error controller
-const errorController = require("./controllers/error");
+
+const errorController = require("./controllers/error"); //import error controller
 
 const app = express();
 
@@ -36,7 +27,6 @@ const store = new MongoDBStore({
   uri: uri,
   collection: "session",
 });
-// const csrfProtecttion = csrf();
 
 // configuration object
 //  Disk storage is in the end a storage engine which you can use with multer
@@ -76,9 +66,7 @@ const authRoutes = require("./routes/auth");
 
 // parsing middleware. it is use to parse data from form the request
 app.use(express.urlencoded({ extended: false }));
-
 app.use(express.json()); // Middleware to parse JSON request bodies
-
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
 );
@@ -96,7 +84,6 @@ app.use(
     store: store,
   })
 );
-// app.use(csrfProtecttion);
 app.use(csrfSynchronisedProtection);
 app.use(flash());
 
@@ -112,7 +99,6 @@ app.use((req, res, next) => {
   }
   User.findById(req.session.user._id)
     .then((user) => {
-      // throw new Error("dummy");
       req.user = user;
       next();
     })
@@ -132,7 +118,6 @@ app.use(errorController.get404);
 
 // next error handling middleware.
 app.use((err, req, res, next) => {
-  console.log("error handler middleware");
   console.log(err);
 
   res.status(500).render("500", {
@@ -141,7 +126,6 @@ app.use((err, req, res, next) => {
     isAuthenticated: req.session.isLoggedIn,
     username: req.user ? req.user.username : null,
   });
-  // res.redirect("/500");
 });
 
 mongoose

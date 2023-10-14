@@ -7,9 +7,8 @@
 
   <body>
   <%- include('../includes/navigation.ejs') %>
-
+  <!-- page loader -->
   <div id="loader"></div>
-    
   <main>
     <div id="passcode-error" class="user-message user-message--error">Invalid Theme Passcode</div>
     <!-- modal -->
@@ -33,7 +32,6 @@
           </form>
       </div>
     </div>
-      
    
     <% if (themes.length > 0) { %>
     <h1 class="themes-header">Themes</h1>

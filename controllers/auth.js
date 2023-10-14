@@ -143,6 +143,7 @@ exports.postSignup = async (req, res, next) => {
   }
 
   try {
+    // encrypt password
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const user = new User({

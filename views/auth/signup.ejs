@@ -17,6 +17,7 @@
             <h1>Create an account</h1>
             <form class="signup-form" action="/signup" method="POST">
                 <div class="form-control">
+                    <label for="username">Username:</label>
                     <input 
                         class="<%= validationErrors.find(err => err.path === 'username') ? 'invalid' : ''%>" 
                         type="username" 
@@ -28,6 +29,7 @@
                 </div>
     
                 <div class="form-control">
+                    <label for="email">E-mail:</label>
                     <input 
                         class="<%= validationErrors.find(err => err.path === 'email') ? 'invalid' : ''%>" 
                         type="email" 
@@ -39,6 +41,7 @@
                 </div>
     
                 <div class="form-control">
+                    <label for="password">Password:</label>
                     <input 
                         class="<%= validationErrors.find(err => err.path === 'password') ? 'invalid' : ''%>" 
                         type="password" 
@@ -50,6 +53,7 @@
                 </div>
                 
                 <div class="form-control">
+                    <label for="confirmPassword">Confirm-password:</label>
                     <input
                         class="<%= validationErrors.find(err => err.path === 'confirmPassword') ? 'invalid' : ''%>" 
                         type="password" 
