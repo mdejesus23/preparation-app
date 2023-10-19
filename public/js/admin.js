@@ -3,7 +3,7 @@ let resultId;
 let csrf;
 
 //modal element
-const modalBackdrop = document.getElementById("backdrop");
+const modalBackdrop = document.getElementById("backdrop-admin");
 
 const showModal = (button) => {
   modalBackdrop.style.display = "flex";

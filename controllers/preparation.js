@@ -2,9 +2,9 @@ const Theme = require("../models/themes");
 const Result = require("../models/result");
 const User = require("../models/user");
 
-const { validationResult } = require("express-validator");
+const { validationResult, cookie } = require("express-validator");
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 5;
 
 exports.getHomePage = (req, res, next) => {
   res.render("preparation/index", {
@@ -46,7 +46,6 @@ exports.getThemes = async (req, res, next) => {
 
 exports.getReadings = async (req, res, next) => {
   const themeId = req.params.themeId;
-  console.log(req.themeAccess);
 
   try {
     const theme = await Theme.findById(themeId);
@@ -100,6 +99,8 @@ exports.checkPasscode = async (req, res, next) => {
   const themeId = req.params.themeId;
   const passcode = req.body.passcode;
 
+  const cookieThemeId = req.cookies.themeId;
+
   try {
     const theme = await Theme.findById(themeId);
     if (!theme) {
@@ -110,11 +111,33 @@ exports.checkPasscode = async (req, res, next) => {
 
     if (theme.passcode !== passcode) {
       console.log("passcode did not match!");
-      res.status(401).json({ message: "Passcode does not match" });
+      return res.status(401).json({ message: "Passcode does not match" });
+    }
+
+    // if the themeId is already set in the browser cookies
+    if (cookieThemeId === themeId) {
+      res.status(202).json({ message: "passcode did match" });
     } else {
-      // if the passcode did match
+      res.cookie("themeId", themeId, { maxAge: 4 * 60 * 60 * 1000 });
       res.status(202).json({ message: "passcode did match" });
     }
+
+    // const userId = req.user._id.toString();
+    // const isIncluded = theme.groupMembers.some(
+    //   (user) => user.userId.toString() === userId
+    // );
+
+    // if (isIncluded) {
+    //   // user already included
+    //   res.status(202).json({ message: "passcode did match" });
+    // } else {
+    //   // if the passcode did match
+    //   theme.groupMembers.push({
+    //     userId: req.user._id,
+    //   });
+    //   theme.save();
+    //   res.status(202).json({ message: "passcode did match" });
+    // }
   } catch (err) {
     res.status(500).json({ message: "Theme not found" });
   }
@@ -243,7 +266,7 @@ exports.getResult = async (req, res, next) => {
     res.render("preparation/result", {
       results: results,
       pageTitle: "Preparation Result",
-      path: "/result",
+      path: "/readings/result",
       currentPage: page,
       hasNextPage: ITEMS_PER_PAGE * page < totalItems, // true if the number of docs fetch is greater than ITEMS_PER_PAGE * page.
       hasPreviousPage: page > 1, // true if current page is greater than 1

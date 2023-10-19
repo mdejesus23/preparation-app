@@ -52,6 +52,7 @@
         type="password"
         name="passcode"
         id="passcode"
+        value="<% if (editing || hasError) { %><%= theme.passcode %><% } %>"
       />
     </div>
   
@@ -67,5 +68,4 @@
 </main>
 <%- include('../includes/end.ejs') %>
 
-<script src="/js/main.js"></script>
-</body>
+

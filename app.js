@@ -1,8 +1,6 @@
-const { uri } = require("./uri");
-
-const port = 3002;
-
 const path = require("path"); //  This line imports the built-in path module in Node.js, which provides utilities for working with file and directory paths.
+const fs = require("fs");
+
 const express = require("express"); // This line imports the express module, which is a popular web framework for Node.js.
 const mongoose = require("mongoose");
 const session = require("express-session");
@@ -11,10 +9,20 @@ const { csrfSync } = require("csrf-sync");
 const flash = require("express-flash");
 const multer = require("multer");
 const User = require("./models/user");
+require("dotenv").config();
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
+const crypto = require("crypto");
+const cookieParser = require("cookie-parser");
 
 const errorController = require("./controllers/error"); //import error controller
 
 const app = express();
+
+app.use(cookieParser());
+
+const MONGODB_URI = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@ac-rqst6ya-shard-00-00.acl3rer.mongodb.net:27017,ac-rqst6ya-shard-00-01.acl3rer.mongodb.net:27017,ac-rqst6ya-shard-00-02.acl3rer.mongodb.net:27017/${process.env.MONGO_DEFAULT_DATABASE}?ssl=true&replicaSet=atlas-17b4b2-shard-0&authSource=admin&retryWrites=true&w=majority`;
 
 // Used to retrieve the token submitted by the user in a form or in the header thru fetch api in the request body.
 const { csrfSynchronisedProtection } = csrfSync({
@@ -24,7 +32,7 @@ const { csrfSynchronisedProtection } = csrfSync({
 });
 
 const store = new MongoDBStore({
-  uri: uri,
+  uri: MONGODB_URI,
   collection: "session",
 });
 
@@ -63,6 +71,57 @@ app.set("views", "views");
 const adminRoutes = require("./routes/admin");
 const preparationRoutes = require("./routes/preparation");
 const authRoutes = require("./routes/auth");
+
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" }
+);
+
+app.use((req, res, next) => {
+  res.locals.nonce1 = crypto.randomBytes(16).toString("hex");
+  res.locals.nonce2 = crypto.randomBytes(16).toString("hex");
+  res.locals.nonce3 = crypto.randomBytes(16).toString("hex");
+  res.locals.nonce4 = crypto.randomBytes(16).toString("hex");
+  res.locals.nonce5 = crypto.randomBytes(16).toString("hex");
+  res.locals.nonce6 = crypto.randomBytes(16).toString("hex");
+  res.locals.nonce7 = crypto.randomBytes(16).toString("hex");
+  res.locals.nonce8 = crypto.randomBytes(16).toString("hex");
+  res.locals.nonce9 = crypto.randomBytes(16).toString("hex");
+  res.locals.nonce10 = crypto.randomBytes(16).toString("hex");
+
+  next();
+});
+
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: [
+          "'self'",
+          (req, res) => `'nonce-${res.locals.nonce1}'`, // admin.js
+          (req, res) => `'nonce-${res.locals.nonce2}'`, // main.js
+          (req, res) => `'nonce-${res.locals.nonce3}'`, // prep.js
+          (req, res) => `'nonce-${res.locals.nonce4}'`, // consolidated.js
+          (req, res) => `'nonce-${res.locals.nonce5}'`, // index.js
+          (req, res) => `'nonce-${res.locals.nonce6}'`, // result.js
+          (req, res) => `'nonce-${res.locals.nonce7}'`, // themes.js
+          (req, res) => `'nonce-${res.locals.nonce8}'`, // scroll.js
+          (req, res) => `'nonce-${res.locals.nonce9}'`, // footer.js
+          (req, res) => `'nonce-${res.locals.nonce10}'`, // fontawesome.js
+        ],
+        scriptSrcAttr: ["'self'", "'unsafe-inline'"],
+        styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"],
+        connectSrc: ["'self'"], // Allow connections to the same origin
+        frameSrc: ["'self'"], // Allow frames from the same origin
+        // imageSrc: ["'self'"],
+      },
+    },
+  })
+);
+
+app.use(compression());
+app.use(morgan("combined", { stream: accessLogStream }));
 
 // parsing middleware. it is use to parse data from form the request
 app.use(express.urlencoded({ extended: false }));
@@ -129,10 +188,10 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect(uri)
+  .connect(MONGODB_URI)
   .then((result) => {
-    app.listen(port, () => {
-      console.log(`app.js server is running in port ${port}`);
+    app.listen(process.env.PORT || 3002, () => {
+      console.log(`app.js server is running!`);
     });
   })
   .catch((err) => {

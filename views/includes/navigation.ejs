@@ -10,7 +10,7 @@
 
       <li class="main-header__item">
         <a class="<%= path === '/themes' ? 'active' : '' %>" href="/themes"
-          >Themes</a
+          >All Themes</a
         >
       </li>
 
@@ -33,7 +33,7 @@
         <a
           class="<%= path === '/admin/themes' ? 'active' : '' %>"
           href="/admin/themes"
-          >Admin themes
+          >My themes
         </a>
       </li>
       <% } %>
@@ -56,7 +56,12 @@
       <% } else { %>
       <!-- if user authenticated -->
       <li class="main-header__item">
-        <p class="username">Welcome: <%= username%></p>
+        <div class="username-container">
+          <div class="user-icon-container">
+            <img src="/images/user-icon.png" />
+          </div>
+          <p><%= username%></p>
+        </div>
       </li>
       <li class="main-header__item">
         <form action="/logout" method="post">
@@ -100,7 +105,7 @@
       <a
         class="<%= path === '/admin/themes' ? 'active' : '' %>"
         href="/admin/themes"
-        >Admin themes
+        >My themes
       </a>
     </li>
     <% } %> <% if (!isAuthenticated) { %>

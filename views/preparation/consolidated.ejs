@@ -25,7 +25,7 @@
         <button onclick="showModal()" id="add-result-button" class="btn add-result">Add result</button>
       </div>
 
-      <div  id="backdrop" class="modal-backdrop">
+      <div  id="backdrop-consolidated" class="modal-backdrop">
         <div class="modal-content">
           <h3>Add Preparation Result</h3>
           <div class="modal-header">
@@ -181,17 +181,23 @@
         </ul>
         <% } %>
       </div>
-      <% } %>
       <div class="consolidated-form">
         <a class="btn" href="/readings/<%= theme._id%>">Back</a>
       </div>
+      <% } %>
+      
 
       <!-- back to top button -->
-      <button onclick="backToTop()" id="scroll-top">Top</button>
+      <button onclick="backToTop()" class="scroll-top">Top</button>
     </main>
+
+
+    <script nonce="<%= nonce3%>" src="/js/prep.js"></script>
+    <script nonce="<%= nonce4%>" src="/js/consolidated.js"></script>
+    <script nonce="<%= nonce8%>" src="/js/scroll.js"></script>
+
+
     <%- include('../includes/end.ejs') %>
 
-    <script src="/js/prep.js"></script>
-    <script src="/js/consolidated.js"></script>
-    <script src="/js/main.js"></script>
+
 

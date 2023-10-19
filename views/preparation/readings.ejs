@@ -81,15 +81,17 @@
         </ul>
         <% } %>
       </div>
-      <% } %>
       <div class="consolidated-form">
         <a class="btn" href="/readings/consolidated/<%= theme._id%>">Consolidate</a>
       </div>
+      <% } %>
+      
       <!-- back to top button -->
-      <button onclick="backToTop()" id="scroll-top">Top</button>
+      <button onclick="backToTop()" class="scroll-top">Top</button>
     </main>
+    <script nonce="<%= nonce8%>" src="/js/scroll.js"></script>
+    <script nonce="<%= nonce3%>" src="/js/prep.js"></script>
     <%- include('../includes/end.ejs') %>
 
-  <script src="/js/prep.js"></script>
-  <script src="/js/main.js"></script>
+
 

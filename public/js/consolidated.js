@@ -1,7 +1,7 @@
 const toggleShowForm = document.getElementById("add-result-button");
 const addResultForm = document.getElementById("add-result-form");
 
-const modalBackdrop = document.getElementById("backdrop");
+const modalBackdrop = document.getElementById("backdrop-consolidated");
 
 // toggleShowForm.addEventListener("click", function () {
 //   if (

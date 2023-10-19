@@ -49,3 +49,5 @@ function quoteRandomizer(quotes) {
 }
 
 quoteRandomizer(quotes);
+
+// console.log("index.js");

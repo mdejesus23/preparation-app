@@ -4,7 +4,7 @@ const fileHelper = require("../util/file");
 
 const { validationResult } = require("express-validator");
 
-const ITEMS_PER_PAGE = 2;
+const ITEMS_PER_PAGE = 5;
 
 exports.getAddTheme = (req, res, next) => {
   res.render("admin/edit-theme", {
@@ -30,8 +30,6 @@ exports.postAddTheme = async (req, res, next) => {
   const description = req.body.description;
   const passcode = req.body.passcode;
   const readings = [];
-
-  console.log(image);
 
   if (!image) {
     return res.status(422).render("admin/edit-theme", {
@@ -171,6 +169,7 @@ exports.postEditThemes = async (req, res, next) => {
   const updatedTitle = req.body.title;
   const image = req.file;
   const updatedDescription = req.body.description;
+  const updatedPasscode = req.body.passcode;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -184,6 +183,7 @@ exports.postEditThemes = async (req, res, next) => {
         _id: themeId,
         title: updatedTitle,
         description: updatedDescription,
+        passcode: updatedPasscode,
       },
       validationErrors: errors.array(),
       username: req.user.username,
@@ -197,6 +197,7 @@ exports.postEditThemes = async (req, res, next) => {
     }
     existingTheme.title = updatedTitle;
     existingTheme.description = updatedDescription;
+    existingTheme.passcode = updatedPasscode;
     // if user attached file image to change current image.
     if (image) {
       fileHelper.deleteFile(existingTheme.imageUrl);

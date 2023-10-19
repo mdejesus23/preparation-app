@@ -112,13 +112,15 @@
         <% } %>
       </div>
       <% } %>
-      <button onclick="backToTop()" id="scroll-top">Top</button>
+      <!-- back to top button -->
+      <button onclick="backToTop()" class="scroll-top">Top</button>
     </main>
+        <script nonce="<%= nonce8%>" src="/js/scroll.js"></script>
+        <script nonce="<%= nonce1%>" src="/js/admin.js"></script>
+        <script nonce="<%= nonce3%>" src="/js/prep.js"></script>
     <%- include('../includes/end.ejs') %>
 
-  <script src="/js/admin.js"></script>
-  <script src="/js/prep.js"></script>
-  <script src="/js/main.js"></script>
+
 
 
 

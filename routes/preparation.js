@@ -4,7 +4,8 @@ const { body } = require("express-validator");
 
 const preparationControllers = require("../controllers/preparation");
 const isAuth = require("../routesProtector/is-auth");
-const isThemeGetAccess = require("../routesProtector/is-themeGetAccess");
+// const isThemeGettestAccess = require("../routesProtector/is-themeGetAccess");
+const hasThemeAccess = require("../routesProtector/is-themeGetAccess");
 
 const router = express.Router();
 
@@ -12,12 +13,10 @@ router.get("/", preparationControllers.getHomePage);
 
 router.get("/themes", isAuth, preparationControllers.getThemes);
 
-router.get("/readings/:themeId", isAuth, preparationControllers.getReadings);
-
 router.get(
   "/readings/:themeId",
   isAuth,
-  isThemeGetAccess,
+  hasThemeAccess,
   preparationControllers.getReadings
 );
 
