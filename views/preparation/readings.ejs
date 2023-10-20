@@ -1,5 +1,4 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/user.css" />
     <link rel="stylesheet" href="/css/readings.css" />
   </head>
 
@@ -10,6 +9,7 @@
       <div id="loader"></div>
       <% if (!readings) { %>
         <h1>No readings found!</h1>
+        <div class="empty-container"></div>
       <% } else {  %>
       <h1 class="theme-header"><%= theme.title%></h1>
 

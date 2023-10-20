@@ -98,7 +98,6 @@ exports.getReadings = async (req, res, next) => {
 exports.checkPasscode = async (req, res, next) => {
   const themeId = req.params.themeId;
   const passcode = req.body.passcode;
-
   const cookieThemeId = req.cookies.themeId;
 
   try {
@@ -121,23 +120,6 @@ exports.checkPasscode = async (req, res, next) => {
       res.cookie("themeId", themeId, { maxAge: 4 * 60 * 60 * 1000 });
       res.status(202).json({ message: "passcode did match" });
     }
-
-    // const userId = req.user._id.toString();
-    // const isIncluded = theme.groupMembers.some(
-    //   (user) => user.userId.toString() === userId
-    // );
-
-    // if (isIncluded) {
-    //   // user already included
-    //   res.status(202).json({ message: "passcode did match" });
-    // } else {
-    //   // if the passcode did match
-    //   theme.groupMembers.push({
-    //     userId: req.user._id,
-    //   });
-    //   theme.save();
-    //   res.status(202).json({ message: "passcode did match" });
-    // }
   } catch (err) {
     res.status(500).json({ message: "Theme not found" });
   }

@@ -31,11 +31,11 @@ body {
 main {
   padding: 1rem;
   margin: auto;
-  margin-bottom: 120px;
 }
 
 h1 {
   text-align: center;
+  z-index: 1;
 }
 
 form {
@@ -56,6 +56,13 @@ li {
 
 .image img {
   height: 100%;
+}
+
+#logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
 }
 
 .main-header {
@@ -96,9 +103,15 @@ li {
   align-items: center;
   cursor: pointer;
   transition: border color 0.4s;
+  position: relative;
 }
 
 .username-container:hover {
+  border: 1px solid white;
+  color: var(--secondary-color);
+}
+
+.username-container:active {
   border: 1px solid white;
   color: var(--secondary-color);
 }
@@ -118,6 +131,62 @@ li {
   width: 80%;
 }
 
+.dropdown-content {
+  display: none;
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 250px;
+  position: absolute;
+  border-radius: 8px;
+  top: 55px;
+  left: -50px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  /* padding: 0.8 1rem; */
+  z-index: 2;
+  background-color: var(--fourth-color);
+  overflow: hidden;
+}
+
+.show {
+  display: flex;
+}
+
+.dropdown-content li {
+  color: black;
+  list-style: none;
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0;
+}
+
+.dropdown-content li a,
+.dropdown-content li form button {
+  color: black;
+  display: block; /* Make the <a> element a block-level element */
+  width: 100%; /* Occupy 100% width of the parent <li> */
+  text-decoration: none; /* Remove underline on links */
+  padding: 10px; /* Add padding to control the spacing inside the <a> */
+}
+
+.dropdown-content li:hover {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.dropdown-content li:hover a {
+  color: var(--secondary-color);
+}
+
+.dropdown-content li:hover form button {
+  color: var(--secondary-color);
+}
+
+.dropdown-content li:last-child {
+  border-top: 1px solid rgb(224, 224, 224);
+  width: 100%;
+}
 .main-header__item a,
 .main-header__item button {
   font: inherit;
@@ -143,7 +212,7 @@ li {
   height: 100vh;
   max-width: 90%;
   position: fixed;
-  left: 0;
+  right: -100px;
   top: 0;
   background: white;
   z-index: 10;
@@ -380,7 +449,11 @@ li {
 }
 
 .voted p {
-  color: var(--vote-count-color);
+  color: green;
+}
+
+.empty-container {
+  height: 90vh;
 }
 
 /* Center the loader */
@@ -419,7 +492,7 @@ li {
   border: none;
   outline: none;
   background-color: var(--primary-color);
-  color: white;
+  color: var(--secondary-color);
   cursor: pointer;
   padding: 7px 10px;
   border-radius: 10px;

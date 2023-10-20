@@ -4,39 +4,9 @@
   <nav class="main-header__nav">
     <ul class="main-header__item-list">
       <li class="main-header__item">
-        <a class="<%= path === '/' ? 'active' : '' %>" href="/">Home</a>
+        <a id="logo" class="logo" href="/">WordOfGod</a>
       </li>
-      <% if (isAuthenticated) { %>
-
-      <li class="main-header__item">
-        <a class="<%= path === '/themes' ? 'active' : '' %>" href="/themes"
-          >All Themes</a
-        >
-      </li>
-
-      <li class="main-header__item">
-        <a
-          class="<%= path === '/readings/result' ? 'active' : '' %>"
-          href="/results"
-          >Result</a
-        >
-      </li>
-
-      <li class="main-header__item">
-        <a
-          class="<%= path === '/admin/add-themes' ? 'active' : '' %>"
-          href="/admin/add-themes"
-          >Add Themes
-        </a>
-      </li>
-      <li class="main-header__item">
-        <a
-          class="<%= path === '/admin/themes' ? 'active' : '' %>"
-          href="/admin/themes"
-          >My themes
-        </a>
-      </li>
-      <% } %>
+      <% if (isAuthenticated) { %> <% } %>
     </ul>
     <!--login/logout-->
     <ul class="main-header__item-list">
@@ -56,19 +26,48 @@
       <% } else { %>
       <!-- if user authenticated -->
       <li class="main-header__item">
+        <a class="<%= path === '/themes' ? 'active' : '' %>" href="/themes"
+          >All Themes</a
+        >
+      </li>
+      <li class="main-header__item">
         <div class="username-container">
           <div class="user-icon-container">
             <img src="/images/user-icon.png" />
           </div>
-          <p><%= username%></p>
+          <button class="dropbtn" id="dropdown-btn"><%= username%></button>
+          <ul class="dropdown-content">
+            <li>
+              <a
+                class="<%= path === '/readings/result' ? 'active' : '' %>"
+                href="/results"
+                >My Result</a
+              >
+            </li>
+            <li>
+              <a
+                class="<%= path === '/admin/add-themes' ? 'active' : '' %>"
+                href="/admin/add-themes"
+                >Add Themes
+              </a>
+            </li>
+            <li>
+              <a
+                class="<%= path === '/admin/themes' ? 'active' : '' %>"
+                href="/admin/themes"
+                >My themes
+              </a>
+            </li>
+            <li>
+              <form action="/logout" method="post">
+                <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+                <button type="submit">Logout</button>
+              </form>
+            </li>
+          </ul>
         </div>
       </li>
-      <li class="main-header__item">
-        <form action="/logout" method="post">
-          <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-          <button type="submit">Logout</button>
-        </form>
-      </li>
+
       <% } %>
     </ul>
   </nav>
@@ -83,30 +82,45 @@
 
     <li class="mobile-nav__item">
       <a class="<%= path === '/themes' ? 'active' : '' %>" href="/themes"
-        >Themes</a
-      >
-    </li>
-
-    <li class="mobile-nav__item">
-      <a
-        class="<%= path === '/readings/result' ? 'active' : '' %>"
-        href="/results"
-        >Result</a
+        >All Themes</a
       >
     </li>
     <li class="mobile-nav__item">
-      <a
-        class="<%= path === '/admin/add-themes' ? 'active' : '' %>"
-        href="/admin/add-themes"
-        >Add Themes
-      </a>
-    </li>
-    <li class="mobile-nav__item">
-      <a
-        class="<%= path === '/admin/themes' ? 'active' : '' %>"
-        href="/admin/themes"
-        >My themes
-      </a>
+      <div class="username-container">
+        <div class="user-icon-container">
+          <img src="/images/user-icon.png" />
+        </div>
+        <button class="dropbtn" id="dropdown-btn"><%= username%></button>
+        <ul class="dropdown-content">
+          <li>
+            <a
+              class="<%= path === '/readings/result' ? 'active' : '' %>"
+              href="/results"
+              >My Result</a
+            >
+          </li>
+          <li>
+            <a
+              class="<%= path === '/admin/add-themes' ? 'active' : '' %>"
+              href="/admin/add-themes"
+              >Add Themes
+            </a>
+          </li>
+          <li>
+            <a
+              class="<%= path === '/admin/themes' ? 'active' : '' %>"
+              href="/admin/themes"
+              >My themes
+            </a>
+          </li>
+          <li>
+            <form action="/logout" method="post">
+              <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+              <button type="submit">Logout</button>
+            </form>
+          </li>
+        </ul>
+      </div>
     </li>
     <% } %> <% if (!isAuthenticated) { %>
     <li class="mobile-nav__item">
@@ -119,14 +133,6 @@
         >Signup</a
       >
     </li>
-    <% } else { %>
-
-    <li class="mobile-nav__item">
-      <form action="/logout" method="post">
-        <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-        <button type="submit">Logout</button>
-      </form>
-    </li>
-    <% } %>
+    <% } else { %> <% } %>
   </ul>
 </nav>
