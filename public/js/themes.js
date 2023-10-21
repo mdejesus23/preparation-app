@@ -4,7 +4,7 @@ let csrf;
 
 const passCodeErr = document.getElementById("passcode-error");
 
-const modalBackdrop = document.getElementById("backdrop-admin");
+const modalBackdrop = document.getElementById("backdrop-themes");
 
 const showModal = (button) => {
   modalBackdrop.style.display = "flex";
