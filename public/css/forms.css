@@ -14,7 +14,12 @@
 }
 
 .form-control {
-  margin: 0.8rem 0;
+  margin-bottom: 0;
+}
+
+.form-control a,
+.form-control button {
+  width: 100%;
 }
 
 .form-control label,
@@ -49,6 +54,11 @@
   border-color: red;
 }
 
-.card-form .btn-signup {
+/* .card-form .btn-signup {
   width: 100%;
+} */
+
+.themes-control {
+  display: flex;
+  flex-direction: column;
 }

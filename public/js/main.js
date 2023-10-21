@@ -26,18 +26,36 @@ window.addEventListener("beforeunload", () => {
   document.getElementById("loader").style.display = "block";
 });
 
+// desktop dropdown
 const dropDown = document.querySelector(".dropdown-content");
+const dropdownBtn = document.getElementById("dropdown-btn");
 
 const showDropDown = () => {
+  console.log("show dropdown was clicked");
   dropDown.classList.toggle("show");
 };
 
-const dropdownBtn = document.getElementById("dropdown-btn");
-
 dropdownBtn.addEventListener("click", showDropDown);
+
+// mobile dropdown
+const mobileDdContet = document.querySelector(".mobile-dropdown-content");
+const mobileDdBtn = document.getElementById("mobile-dropdown-btn");
+
+const showMobileDd = () => {
+  console.log("show dropdown was clicked");
+  mobileDdContet.classList.toggle("show");
+};
+
+mobileDdBtn.addEventListener("click", showMobileDd);
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function (event) {
+  if (!event.target.matches(".mobile-dropbtn")) {
+    if (mobileDdContet.classList.contains("show")) {
+      mobileDdContet.classList.remove("show");
+    }
+  }
+
   if (!event.target.matches(".dropbtn")) {
     if (dropDown.classList.contains("show")) {
       dropDown.classList.remove("show");

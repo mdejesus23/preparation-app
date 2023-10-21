@@ -50,13 +50,14 @@
                 <p class="theme-description"><%= theme.description%></p>
             </div>
             <div class="card-actions">
-                    <div class="form-control">
-                        <a href="/admin/edit-theme/<%= theme._id%>?edit=true" class="btn">Edit</a>
-                        <input type="hidden" id="csrfToken" name="csrfToken" value="<%= csrfToken%>" />
-                        <input type="hidden" id="themeId" name="themeId" value="<%= theme._id%>" />
-                        <button class="btn" onclick="showModal(this)">Delete</button>
-                    </div>
+              <div class="form-control themes-control">
+                <a href="/admin/edit-theme/<%= theme._id%>?edit=true" class="btn">Edit</a>
+                <input type="hidden" id="csrfToken" name="csrfToken" value="<%= csrfToken%>" />
+                <input type="hidden" id="themeId" name="themeId" value="<%= theme._id%>" />
+                <button class="btn" onclick="showModal(this)">Delete</button>
                 <a href="/admin/add-readings/<%= theme._id%>" class="btn">Add Readings</a>
+                <button class="btn" onclick="showResetModal(this)">Reset Votes</button>
+            </div>
             </div>
         </article>
 
@@ -65,11 +66,9 @@
     <%- include('../includes/pagination.ejs') %>
     <% } else { %>
         <h1>No Themes Found!</h1>
-        <div class="empty-container"></div>
     <% } %>
   </main>
   
     <script nonce="<%= nonce1%>" src="/js/admin.js"></script>
     
   <%- include('../includes/end.ejs') %>
-

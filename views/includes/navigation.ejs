@@ -1,11 +1,12 @@
 <div class="backdrop"></div>
 <header class="main-header">
+  <li class="main-header__item logo-header">
+    <a id="logo" class="logo" href="/"><span class="highlight-letter">Word</span>of<span class="highlight-letter">God</span></a>
+    <span class="tooltip">Home</span>
+  </li>
   <button id="side-menu-toggle">Menu</button>
   <nav class="main-header__nav">
     <ul class="main-header__item-list">
-      <li class="main-header__item">
-        <a id="logo" class="logo" href="/">WordOfGod</a>
-      </li>
       <% if (isAuthenticated) { %> <% } %>
     </ul>
     <!--login/logout-->
@@ -35,7 +36,7 @@
           <div class="user-icon-container">
             <img src="/images/user-icon.png" />
           </div>
-          <button class="dropbtn" id="dropdown-btn"><%= username%></button>
+          <button class="dropbtn" id="dropdown-btn"><%= username%> &#8681;</button>
           <ul class="dropdown-content">
             <li>
               <a
@@ -72,6 +73,7 @@
     </ul>
   </nav>
 </header>
+
 <!--Mobile view navigation-->
 <nav class="mobile-nav">
   <ul class="mobile-nav__item-list">
@@ -86,12 +88,15 @@
       >
     </li>
     <li class="mobile-nav__item">
-      <div class="username-container">
-        <div class="user-icon-container">
-          <img src="/images/user-icon.png" />
-        </div>
-        <button class="dropbtn" id="dropdown-btn"><%= username%></button>
-        <ul class="dropdown-content">
+      <div class="mobile-username-container">
+        <button class="mobile-dropbtn" id="mobile-dropdown-btn">
+          <div class="mobile-user-icon-container">
+            <img src="/images/user-icon.png" />
+          </div>
+            <%= username%> &#8681;
+        </button>
+        
+        <ul class="mobile-dropdown-content">
           <li>
             <a
               class="<%= path === '/readings/result' ? 'active' : '' %>"
@@ -133,6 +138,6 @@
         >Signup</a
       >
     </li>
-    <% } else { %> <% } %>
+    <% }  %> 
   </ul>
 </nav>

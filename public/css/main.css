@@ -31,6 +31,7 @@ body {
 main {
   padding: 1rem;
   margin: auto;
+  min-height: 600px;
 }
 
 h1 {
@@ -59,10 +60,41 @@ li {
 }
 
 #logo {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: bold;
   text-decoration: none;
   color: white;
+}
+
+.logo-header {
+  margin: 0;
+  list-style: none;
+  position: relative;
+}
+
+.tooltip {
+  visibility: hidden;
+  background-color: rgb(85, 85, 85);
+  opacity: 0.8;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 7px;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -60px;
+}
+
+.logo-header:hover .tooltip {
+  visibility: visible;
+}
+
+.highlight-letter {
+  color: var(--secondary-color);
 }
 
 .main-header {
@@ -72,6 +104,7 @@ li {
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .main-header__nav {
@@ -94,6 +127,8 @@ li {
   margin: 0 1rem;
   padding: 0;
 }
+
+/* desktop dropdown*/
 
 .username-container {
   color: white;
@@ -140,8 +175,8 @@ li {
   min-width: 250px;
   position: absolute;
   border-radius: 8px;
-  top: 55px;
-  left: -50px;
+  top: 40px;
+  left: -130px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   /* padding: 0.8 1rem; */
   z-index: 2;
@@ -170,16 +205,17 @@ li {
   padding: 10px; /* Add padding to control the spacing inside the <a> */
 }
 
-.dropdown-content li:hover {
+.dropdown-content li:hover,
+.dropdown-content li:hover a,
+.dropdown-content li:hover form button {
   background-color: var(--primary-color);
   color: var(--secondary-color);
 }
 
-.dropdown-content li:hover a {
-  color: var(--secondary-color);
-}
-
-.dropdown-content li:hover form button {
+.dropdown-content li:active,
+.dropdown-content li:active a,
+.dropdown-content li:active form button {
+  background-color: var(--primary-color);
   color: var(--secondary-color);
 }
 
@@ -187,6 +223,128 @@ li {
   border-top: 1px solid rgb(224, 224, 224);
   width: 100%;
 }
+
+/*mobile dropdown*/
+
+.mobile-username-container {
+  color: black;
+  padding: 4px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+  transition: border color 0.4s;
+  position: relative;
+}
+
+.mobile-dropbtn {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0;
+}
+
+.mobile-dropbtn:hover {
+  color: white;
+}
+
+.mobile-dropbtn:active {
+  color: white;
+}
+
+.mobile-username-container:hover .mobile-user-icon-container {
+  background-color: var(--primary-color);
+  border: 1px solid white;
+}
+
+.mobile-username-container:active .mobile-user-icon-container {
+  background-color: var(--primary-color);
+  border: 1px solid white;
+}
+
+.mobile-username-container {
+  color: black;
+}
+
+.mobile-user-icon-container {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 1px solid black;
+  margin-right: 5px;
+  margin-left: -5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+}
+
+.mobile-username-container:hover {
+  background-color: var(--primary-color);
+  color: var(--primary-font-color);
+}
+
+.mobile-username-container:active {
+  background-color: var(--primary-color);
+  color: var(--primary-font-color);
+}
+
+.mobile-user-icon-container img {
+  width: 80%;
+}
+
+.mobile-dropdown-content {
+  display: none;
+  /* display: flex; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: var(--fourth-color);
+}
+
+.show {
+  display: flex;
+}
+
+.mobile-dropdown-content li {
+  color: black;
+  list-style: none;
+  width: 100%;
+  padding: 0.6rem;
+  margin: 0;
+}
+
+.mobile-dropdown-content li a,
+.mobile-dropdown-content li form button {
+  color: black;
+  display: block; /* Make the <a> element a block-level element */
+  width: 100%; /* Occupy 100% width of the parent <li> */
+  text-decoration: none; /* Remove underline on links */
+  padding: 10px; /* Add padding to control the spacing inside the <a> */
+}
+
+.mobile-dropdown-content li:hover,
+.mobile-dropdown-content li:hover a,
+.mobile-dropdown-content li:hover form button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.mobile-dropdown-content li:active,
+.mobile-dropdown-content li:active a,
+.mobile-dropdown-content li:active form button {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.mobile-dropdown-content li:last-child {
+  border-top: 1px solid rgb(224, 224, 224);
+  width: 100%;
+}
+
 .main-header__item a,
 .main-header__item button {
   font: inherit;
@@ -212,12 +370,12 @@ li {
   height: 100vh;
   max-width: 90%;
   position: fixed;
-  right: -100px;
+  right: 0;
   top: 0;
   background: white;
-  z-index: 10;
+  z-index: 1000;
   padding: 2rem 1rem 1rem 2rem;
-  transform: translateX(-100%);
+  transform: translateX(100%);
   transition: transform 0.3s ease-out;
 }
 
@@ -307,6 +465,11 @@ li {
   box-shadow: 0 8px 16px 0 rgba(51, 110, 106, 0.3);
 }
 
+.card-header {
+  color: var(--secondary-color);
+  background-color: var(--primary-color);
+}
+
 .card-header,
 .card-content {
   padding: 1rem;
@@ -319,21 +482,28 @@ li {
   margin: 0;
 }
 
+.card-header h2 {
+  text-align: center;
+}
+
 .card-image {
   width: 100%;
 }
 
 .card-image img {
   width: 100%;
+  height: auto;
+  /* max-height: 350px; */
+  object-fit: fill;
 }
 
 .card-actions {
-  padding: 1rem;
+  padding-bottom: 0.6rem;
   text-align: center;
 }
 
 .card-actions button {
-  margin: 0 0.25rem;
+  /* margin: 0 0.25rem; */
 }
 
 .btn {
@@ -388,6 +558,7 @@ li {
 }
 
 .user-message--error {
+  display: block;
   border-color: red;
   background: rgb(255, 176, 176);
   color: red;
@@ -395,6 +566,7 @@ li {
 }
 
 .user-message--success {
+  display: block;
   border-color: green;
   background: rgb(171, 204, 171);
   color: green;
@@ -450,10 +622,6 @@ li {
 
 .voted p {
   color: green;
-}
-
-.empty-container {
-  height: 90vh;
 }
 
 /* Center the loader */
@@ -512,9 +680,5 @@ li {
 @media (max-width: 768px) {
   html {
     font-size: 12px;
-  }
-
-  .username {
-    color: black;
   }
 }

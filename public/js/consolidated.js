@@ -3,17 +3,6 @@ const addResultForm = document.getElementById("add-result-form");
 
 const modalBackdrop = document.getElementById("backdrop-consolidated");
 
-// toggleShowForm.addEventListener("click", function () {
-//   if (
-//     addResultForm.style.display === "none" ||
-//     addResultForm.style.display === ""
-//   ) {
-//     addResultForm.style.display = "block";
-//   } else {
-//     addResultForm.style.display = "none";
-//   }
-// });
-
 const showModal = () => {
   modalBackdrop.style.display = "flex";
 };

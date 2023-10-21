@@ -1,5 +1,5 @@
 /* The Modal (background) */
-.modal-backdrop {
+.reset-modal-backdrop {
   display: none;
   /* display: flex; */
   justify-content: center; /* Center horizontally */
@@ -8,16 +8,14 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 1;
+  z-index: 9;
   background-color: rgba(0, 0, 0, 0.75);
 }
 
 /* Modal Content/Box */
-.modal-content {
-  position: fixed;
+.reset-modal-content {
+  position: absolute;
   top: 15vh;
-  /* left: 20%;
-  right: 20%; */
   width: 50%;
   background-color: white;
   padding: 1rem;
@@ -29,18 +27,18 @@
   max-height: 90vh;
 }
 
-.modal-header {
+.reset-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.modal-header h3 {
+.reset-modal-header h3 {
   color: red;
 }
 
 /* The Close Button */
-.close {
+.close-btn {
   color: #aaa;
   float: right;
   font-size: 28px;
@@ -48,33 +46,33 @@
   margin-bottom: 1rem;
 }
 
-.close:hover,
-.close:focus {
+.close-btn:hover,
+.close-btn:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;
 }
 
-.modal-content p {
+.reset-modal-content p {
   margin-top: 1.5rem;
   margin-bottom: 3rem;
 }
 
-.modal-control {
+.reset-modal-control {
   width: 100%;
   display: flex;
   justify-content: right;
   margin-top: 1rem;
 }
 
-.modal-control button:last-child {
+.reset-modal-control button:last-child {
   background-color: red;
   color: white;
   margin-left: 0.5rem;
 }
 
-.modal-control button:hover,
-.modal-control button:focus {
+.reset-modal-control button:hover,
+.reset-modal-control button:focus {
   font-weight: bold;
 }
 
@@ -90,7 +88,7 @@
 }
 
 @media (max-width: 768px) {
-  .modal-content {
+  .reset-modal-content {
     width: 90%;
   }
 }

@@ -1,15 +1,15 @@
 let themeElement;
-let resultId;
+let themeId;
 let csrf;
 
-//modal element
+//modal element for deleting themes
 const modalBackdrop = document.getElementById("backdrop-admin");
 
 const showModal = (button) => {
   modalBackdrop.style.display = "flex";
 
   themeElement = button.closest("article");
-  resultId = themeElement.querySelector("#themeId").value;
+  themeId = themeElement.querySelector("#themeId").value;
   csrf = themeElement.querySelector("#csrfToken").value;
 };
 
@@ -26,7 +26,7 @@ const closeModal = () => {
 };
 
 const deleteTheme = () => {
-  const url = "/admin/theme/" + resultId;
+  const url = "/admin/theme/" + themeId;
 
   fetch(url, {
     method: "DELETE",
