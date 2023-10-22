@@ -2,11 +2,15 @@
   <link rel="stylesheet" href="/css/themes.css" />
   <link rel="stylesheet" href="/css/forms.css" />
   <link rel="stylesheet" href="/css/modal.css" />
+  <link rel="stylesheet" href="/css/reset-modal.css" />
+
 
 </head>
 
 <body>
   <%- include('../includes/navigation.ejs') %>
+
+  <!-- backdrop for deleting themes -->
   <div  id="backdrop-admin" class="modal-backdrop backdrop">
     <div class="modal-content">
         <div class="modal-header">
@@ -19,6 +23,23 @@
       <div class="modal-control">
         <button class="btn" onclick="deleteTheme()">Yes</button>
         <button onclick="closeModal()" class="btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- backdrop for themes votes reset  -->
+  <div  id="backdrop-reset" class="reset-modal-backdrop backdrop">
+    <div class="reset-modal-content">
+        <div class="reset-modal-header">
+            <h3>Attention!</h3>
+            <span onclick="resetCloseModal()" class="close-btn">&times;</span>
+        </div>
+      <hr>
+      <p>Are you sure you want to reset the vote count of this theme?</p>
+      <hr>
+      <div class="reset-modal-control">
+        <button class="btn" onclick="resetVotes()">Yes</button>
+        <button onclick="resetCloseModal()" class="btn">Cancel</button>
       </div>
     </div>
   </div>
@@ -70,5 +91,7 @@
   </main>
   
     <script nonce="<%= nonce1%>" src="/js/admin.js"></script>
+    <script nonce="<%= nonce10%>" src="/js/reset-votes.js"></script>
+
     
   <%- include('../includes/end.ejs') %>

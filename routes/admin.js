@@ -62,4 +62,10 @@ router.delete(
   adminController.deleteReading
 );
 
+router.post(
+  "/theme/reset-votes/:themeId",
+  isAuth,
+  adminController.postThemeResetVotes
+);
+
 module.exports = router;

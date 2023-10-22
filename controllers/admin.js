@@ -218,12 +218,11 @@ exports.deleteTheme = async (req, res, next) => {
   try {
     const theme = await Theme.findById(themeId);
     if (!theme) {
-      return next(new Error("Product not found!"));
+      return next(new Error("Theme not found!"));
     }
     // fileHelper is a function use to delete image file using file system
     fileHelper.deleteFile(theme.imageUrl);
     await Theme.deleteOne({ _id: themeId, userId: req.user._id });
-    console.log("Theme Deleted!");
     res.status(200).json({ message: "Success" });
   } catch (err) {
     res.status(500).json({ message: "Deleting product failed!" });
@@ -349,5 +348,35 @@ exports.deleteReading = async (req, res, next) => {
     res.status(200).json({ message: "Success deleting reading" });
   } catch (err) {
     res.status(500).json({ message: "Deleting reading failed!" });
+  }
+};
+
+exports.postThemeResetVotes = async (req, res, next) => {
+  const themeId = req.params.themeId;
+
+  try {
+    const theme = await Theme.findById(themeId);
+    if (!theme) {
+      return next(new Error("Theme not found!"));
+    }
+
+    const updatedReadings = theme.readings.map((reading) => {
+      return {
+        ...reading,
+        voteCount: 0,
+      };
+    });
+
+    console.log(updatedReadings);
+
+    theme.readings = updatedReadings;
+    await theme.save();
+
+    res.status(200).json({
+      message: "votes reset successfully",
+      theme: theme,
+    });
+  } catch (err) {
+    res.status(500).json({ message: "votes reset failed" });
   }
 };

@@ -31,6 +31,7 @@ body {
 main {
   padding: 1rem;
   margin: auto;
+  margin-top: 1.5rem;
   min-height: 500px;
 }
 

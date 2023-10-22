@@ -9,6 +9,8 @@
 <main>
   <% if (errorMessage) { %>
     <div class="user-message user-message--error"><%= errorMessage %></div>
+  <% } else if (successMessage) { %>
+      <div class="user-message user-message--success"><%= successMessage %></div>
   <% } %>
 
   <div id="loader"></div>

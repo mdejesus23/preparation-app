@@ -108,7 +108,7 @@ app.use(
           (req, res) => `'nonce-${res.locals.nonce7}'`, // themes.js
           (req, res) => `'nonce-${res.locals.nonce8}'`, // scroll.js
           (req, res) => `'nonce-${res.locals.nonce9}'`, // footer.js
-          (req, res) => `'nonce-${res.locals.nonce10}'`, // fontawesome.js
+          (req, res) => `'nonce-${res.locals.nonce10}'`, // reset-votes
         ],
         scriptSrcAttr: ["'self'", "'unsafe-inline'"],
         styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"],

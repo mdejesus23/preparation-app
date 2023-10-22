@@ -18,17 +18,11 @@ const transporter = nodemailer.createTransport(
 );
 
 exports.getLogin = (req, res, next) => {
-  let message = req.flash("error");
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
-
   res.render("auth/login", {
     path: "/login",
     pageTitle: "Login",
-    errorMessage: message,
+    errorMessage: null,
+    successMessage: null,
     prevInput: {
       email: "",
       password: "",
@@ -38,12 +32,6 @@ exports.getLogin = (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
-  let message = req.flash("success");
-  if (message.length > 0) {
-    message = message[0];
-  } else {
-    message = null;
-  }
   res.render("auth/signup", {
     path: "/signup",
     pageTitle: "Signup",
@@ -62,7 +50,6 @@ exports.getSignup = (req, res, next) => {
 exports.postLogin = async (req, res, next) => {
   const email = req.body.email;
   const password = req.body.password;
-  const username = req.body.username;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -73,7 +60,6 @@ exports.postLogin = async (req, res, next) => {
       prevInput: {
         email: email,
         password: password,
-        username: username,
       },
       validationErrors: errors.array(),
     });
@@ -99,7 +85,6 @@ exports.postLogin = async (req, res, next) => {
     }
 
     // if password didn't match
-    // req.flash("error", "Invalid email or password"); // takes a key 1st arg. and then the message.
     res.status(422).render("auth/login", {
       path: "/login",
       pageTitle: "Login",
@@ -226,7 +211,17 @@ exports.postResetPassword = (req, res, next) => {
         return user.save();
       })
       .then((result) => {
-        res.redirect("/login");
+        res.render("auth/login", {
+          path: "/login",
+          pageTitle: "Login",
+          errorMessage: "",
+          successMessage: "Please check your email to change your password.",
+          prevInput: {
+            email: "",
+            password: "",
+          },
+          validationErrors: [],
+        });
         transporter.sendMail({
           to: req.body.email,
           from: "dejesusmelnard@gmail.com",
@@ -248,7 +243,6 @@ exports.postResetPassword = (req, res, next) => {
 
 exports.getNewPassword = async (req, res, next) => {
   const token = req.params.token;
-  let message = req.flash("error");
 
   try {
     const user = await User.findOne({
@@ -256,16 +250,9 @@ exports.getNewPassword = async (req, res, next) => {
       resetTokenExpiration: { $gt: Date.now() },
     });
 
-    if (message.length > 0) {
-      message = message[0];
-    } else {
-      message = null;
-    }
-
     res.render("auth/new-password", {
       path: "/new-password",
       pageTitle: "New Password",
-      errorMessage: message,
       userId: user._id.toString(), // we can get user data because of the middleware in the app.js which assign user.
       passwordToken: token,
     });
@@ -298,7 +285,17 @@ exports.postNewPassword = async (req, res, next) => {
     resetUser.resetTokenExpiration = undefined;
     await resetUser.save();
 
-    res.redirect("/login");
+    return res.render("auth/login", {
+      path: "/login",
+      pageTitle: "Login",
+      errorMessage: "",
+      successMessage: "Password successfully changed.",
+      prevInput: {
+        email: "",
+        password: "",
+      },
+      validationErrors: [],
+    });
   } catch (err) {
     const error = new Error(err); // create an error object.
     error.httpStatusCode = 500; // set error object property

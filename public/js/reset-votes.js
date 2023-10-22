@@ -9,8 +9,8 @@ const showResetModal = (button) => {
   resetModalBackdrop.style.display = "flex";
 
   resetThemeElement = button.closest("article");
-  resetThemeId = themeElement.querySelector("#themeId").value;
-  resetCsrf = themeElement.querySelector("#csrfToken").value;
+  resetThemeId = resetThemeElement.querySelector("#themeId").value;
+  resetCsrf = resetThemeElement.querySelector("#csrfToken").value;
 };
 
 // When the user clicks anywhere outside of the modal, close it
@@ -21,13 +21,13 @@ window.onclick = (event) => {
 };
 
 // close modal
-const closeModal = () => {
-  modalBackdrop.style.display = "none";
+const resetCloseModal = () => {
+  resetModalBackdrop.style.display = "none";
 };
 
 // reset votes
 const resetVotes = () => {
-  const url = "/admin/theme/reset-votes" + resetThemeId;
+  const url = "/admin/theme/reset-votes/" + resetThemeId;
 
   fetch(url, {
     method: "POST",
@@ -36,14 +36,18 @@ const resetVotes = () => {
       "csrf-token": resetCsrf,
     },
   })
-    .then((result) => {
-      return result.json();
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
     })
     .then((data) => {
       console.log(data);
-      closeModal();
+      resetCloseModal();
     })
     .catch((err) => {
       console.log(err);
+      resetCloseModal();
     });
 };
