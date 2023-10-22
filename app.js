@@ -88,7 +88,6 @@ app.use((req, res, next) => {
   res.locals.nonce8 = crypto.randomBytes(16).toString("hex");
   res.locals.nonce9 = crypto.randomBytes(16).toString("hex");
   res.locals.nonce10 = crypto.randomBytes(16).toString("hex");
-
   next();
 });
 
@@ -111,10 +110,14 @@ app.use(
           (req, res) => `'nonce-${res.locals.nonce10}'`, // reset-votes
         ],
         scriptSrcAttr: ["'self'", "'unsafe-inline'"],
-        styleSrc: ["'self'", "'unsafe-inline'", "fonts.googleapis.com"],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          "fonts.googleapis.com",
+          "https://kit.fontawesome.com/372429fb46.js",
+        ],
         connectSrc: ["'self'"], // Allow connections to the same origin
         frameSrc: ["'self'"], // Allow frames from the same origin
-        // imageSrc: ["'self'"],
       },
     },
   })

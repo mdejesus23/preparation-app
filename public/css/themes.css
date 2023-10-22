@@ -23,3 +23,11 @@
 .theme-description {
   text-align: center;
 }
+
+#reset-votes-error {
+  display: none;
+}
+
+#reset-votes-success {
+  display: none;
+}

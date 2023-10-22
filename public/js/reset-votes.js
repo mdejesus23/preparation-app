@@ -2,6 +2,10 @@ let resetThemeElement;
 let resetThemeId;
 let resetCsrf;
 
+// reset votes error/success message
+const resetError = document.getElementById("reset-votes-error");
+const resetSuccess = document.getElementById("reset-votes-success");
+
 //modal element for deleting themes
 const resetModalBackdrop = document.getElementById("backdrop-reset");
 
@@ -43,7 +47,13 @@ const resetVotes = () => {
       return response.json();
     })
     .then((data) => {
-      console.log(data);
+      console.log(data.message);
+      if (data.message === "votes reset successfully") {
+        resetSuccess.style.display = "block";
+      } else if (data.message === "votes reset failed") {
+        resetSuccess.style.display = "none";
+        resetError.style.display = "block";
+      }
       resetCloseModal();
     })
     .catch((err) => {
