@@ -36,17 +36,7 @@ const store = new MongoDBStore({
   collection: "session",
 });
 
-// configuration object
-//  Disk storage is in the end a storage engine which you can use with multer
-// It takes two keys, it takes the destination and it takes the file name.
-const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "images"); // null if its error or empty
-  },
-  filename: (req, file, cb) => {
-    cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
-  },
-});
+const fileStorage = multer.memoryStorage();
 
 // filter function to filter incoming file before it save through its file type.
 const fileFilter = (req, file, cb) => {
@@ -77,6 +67,7 @@ const accessLogStream = fs.createWriteStream(
   { flags: "a" }
 );
 
+// create nonce as local variables for CSP
 app.use((req, res, next) => {
   res.locals.nonce1 = crypto.randomBytes(16).toString("hex");
   res.locals.nonce2 = crypto.randomBytes(16).toString("hex");
@@ -91,6 +82,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// implement CSP directives
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -118,17 +110,24 @@ app.use(
         ],
         connectSrc: ["'self'"], // Allow connections to the same origin
         frameSrc: ["'self'"], // Allow frames from the same origin
+        imgSrc: ["*"],
       },
     },
   })
 );
 
+// compress file
 app.use(compression());
+
+// middleware for logging HTTP request information.
 app.use(morgan("combined", { stream: accessLogStream }));
 
 // parsing middleware. it is use to parse data from form the request
 app.use(express.urlencoded({ extended: false }));
+
 app.use(express.json()); // Middleware to parse JSON request bodies
+
+// middleware for file/image storage
 app.use(
   multer({ storage: fileStorage, fileFilter: fileFilter }).single("image")
 );
@@ -146,7 +145,11 @@ app.use(
     store: store,
   })
 );
+
+// middleware for csrf protection
 app.use(csrfSynchronisedProtection);
+
+// middleware for storing or retrieving flash messages.
 app.use(flash());
 
 app.use((req, res, next) => {

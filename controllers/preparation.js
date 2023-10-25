@@ -2,6 +2,26 @@ const Theme = require("../models/themes");
 const Result = require("../models/result");
 const User = require("../models/user");
 
+const { S3Client, GetObjectCommand } = require("@aws-sdk/client-s3");
+
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
+const dotenv = require("dotenv");
+dotenv.config();
+
+const bucketName = process.env.AWS_BUCKET_NAME;
+const region = process.env.AWS_BUCKET_REGION;
+const accessKeyId = process.env.AWS_ACCESS_KEY;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+
+const s3Client = new S3Client({
+  region,
+  credentials: {
+    accessKeyId,
+    secretAccessKey,
+  },
+});
+
 const { validationResult, cookie } = require("express-validator");
 
 const ITEMS_PER_PAGE = 5;
@@ -25,6 +45,22 @@ exports.getThemes = async (req, res, next) => {
     const themes = await Theme.find()
       .skip((page - 1) * ITEMS_PER_PAGE) // Skip the previous pages with the items per page.
       .limit(ITEMS_PER_PAGE); // Limit the result to the current page's items
+
+    // For each theme, generate a signed URL and save it to the theme object
+    for (let theme of themes) {
+      const imageUrl = await getSignedUrl(
+        s3Client,
+        new GetObjectCommand({
+          Bucket: bucketName,
+          Key: theme.imageName,
+        }),
+        { expiresIn: 3600 } // 1 hour
+      );
+
+      theme.imageUrl = imageUrl;
+      await theme.save();
+    }
+
     res.render("preparation/themes", {
       themes: themes,
       path: "/themes",
@@ -141,6 +177,11 @@ exports.voteReading = async (req, res, next) => {
     } else {
       reading.voteCount -= 1;
     }
+
+    if (reading.voteCount < 0) {
+      reading.voteCount = 0;
+    }
+
     await theme.save();
 
     res.status(200).json({ message: "Vote counted" });

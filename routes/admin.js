@@ -43,6 +43,16 @@ router.post(
       .isLength({ min: 3 })
       .trim()
       .withMessage("Please enter a valid title min of 3 characters"),
+    body("description")
+      .isLength({ min: 5, max: 400 })
+      .trim()
+      .withMessage(
+        "Please enter a valid description min of five and max of 400 characters!"
+      ),
+    body("passcode", "Please enter a valid passcode min of 4 characters")
+      .isString()
+      .isLength({ min: 4 })
+      .trim(),
   ],
   isAuth,
   adminController.postEditThemes

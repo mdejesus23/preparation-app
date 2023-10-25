@@ -7,7 +7,7 @@ const themeSchema = new Schema({
     type: String,
     required: true,
   },
-  imageUrl: {
+  imageName: {
     type: String,
     required: true,
   },
@@ -40,6 +40,7 @@ const themeSchema = new Schema({
     ref: "User",
     required: true,
   },
+  imageUrl: String,
 });
 
 module.exports = mongoose.model("Theme", themeSchema);

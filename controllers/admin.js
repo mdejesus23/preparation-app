@@ -3,6 +3,32 @@ const Theme = require("../models/themes");
 const fileHelper = require("../util/file");
 
 const { validationResult } = require("express-validator");
+const sharp = require("sharp");
+
+const {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+  DeleteObjectCommand,
+} = require("@aws-sdk/client-s3");
+
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+
+const dotenv = require("dotenv");
+dotenv.config();
+
+const bucketName = process.env.AWS_BUCKET_NAME;
+const region = process.env.AWS_BUCKET_REGION;
+const accessKeyId = process.env.AWS_ACCESS_KEY;
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+
+const s3Client = new S3Client({
+  region,
+  credentials: {
+    accessKeyId,
+    secretAccessKey,
+  },
+});
 
 const ITEMS_PER_PAGE = 5;
 
@@ -31,6 +57,7 @@ exports.postAddTheme = async (req, res, next) => {
   const passcode = req.body.passcode;
   const readings = [];
 
+  // validate if image is not the required image type.
   if (!image) {
     return res.status(422).render("admin/edit-theme", {
       pageTitle: "Add Themes",
@@ -48,8 +75,6 @@ exports.postAddTheme = async (req, res, next) => {
     });
   }
 
-  const imageUrl = image.path; // image path is a path to the file system with image directory.
-
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render("admin/edit-theme", {
@@ -63,21 +88,39 @@ exports.postAddTheme = async (req, res, next) => {
         title: title,
         description: description,
         readings: readings,
+        passcode: passcode,
       },
       validationErrors: errors.array(),
     });
   }
 
-  const theme = new Theme({
-    title: title,
-    imageUrl: imageUrl,
-    description: description,
-    passcode: passcode,
-    readings: readings,
-    userId: req.session.user,
-  });
+  // resize image
+  const buffer = await sharp(image.buffer).resize(200, 180).toBuffer();
+
+  // image name
+  const imageName =
+    new Date().toISOString().replace(/:/g, "-") + image.originalname;
+
+  const uploadParams = {
+    Bucket: bucketName, // s3 bucket name
+    Key: imageName, // image file name
+    Body: buffer, // image buffer data
+    ContentType: image.mimetype,
+  };
 
   try {
+    // Send the upload to S3
+    await s3Client.send(new PutObjectCommand(uploadParams));
+
+    const theme = new Theme({
+      title: title,
+      imageName: imageName,
+      description: description,
+      passcode: passcode,
+      readings: readings,
+      userId: req.session.user,
+    });
+
     await theme.save();
     res.redirect("/admin/themes");
   } catch (err) {
@@ -142,7 +185,23 @@ exports.getThemes = async (req, res, next) => {
 
     const themes = await Theme.find({ userId: req.user._id })
       .skip((page - 1) * ITEMS_PER_PAGE) // Skip the previous pages with the items per page.
-      .limit(ITEMS_PER_PAGE); // Limi
+      .limit(ITEMS_PER_PAGE); // Limit
+
+    // For each theme, generate a signed URL and save it to the theme object
+    for (let theme of themes) {
+      const imageUrl = await getSignedUrl(
+        s3Client,
+        new GetObjectCommand({
+          Bucket: bucketName,
+          Key: theme.imageName,
+        }),
+        { expiresIn: 3600 } // 1 hour
+      );
+
+      theme.imageUrl = imageUrl;
+      await theme.save();
+    }
+
     res.render("admin/themes", {
       themes: themes,
       pageTitle: "Admin Themes",
@@ -192,16 +251,42 @@ exports.postEditThemes = async (req, res, next) => {
 
   try {
     const existingTheme = await Theme.findById(themeId);
+
     if (existingTheme.userId.toString() !== req.user._id.toString()) {
       return res.redirect("/");
     }
+
     existingTheme.title = updatedTitle;
     existingTheme.description = updatedDescription;
     existingTheme.passcode = updatedPasscode;
+
     // if user attached file image to change current image.
     if (image) {
-      fileHelper.deleteFile(existingTheme.imageUrl);
-      existingTheme.imageUrl = image.path;
+      // delete old image on s3
+      const deleteParams = {
+        Bucket: bucketName,
+        Key: existingTheme.imageName,
+      };
+      await s3Client.send(new DeleteObjectCommand(deleteParams));
+
+      // then upload updated image on s3.
+      // resize image
+      const buffer = await sharp(image.buffer).resize(200, 180).toBuffer();
+
+      // image name
+      const imageName =
+        new Date().toISOString().replace(/:/g, "-") + image.originalname;
+
+      const uploadParams = {
+        Bucket: bucketName, // s3 bucket name
+        Key: imageName, // image file name
+        Body: buffer, // image buffer data
+        ContentType: image.mimetype,
+      };
+      // Send the updated image to S3
+      await s3Client.send(new PutObjectCommand(uploadParams));
+
+      existingTheme.imageName = imageName;
     }
     await existingTheme.save();
     console.log("UPDATED THEME!");
@@ -221,7 +306,7 @@ exports.deleteTheme = async (req, res, next) => {
       return next(new Error("Theme not found!"));
     }
     // fileHelper is a function use to delete image file using file system
-    fileHelper.deleteFile(theme.imageUrl);
+    // fileHelper.deleteFile(theme.imageUrl);
     await Theme.deleteOne({ _id: themeId, userId: req.user._id });
     res.status(200).json({ message: "Success" });
   } catch (err) {
