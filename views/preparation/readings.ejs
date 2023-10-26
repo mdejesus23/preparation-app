@@ -67,7 +67,7 @@
         <% } %>
         <% if (readings.gospel) { %>
         <ul id="g1" class="readings-columns">
-          <h2>Gospel</h2>
+          <h2 class="category-header">Gospel</h2>
           <% readings.gospel.forEach(reading => { %>
             <li class="flex <%= votedReadings.includes(reading._id.toString()) ? 'voted' : ''%>">
               <p><%= reading.reading%></p>
@@ -81,7 +81,7 @@
         <% } %>
       </div>
       <div class="consolidated-form">
-        <a class="btn" href="/readings/consolidated/<%= theme._id%>">Consolidate</a>
+        <a class="btn" href="/readings/consolidated/<%= theme._id%>">View Total Votes</a>
       </div>
       <% } %>
       

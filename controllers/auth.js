@@ -1,21 +1,14 @@
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto"); // built-in node.js module. provides cryptographic functionality.
 
-const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.API_KEY);
+
 require("dotenv").config();
 
 const { validationResult } = require("express-validator");
 
 const User = require("../models/user");
-
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      api_key: process.env.API_KEY,
-    },
-  })
-);
 
 exports.getLogin = (req, res, next) => {
   res.render("auth/login", {
@@ -141,25 +134,33 @@ exports.postSignup = async (req, res, next) => {
 
     // req.flash("success", "Signup successfully!");
     // res.redirect("/signup");
-    res.render("auth/signup", {
-      path: "/signup",
-      pageTitle: "Signup",
+    res.render("auth/login", {
+      path: "/login",
+      pageTitle: "Login",
       errorMessage: null,
-      successMessage: "Signup successfully!",
+      successMessage: "Signup Successfully!",
       prevInput: {
         email: "",
-        username: "",
         password: "",
-        confirmPassword: "",
       },
       validationErrors: [],
     });
-    return transporter.sendMail({
+
+    // send email
+    const msg = {
       to: email,
-      from: "dejesusmelnard@gmail.com",
+      from: "dejesusmelnard@gmail.com", // Use the email address or domain you verified above
       subject: "Signup Succeeded",
-      html: "<h1>You successfully signed up</h1>",
-    });
+      text: "and easy to do anywhere, even with Node.js",
+      html: "<h1>You successfully signed up in the Preparation app.</h1>",
+    };
+
+    try {
+      await sgMail.send(msg);
+    } catch (error) {
+      console.error("Error sending email:", error);
+      next(error);
+    }
   } catch (err) {
     const error = new Error(err); // create an error object.
     error.httpStatusCode = 500; // set error object property
@@ -222,16 +223,30 @@ exports.postResetPassword = (req, res, next) => {
           },
           validationErrors: [],
         });
-        transporter.sendMail({
+
+        // send email
+        const msg = {
           to: req.body.email,
-          from: "dejesusmelnard@gmail.com",
+          from: "dejesusmelnard@gmail.com", // Use the email address or domain you verified above
           subject: "Password Reset",
+          text: "and easy to do anywhere, even with Node.js",
           html: `
-          <h1>Password Resetting</h1>
+          <h1>Preparation App Password Resetting</h1>
           <p>You requested password reset</p>
           <p>Click this <a href='http://localhost:3002/reset/${token}'>link</a> to set a new password</p>
           `,
-        });
+        };
+
+        //ES6
+        sgMail
+          .send(msg)
+          .then((result) => {
+            console.log("sending password reset email successfully");
+          })
+          .catch((err) => {
+            console.log(err);
+            next(err);
+          });
       })
       .catch((err) => {
         const error = new Error(err); // create an error object.

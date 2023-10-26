@@ -53,13 +53,18 @@ h3 {
 .readings-columns {
   position: relative;
   margin: 0;
-  padding: 0.25rem;
   border: 0.4rem solid #f8f9fa;
   border-radius: 5%;
+  overflow: hidden;
 }
 
 .readings-columns li:nth-child(even) {
   background-color: var(--bg-color-reading);
+}
+
+.category-header {
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
 }
 
 .flex {
