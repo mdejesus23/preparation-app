@@ -1,0 +1,53 @@
+.modal-backdrop {
+  display: none;
+  justify-content: center; /* Center horizontally */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* Modal Content/Box */
+.modal-content {
+  position: fixed;
+  top: 10vh;
+  width: 50%;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 99;
+  animation: slide-down 300ms ease-out forwards;
+  overflow: auto;
+  max-height: 90vh;
+}
+
+.modal-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  background-color: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.final-reading-control {
+  margin: 1rem auto;
+}
+
+.add-result-control {
+  margin: 0.6rem auto;
+}
+
+#add-result-btn-container {
+  padding: 1rem 0;
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    top: 8vh;
+    width: 95%;
+  }
+}

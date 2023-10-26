@@ -16,14 +16,14 @@
       <div id="loader"></div>
 
       <h1 class="theme-header"><%= theme.title%></h1>
-      <div class="card-form">
+      <div class="card-form" id="add-reading-form">
         <form class="reading-form" action="/admin/add-readings/<%= theme._id%>" method="POST">
           <div class="form-control">
               <input type="text" name="reading" id="reading" placeholder="Reading" />
           </div>
   
           <div class="form-control">
-              <label for="category">Category</label>
+              <label class="category-label" for="category">Category</label>
               <select name="category" id="category">
                   <option value="">(Select One)</option>
                   <option value="Historical">Historical</option>
@@ -34,7 +34,7 @@
           </div>
           <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
           <div class="form-control">
-            <button class="btn" type="submit">Add Reading</button>
+            <button id="add-reading-btn" class="btn" type="submit">Add Reading</button>
           </div>
         </form>
       </div>

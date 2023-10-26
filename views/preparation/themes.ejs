@@ -11,24 +11,26 @@
   <main>
     <div id="passcode-error" class="user-message user-message--error">Invalid Theme Passcode</div>
     <!-- modal -->
-    <div id="backdrop-themes" class="modal-backdrop">
-      <div class="modal-content">
+    <div id="backdrop-themes" class="passcode-modal-backdrop">
+      <div class="passcode-modal-content modal-content">
           <div class="modal-header">
-            <h3>Enter passcode</h3>
+            <h3>Enter theme passcode</h3>
             <span onclick="closeModal()" class="close">&times;</span>
-        </div>
+          </div>
           
-            <div class="form-control">
-              <input
-                type="password"
-                name="passcode"
-                id="passcode"
-                placeholder="passcode"
-              />
+            <div class="passcode-form-control">
+
+              <div class="form-control">
+                <input
+                  class="passcode-input"
+                  type="password"
+                  name="passcode"
+                  id="passcode"
+                  placeholder="passcode"
+                />
+              </div>
+              <button  id="passcode-btn" class="btn" onclick="postPasscode()">Submit</button>
             </div>
-           
-            <button class="btn" onclick="postPasscode()">Submit</button>
-          </form>
       </div>
     </div>
    

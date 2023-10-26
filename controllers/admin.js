@@ -95,7 +95,7 @@ exports.postAddTheme = async (req, res, next) => {
   }
 
   // resize image
-  const buffer = await sharp(image.buffer).resize(200, 180).toBuffer();
+  const buffer = await sharp(image.buffer).resize(300, 250).toBuffer();
 
   // image name
   const imageName =
@@ -271,7 +271,7 @@ exports.postEditThemes = async (req, res, next) => {
 
       // then upload updated image on s3.
       // resize image
-      const buffer = await sharp(image.buffer).resize(200, 180).toBuffer();
+      const buffer = await sharp(image.buffer).resize(300, 250).toBuffer();
 
       // image name
       const imageName =
@@ -305,8 +305,15 @@ exports.deleteTheme = async (req, res, next) => {
     if (!theme) {
       return next(new Error("Theme not found!"));
     }
-    // fileHelper is a function use to delete image file using file system
-    // fileHelper.deleteFile(theme.imageUrl);
+
+    // set params to delete image in s3
+    const deleteParams = {
+      Bucket: bucketName,
+      Key: theme.imageName,
+    };
+    //
+    await s3Client.send(new DeleteObjectCommand(deleteParams));
+
     await Theme.deleteOne({ _id: themeId, userId: req.user._id });
     res.status(200).json({ message: "Success" });
   } catch (err) {

@@ -2,7 +2,7 @@
     <link rel="stylesheet" href="/css/forms.css" />
     <link rel="stylesheet" href="/css/readings.css" />
     <link rel="stylesheet" href="/css/consolidated.css" />
-    <link rel="stylesheet" href="/css/modal.css" />
+    <link rel="stylesheet" href="/css/add-result.css" />
 
   </head>
 
@@ -26,95 +26,99 @@
       </div>
 
       <div  id="backdrop-consolidated" class="modal-backdrop">
-        <div class="modal-content">
-          <h3>Add Preparation Result</h3>
+
+        <div id="add-result-modal" class="modal-content">
+
           <div class="modal-header">
+            <h3>Add Preparation Result</h3>
           </div>
-          <div class="final-reading-control card-form">
-            
-          <form id="add-result-form" class="reading-form result-form" action="/results" method="POST">
-            <!-- entrance song -->
-            <div class="form-control add-result-control">
-              <input placeholder="Entrance Song" class="<%= validationErrors.find(err => err.path === 'entranceSong') ? 'invalid' : ''%>"
-               type="text" 
-               name="entranceSong" 
-               id="entranceSong"
-               value="<% if (hasError) { %><%= result.entranceSong%><% } %>" />
-            </div>
-            <!-- first reading -->
-            <div class="form-control add-result-control">
-                <input placeholder="1st Reading" class="<%= validationErrors.find(err => err.path === 'firstReading') ? 'invalid' : ''%>"
+
+          <div class="final-reading-control">
+              
+            <form id="add-result-form" class="reading-form result-form" action="/results" method="POST">
+              <!-- entrance song -->
+              <div class="form-control add-result-control">
+                <input placeholder="Entrance Song" class="<%= validationErrors.find(err => err.path === 'entranceSong') ? 'invalid' : ''%>"
                 type="text" 
-                name="firstReading" 
-                id="firstReading"
-                value="<% if (hasError) { %><%= result.firstReading%><% } %>" />
-            </div>
-            <!-- psalm 1 -->
-            <div class="form-control add-result-control">
-              <input placeholder="1st psalm" class="<%= validationErrors.find(err => err.path === 'firstPsalm') ? 'invalid' : ''%>"
-              type="text"
-              name="firstPsalm" 
-              id="firstPsalm"
-              value="<% if (hasError) { %><%= result.firstPsalm%><% } %>" />
-            </div>
-            <!-- second reading -->
-            <div class="form-control add-result-control">
-              <input placeholder="2nd Reading" class="<%= validationErrors.find(err => err.path === 'secondReading') ? 'invalid' : ''%>"
-              type="text" 
-              name="secondReading" 
-              id="secondReading"
-              value="<% if (hasError) { %><%= result.secondReading%><% } %>" />
-            </div>
-            <!-- psalm 2 -->
-            <div class="form-control add-result-control">
-              <input placeholder="2nd psalm" class="<%= validationErrors.find(err => err.path === 'secondPsalm') ? 'invalid' : ''%>"
+                name="entranceSong" 
+                id="entranceSong"
+                value="<% if (hasError) { %><%= result.entranceSong%><% } %>" />
+              </div>
+              <!-- first reading -->
+              <div class="form-control add-result-control">
+                  <input placeholder="1st Reading" class="<%= validationErrors.find(err => err.path === 'firstReading') ? 'invalid' : ''%>"
+                  type="text" 
+                  name="firstReading" 
+                  id="firstReading"
+                  value="<% if (hasError) { %><%= result.firstReading%><% } %>" />
+              </div>
+              <!-- psalm 1 -->
+              <div class="form-control add-result-control">
+                <input placeholder="1st psalm" class="<%= validationErrors.find(err => err.path === 'firstPsalm') ? 'invalid' : ''%>"
+                type="text"
+                name="firstPsalm" 
+                id="firstPsalm"
+                value="<% if (hasError) { %><%= result.firstPsalm%><% } %>" />
+              </div>
+              <!-- second reading -->
+              <div class="form-control add-result-control">
+                <input placeholder="2nd Reading" class="<%= validationErrors.find(err => err.path === 'secondReading') ? 'invalid' : ''%>"
                 type="text" 
-                name="secondPsalm" 
-                id="secondPsalm"
-                value="<% if (hasError) { %><%= result.secondPsalm%><% } %>" />
-            </div>
-            <!-- third reading -->
-            <div class="form-control add-result-control">
-              <input placeholder="3rd Reading" class="<%= validationErrors.find(err => err.path === 'thirdReading') ? 'invalid' : ''%>"
-               type="text" 
-               name="thirdReading" 
-               id="thirdReading"
-               value="<% if (hasError) { %><%= result.thirdReading%><% } %>"  />
-            </div>
-            <!-- psalm 3 -->
-            <div class="form-control add-result-control">
-              <input placeholder="3rd Psalm" class="<%= validationErrors.find(err => err.path === 'thirdPsalm') ? 'invalid' : ''%>"
-               type="text" 
-               name="thirdPsalm" 
-               id="thirdPsalm"
-               value="<% if (hasError) { %><%= result.thirdPsalm%><% } %>"  />
-            </div>
-            <!-- gopel reading -->
-            <div class="form-control add-result-control">
-              <input placeholder="Gospel" class="<%= validationErrors.find(err => err.path === 'gospelReading') ? 'invalid' : ''%>"
-                 type="text" 
-                 name="gospelReading" 
-                 id="gospelReading"
-                 value="<% if (hasError) { %><%= result.gospelReading%><% } %>" />
-            </div>
-  
-            <!-- final song -->
-            <div class="form-control add-result-control">
-              <input placeholder="Final Song" class="<%= validationErrors.find(err => err.path === 'finalSong') ? 'invalid' : ''%>"
-               type="text" 
-               name="finalSong" 
-               id="finalSong"
-               value="<% if (hasError) { %><%= result.finalSong%><% } %>" />
-            </div>
-            <input type="hidden" name="themeId" value="<%= theme._id%>" />
-            <input type="hidden" name="themeTitle" value="<%= theme.title%>" />
-            <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-            <div class="form-control">
-              <button class="btn" type="submit">Confirm</button>
-              <button class="btn cancel" type="button" onclick="closeModal()">Cancel</button>
-            </div>
-          </form>
-        </div>
+                name="secondReading" 
+                id="secondReading"
+                value="<% if (hasError) { %><%= result.secondReading%><% } %>" />
+              </div>
+              <!-- psalm 2 -->
+              <div class="form-control add-result-control">
+                <input placeholder="2nd psalm" class="<%= validationErrors.find(err => err.path === 'secondPsalm') ? 'invalid' : ''%>"
+                  type="text" 
+                  name="secondPsalm" 
+                  id="secondPsalm"
+                  value="<% if (hasError) { %><%= result.secondPsalm%><% } %>" />
+              </div>
+              <!-- third reading -->
+              <div class="form-control add-result-control">
+                <input placeholder="3rd Reading" class="<%= validationErrors.find(err => err.path === 'thirdReading') ? 'invalid' : ''%>"
+                type="text" 
+                name="thirdReading" 
+                id="thirdReading"
+                value="<% if (hasError) { %><%= result.thirdReading%><% } %>"  />
+              </div>
+              <!-- psalm 3 -->
+              <div class="form-control add-result-control">
+                <input placeholder="3rd Psalm" class="<%= validationErrors.find(err => err.path === 'thirdPsalm') ? 'invalid' : ''%>"
+                type="text" 
+                name="thirdPsalm" 
+                id="thirdPsalm"
+                value="<% if (hasError) { %><%= result.thirdPsalm%><% } %>"  />
+              </div>
+              <!-- gopel reading -->
+              <div class="form-control add-result-control">
+                <input placeholder="Gospel" class="<%= validationErrors.find(err => err.path === 'gospelReading') ? 'invalid' : ''%>"
+                  type="text" 
+                  name="gospelReading" 
+                  id="gospelReading"
+                  value="<% if (hasError) { %><%= result.gospelReading%><% } %>" />
+              </div>
+    
+              <!-- final song -->
+              <div class="form-control add-result-control">
+                <input placeholder="Final Song" class="<%= validationErrors.find(err => err.path === 'finalSong') ? 'invalid' : ''%>"
+                type="text" 
+                name="finalSong" 
+                id="finalSong"
+                value="<% if (hasError) { %><%= result.finalSong%><% } %>" />
+              </div>
+              <input type="hidden" name="themeId" value="<%= theme._id%>" />
+              <input type="hidden" name="themeTitle" value="<%= theme.title%>" />
+              <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+              <div id="add-result-btn-container" class="form-control">
+                <button class="btn" type="submit">Confirm</button>
+                <button class="btn cancel" type="button" onclick="closeModal()">Cancel</button>
+              </div>
+            </form>
+
+          </div>
         </div>
       </div>
 

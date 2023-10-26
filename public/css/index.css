@@ -35,6 +35,6 @@
 }
 
 .banner-container h2 {
-  color: rvar(--secondary-font-color);
-  font-size: 1.6rem;
+  color: var(--secondary-color);
+  font-size: 1.4rem;
 }

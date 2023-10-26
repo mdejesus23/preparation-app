@@ -3,6 +3,12 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
+}
+
+#add-result-header {
+  padding: 1rem;
+  text-align: center;
 }
 
 .add-result {

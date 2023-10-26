@@ -4,6 +4,26 @@ h3 {
   text-align: center;
 }
 
+#add-reading-form {
+  background-color: var(--primary-color);
+}
+
+.category-label {
+  color: white;
+}
+
+#add-reading-btn {
+  background-color: var(--primary-color);
+  border: 1px solid white;
+  color: white;
+}
+
+#add-reading-btn:hover,
+#add-reading-btn:active {
+  border: 1px solid var(--secondary-color);
+  color: var(--secondary-color);
+}
+
 .category-nav {
   display: none;
   justify-content: center;
@@ -91,5 +111,6 @@ h3 {
     grid-template-columns: 1fr;
     column-gap: 1rem;
     row-gap: 1rem;
+    margin: 1rem 0.2rem;
   }
 }

@@ -20,8 +20,6 @@
   right: 20%; */
   width: 50%;
   background-color: white;
-  padding: 1rem;
-  border-radius: 14px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 99;
   animation: slide-down 300ms ease-out forwards;
@@ -30,13 +28,15 @@
 }
 
 .modal-header {
+  background-color: var(--primary-color);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 10px;
 }
 
 .modal-header h3 {
-  color: red;
+  color: var(--secondary-color);
 }
 
 /* The Close Button */
@@ -50,12 +50,13 @@
 
 .close:hover,
 .close:focus {
-  color: black;
+  color: red;
   text-decoration: none;
   cursor: pointer;
 }
 
 .modal-content p {
+  text-align: center;
   margin-top: 1.5rem;
   margin-bottom: 3rem;
 }
@@ -63,14 +64,27 @@
 .modal-control {
   width: 100%;
   display: flex;
-  justify-content: right;
-  margin-top: 1rem;
+  justify-content: center;
+}
+
+.modal-control button {
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  padding: 0.8rem 0;
+}
+
+.modal-control button:first-child {
+  /* background-color: var(--primary-color);
+  color: var(--secondary-color); */
+
+  background-color: red;
+  color: white;
 }
 
 .modal-control button:last-child {
-  background-color: red;
+  background-color: gray;
   color: white;
-  margin-left: 0.5rem;
 }
 
 .modal-control button:hover,

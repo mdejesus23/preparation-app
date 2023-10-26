@@ -11,15 +11,13 @@
   <%- include('../includes/navigation.ejs') %>
 
   <!-- backdrop for deleting themes -->
-  <div  id="backdrop-admin" class="modal-backdrop backdrop">
+  <div onclick="closeModal()"  id="backdrop-admin" class="modal-backdrop backdrop">
     <div class="modal-content">
         <div class="modal-header">
             <h3>Attention!</h3>
             <span onclick="closeModal()" class="close">&times;</span>
         </div>
-      <hr>
       <p>Are you sure you want to delete this theme?</p>
-      <hr>
       <div class="modal-control">
         <button class="btn" onclick="deleteTheme()">Yes</button>
         <button onclick="closeModal()" class="btn">Cancel</button>
@@ -28,15 +26,13 @@
   </div>
 
   <!-- backdrop for themes votes reset  -->
-  <div  id="backdrop-reset" class="reset-modal-backdrop backdrop">
+  <div onclick="resetCloseModal()" id="backdrop-reset" class="reset-modal-backdrop backdrop">
     <div class="reset-modal-content">
         <div class="reset-modal-header">
             <h3>Attention!</h3>
             <span onclick="resetCloseModal()" class="close-btn">&times;</span>
         </div>
-      <hr>
       <p>Are you sure you want to reset the vote count of this theme?</p>
-      <hr>
       <div class="reset-modal-control">
         <button class="btn" onclick="resetVotes()">Yes</button>
         <button onclick="resetCloseModal()" class="btn">Cancel</button>
