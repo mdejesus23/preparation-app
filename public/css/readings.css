@@ -55,7 +55,7 @@ h3 {
   margin: 0;
   border: 0.4rem solid #f8f9fa;
   border-radius: 5%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .readings-columns li:nth-child(even) {

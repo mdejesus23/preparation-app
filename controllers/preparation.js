@@ -145,7 +145,6 @@ exports.checkPasscode = async (req, res, next) => {
     }
 
     if (theme.passcode !== passcode) {
-      console.log("passcode did not match!");
       return res.status(401).json({ message: "Passcode does not match" });
     }
 
@@ -424,7 +423,6 @@ exports.deleteResult = async (req, res, next) => {
     }
 
     await result.deleteOne({ _id: resultId, userId: req.user._id });
-    console.log("result deleted!");
     res.status(200).json({ message: "Success" });
   } catch (err) {
     res.status(500).json({ message: "Deleting product failed!" });

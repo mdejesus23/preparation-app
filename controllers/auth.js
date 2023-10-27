@@ -104,7 +104,6 @@ exports.postSignup = async (req, res, next) => {
   const errors = validationResult(req); // collect errors in the middleware in the request.
   // if errors occur
   if (!errors.isEmpty()) {
-    console.log(errors.array());
     return res.status(422).render("auth/signup", {
       path: "/signup",
       pageTitle: "Signup",

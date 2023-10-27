@@ -289,7 +289,6 @@ exports.postEditThemes = async (req, res, next) => {
       existingTheme.imageName = imageName;
     }
     await existingTheme.save();
-    console.log("UPDATED THEME!");
     res.redirect("/admin/themes");
   } catch (err) {
     const error = new Error(err); // create an error object.
@@ -433,8 +432,6 @@ exports.deleteReading = async (req, res, next) => {
       return reading._id.toString() !== readingId.toString();
     });
 
-    console.log(updatedReadings);
-
     theme.readings = updatedReadings;
     await theme.save();
     res.status(200).json({ message: "Success deleting reading" });
@@ -458,8 +455,6 @@ exports.postThemeResetVotes = async (req, res, next) => {
         voteCount: 0,
       };
     });
-
-    console.log(updatedReadings);
 
     theme.readings = updatedReadings;
     await theme.save();
