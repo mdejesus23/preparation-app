@@ -15,6 +15,7 @@ const compression = require("compression");
 const morgan = require("morgan");
 const crypto = require("crypto");
 const cookieParser = require("cookie-parser");
+const config = require("config");
 
 const errorController = require("./controllers/error"); //import error controller
 
@@ -110,7 +111,7 @@ app.use(
         ],
         connectSrc: ["'self'"], // Allow connections to the same origin
         frameSrc: ["'self'"], // Allow frames from the same origin
-        imgSrc: ["*"],
+        imgSrc: ["*"], // allow image source
       },
     },
   })
@@ -136,15 +137,23 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
+const sess = {
+  secret: "my secret",
+  resave: false,
+  saveUninitialized: false,
+  store: store,
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+  },
+};
+
+if (app.get(process.env.NODE_ENV) === "production") {
+  app.set("trust proxy", 1); // trust first proxy
+  sess.cookie.secure = true; // serve secure cookies
+}
+
 // setup another middleware to initialize session.
-app.use(
-  session({
-    secret: "my secret",
-    resave: false,
-    saveUninitialized: false,
-    store: store,
-  })
-);
+app.use(session(sess));
 
 // middleware for csrf protection
 app.use(csrfSynchronisedProtection);
