@@ -137,23 +137,56 @@ app.use(
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-const sess = {
-  secret: "my secret",
-  resave: false,
-  saveUninitialized: false,
-  store: store,
-  cookie: {
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
-  },
-};
+// const sess = {
+//   secret: "my secret",
+//   resave: false,
+//   saveUninitialized: false,
+//   store: store,
+//   cookie: {
+//     maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+//   },
+// };
 
-if (app.get("env") === "production") {
-  app.set("trust proxy", 1); // trust first proxy
-  sess.cookie.secure = true; // serve secure cookies
+// if (app.get("env") === "production") {
+//   app.set("trust proxy", 1); // trust first proxy
+//   sess.cookie.secure = true; // serve secure cookies
+// }
+
+// // setup another middleware to initialize session.
+// app.use(session(sess));
+
+// Set up your middleware based on the NODE_ENV environment variable
+if (process.env.NODE_ENV === "production") {
+  // Production middleware configuration
+  app.use(
+    session({
+      secret: "my secret",
+      resave: false,
+      saveUninitialized: false,
+      store: store,
+      cookie: {
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+        httpOnly: true,
+        secure: true, // Ensure your app is running over HTTPS in production
+      },
+    })
+  );
+} else {
+  // Development middleware configuration
+  app.use(
+    session({
+      secret: "my secret",
+      resave: false,
+      saveUninitialized: false,
+      store: store,
+      cookie: {
+        maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
+        httpOnly: true,
+        secure: false, // Ensure your app is running over HTTPS in production
+      },
+    })
+  );
 }
-
-// setup another middleware to initialize session.
-app.use(session(sess));
 
 // middleware for csrf protection
 app.use(csrfSynchronisedProtection);
