@@ -8,8 +8,8 @@
 
   <div id="loader"></div>
 
-  <div id="backdrop-result" class="modal-backdrop">
-    <div class="modal-content">
+  <div onclick="closeModal()" id="backdrop-result" class="modal-backdrop"></div>
+    <div id="result-modal-content" class="modal-content">
         <div class="modal-header">
             <h3>Attention!</h3>
             <span onclick="closeModal()" class="close">&times;</span>
@@ -22,8 +22,6 @@
         <button onclick="closeModal()" class="btn">Cancel</button>
       </div>
     </div>
-  </div>
-    
 
   <main>
      <% if (results.length > 0) { %>

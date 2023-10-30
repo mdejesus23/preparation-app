@@ -4,25 +4,21 @@ let csrf;
 
 // modal element
 const modalBackdrop = document.getElementById("backdrop-result");
+const resultModalContent = document.getElementById("result-modal-content");
 
 const showModal = (button) => {
   modalBackdrop.style.display = "flex";
+  resultModalContent.style.display = "block";
 
   resultElement = button.closest("article");
   resultId = resultElement.querySelector("#resultId").value;
   csrf = resultElement.querySelector("#csrfToken").value;
 };
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = (event) => {
-  if (event.target == modalBackdrop) {
-    modalBackdrop.style.display = "none";
-  }
-};
-
 // close modal button.
 const closeModal = () => {
   modalBackdrop.style.display = "none";
+  resultModalContent.style.display = "none";
 };
 
 const deleteResult = () => {
