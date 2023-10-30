@@ -158,9 +158,10 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 // Set up your middleware based on the NODE_ENV environment variable
 if (process.env.NODE_ENV === "production") {
   // Production middleware configuration
+  app.set("trust proxy", 1); // trust first proxy
   app.use(
     session({
-      secret: "my secret",
+      secret: process.env.SECRET_KEY,
       resave: false,
       saveUninitialized: false,
       store: store,
@@ -175,7 +176,7 @@ if (process.env.NODE_ENV === "production") {
   // Development middleware configuration
   app.use(
     session({
-      secret: "my secret",
+      secret: process.env.SECRET_KEY,
       resave: false,
       saveUninitialized: false,
       store: store,
