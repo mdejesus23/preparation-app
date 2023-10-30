@@ -369,7 +369,7 @@ li {
 .mobile-nav {
   width: 30rem;
   height: 100vh;
-  max-width: 90%;
+  max-width: 70%;
   position: fixed;
   right: 0;
   top: 0;
@@ -393,7 +393,6 @@ li {
 }
 
 .mobile-nav__item {
-  margin: 1rem;
   padding: 0;
 }
 
