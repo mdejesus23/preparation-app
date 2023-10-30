@@ -8,25 +8,21 @@ const resetSuccess = document.getElementById("reset-votes-success");
 
 //modal element for deleting themes
 const resetModalBackdrop = document.getElementById("backdrop-reset");
+const resetModalContent = document.getElementById("reset-modal-content");
 
 const showResetModal = (button) => {
   resetModalBackdrop.style.display = "flex";
+  resetModalContent.style.display = "block";
 
   resetThemeElement = button.closest("article");
   resetThemeId = resetThemeElement.querySelector("#themeId").value;
   resetCsrf = resetThemeElement.querySelector("#csrfToken").value;
 };
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = (event) => {
-  if (event.target == resetModalBackdrop) {
-    resetModalBackdrop.style.display = "none";
-  }
-};
-
 // close modal
 const resetCloseModal = () => {
   resetModalBackdrop.style.display = "none";
+  resetModalContent.style.display = "none";
 };
 
 // reset votes

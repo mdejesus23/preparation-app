@@ -5,25 +5,21 @@ let csrf;
 const passCodeErr = document.getElementById("passcode-error");
 
 const modalBackdrop = document.getElementById("backdrop-themes");
+const passcodeModalContent = document.getElementById("passcode-modal-content");
 
 const showModal = (button) => {
   modalBackdrop.style.display = "flex";
+  passcodeModalContent.style.display = "block";
 
   themeElement = button.closest("article");
   themeId = themeElement.querySelector('[name="themeId"]').value;
   csrf = themeElement.querySelector('[name="csrfToken"]').value;
 };
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = (event) => {
-  if (event.target == modalBackdrop) {
-    modalBackdrop.style.display = "none";
-  }
-};
-
 // close modal
 const closeModal = () => {
   modalBackdrop.style.display = "none";
+  passcodeModalContent.style.display = "none";
 };
 
 const postPasscode = () => {

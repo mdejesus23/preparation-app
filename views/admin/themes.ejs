@@ -11,8 +11,8 @@
   <%- include('../includes/navigation.ejs') %>
 
   <!-- backdrop for deleting themes -->
-  <div onclick="closeModal()"  id="backdrop-admin" class="modal-backdrop backdrop">
-    <div class="modal-content">
+  <div onclick="closeModal()"  id="backdrop-admin" class="modal-backdrop backdrop"></div>
+    <div id="delete-modal-content" class="modal-content">
         <div class="modal-header">
             <h3>Attention!</h3>
             <span onclick="closeModal()" class="close">&times;</span>
@@ -23,11 +23,10 @@
         <button onclick="closeModal()" class="btn">Cancel</button>
       </div>
     </div>
-  </div>
 
   <!-- backdrop for themes votes reset  -->
-  <div onclick="resetCloseModal()" id="backdrop-reset" class="reset-modal-backdrop backdrop">
-    <div class="reset-modal-content">
+  <div onclick="resetCloseModal()" id="backdrop-reset" class="reset-modal-backdrop backdrop"></div>
+    <div id="reset-modal-content" class="reset-modal-content">
         <div class="reset-modal-header">
             <h3>Attention!</h3>
             <span onclick="resetCloseModal()" class="close-btn">&times;</span>
@@ -38,10 +37,8 @@
         <button onclick="resetCloseModal()" class="btn">Cancel</button>
       </div>
     </div>
-  </div>
 
   <main>
-    
     <% if (errorMessage) { %>
         <div class="user-message user-message--error"><%= errorMessage %></div>
     <% } else if (successMessage) { %>

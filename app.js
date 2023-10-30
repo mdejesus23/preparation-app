@@ -15,7 +15,6 @@ const compression = require("compression");
 const morgan = require("morgan");
 const crypto = require("crypto");
 const cookieParser = require("cookie-parser");
-const config = require("config");
 
 const errorController = require("./controllers/error"); //import error controller
 
@@ -136,24 +135,6 @@ app.use(
 // static middleware to serve static files
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
-
-// const sess = {
-//   secret: "my secret",
-//   resave: false,
-//   saveUninitialized: false,
-//   store: store,
-//   cookie: {
-//     maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
-//   },
-// };
-
-// if (app.get("env") === "production") {
-//   app.set("trust proxy", 1); // trust first proxy
-//   sess.cookie.secure = true; // serve secure cookies
-// }
-
-// // setup another middleware to initialize session.
-// app.use(session(sess));
 
 // Set up your middleware based on the NODE_ENV environment variable
 if (process.env.NODE_ENV === "production") {

@@ -2,7 +2,6 @@
 .modal-backdrop {
   display: none;
   /* display: flex; */
-  justify-content: center; /* Center horizontally */
   position: fixed;
   top: 0;
   left: 0;
@@ -14,10 +13,11 @@
 
 /* Modal Content/Box */
 .modal-content {
+  display: none;
   position: fixed;
+  /* Center the div horizontally and vertically */
   top: 15vh;
-  /* left: 20%;
-  right: 20%; */
+  left: 25%;
   width: 50%;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -25,6 +25,7 @@
   animation: slide-down 300ms ease-out forwards;
   overflow: auto;
   max-height: 90vh;
+  transform: translate(-50%, -50%);
 }
 
 .modal-header {
@@ -106,5 +107,6 @@
 @media (max-width: 768px) {
   .modal-content {
     width: 90%;
+    left: 5%;
   }
 }

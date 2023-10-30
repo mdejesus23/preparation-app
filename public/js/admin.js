@@ -4,25 +4,21 @@ let csrf;
 
 //modal element for deleting themes
 const modalBackdrop = document.getElementById("backdrop-admin");
+const deleteModalContent = document.getElementById("delete-modal-content");
 
 const showModal = (button) => {
   modalBackdrop.style.display = "flex";
+  deleteModalContent.style.display = "block";
 
   themeElement = button.closest("article");
   themeId = themeElement.querySelector("#themeId").value;
   csrf = themeElement.querySelector("#csrfToken").value;
 };
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = (event) => {
-  if (event.target == modalBackdrop) {
-    modalBackdrop.style.display = "none";
-  }
-};
-
 // close modal
 const closeModal = () => {
   modalBackdrop.style.display = "none";
+  deleteModalContent.style.display = "none";
 };
 
 const deleteTheme = () => {
