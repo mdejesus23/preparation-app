@@ -93,39 +93,38 @@
           <div class="mobile-user-icon-container">
             <img src="/images/user-icon.png" />
           </div>
-            <%= username%> &#8681;
+            <%= username%>
         </button>
-        
-        <ul class="mobile-dropdown-content">
-          <li>
-            <a
-              class="<%= path === '/readings/result' ? 'active' : '' %>"
-              href="/results"
-              >My Result</a
-            >
-          </li>
-          <li>
-            <a
-              class="<%= path === '/admin/add-themes' ? 'active' : '' %>"
-              href="/admin/add-themes"
-              >Add Themes
-            </a>
-          </li>
-          <li>
-            <a
-              class="<%= path === '/admin/themes' ? 'active' : '' %>"
-              href="/admin/themes"
-              >My themes
-            </a>
-          </li>
-          <li>
-            <form action="/logout" method="post">
-              <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-              <button type="submit">Logout</button>
-            </form>
-          </li>
-        </ul>
       </div>
+      <ul class="mobile-dropdown-content">
+        <li>
+          <a
+            class="<%= path === '/readings/result' ? 'active' : '' %>"
+            href="/results"
+            >My Result</a
+          >
+        </li>
+        <li>
+          <a
+            class="<%= path === '/admin/add-themes' ? 'active' : '' %>"
+            href="/admin/add-themes"
+            >Add Themes
+          </a>
+        </li>
+        <li>
+          <a
+            class="<%= path === '/admin/themes' ? 'active' : '' %>"
+            href="/admin/themes"
+            >My themes
+          </a>
+        </li>
+        <li>
+          <form action="/logout" method="post">
+            <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+            <button type="submit">Logout</button>
+          </form>
+        </li>
+      </ul>
     </li>
     <% } %> <% if (!isAuthenticated) { %>
     <li class="mobile-nav__item">
