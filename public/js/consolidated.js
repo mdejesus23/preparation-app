@@ -2,21 +2,17 @@ const toggleShowForm = document.getElementById("add-result-button");
 const addResultForm = document.getElementById("add-result-form");
 
 const modalBackdrop = document.getElementById("backdrop-consolidated");
+const addResultModalContent = document.getElementById("add-result-modal");
 
 const showModal = () => {
   modalBackdrop.style.display = "flex";
-};
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = (event) => {
-  if (event.target == modalBackdrop) {
-    modalBackdrop.style.display = "none";
-  }
+  addResultModalContent.style.display = "block";
 };
 
 // close modal
 const closeModal = () => {
   modalBackdrop.style.display = "none";
+  addResultModalContent.style.display = "none";
 };
 
 // first reading popup message.
