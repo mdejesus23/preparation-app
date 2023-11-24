@@ -8,8 +8,12 @@ function backdropClickHandler() {
 }
 
 function menuToggleClickHandler() {
-  backdrop.style.display = "block";
-  sideDrawer.classList.add("open");
+  if (backdrop.style.display === "block") {
+    backdrop.style.display = "none";
+  } else {
+    backdrop.style.display = "block";
+  }
+  sideDrawer.classList.toggle("open");
 }
 
 backdrop.addEventListener("click", backdropClickHandler);
