@@ -15,7 +15,6 @@ const compression = require("compression");
 const morgan = require("morgan");
 const crypto = require("crypto");
 const cookieParser = require("cookie-parser");
-
 const errorController = require("./controllers/error"); //import error controller
 
 const app = express();
@@ -164,7 +163,7 @@ if (process.env.NODE_ENV === "production") {
       cookie: {
         maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
         httpOnly: true,
-        secure: false, // Ensure your app is running over HTTPS in production
+        secure: false, 
       },
     })
   );

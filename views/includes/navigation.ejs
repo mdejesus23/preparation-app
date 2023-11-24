@@ -1,7 +1,12 @@
 <div class="backdrop"></div>
 <header class="main-header">
   <li class="main-header__item logo-header">
-    <a id="logo" class="logo" href="/"><span class="highlight-letter">Word</span>of<span class="highlight-letter">God</span></a>
+    <a id="logo" class="logo" href="/"
+      ><span class="highlight-letter">Word</span>of<span
+        class="highlight-letter"
+        >God</span
+      ></a
+    >
     <span class="tooltip">Home</span>
   </li>
   <button id="side-menu-toggle">Menu</button>
@@ -36,7 +41,7 @@
           <div class="user-icon-container">
             <img src="/images/user-icon.png" />
           </div>
-          <button class="dropbtn" id="dropdown-btn"><%= username%> &#8681;</button>
+          <button class="dropbtn" id="dropdown-btn"><%= username%></button>
           <ul class="dropdown-content">
             <li>
               <a
@@ -93,9 +98,9 @@
           <div class="mobile-user-icon-container">
             <img src="/images/user-icon.png" />
           </div>
-            <%= username%> &#8681;
+          <%= username%> &#8964;
         </button>
-        
+
         <ul class="mobile-dropdown-content">
           <li>
             <a
@@ -118,15 +123,16 @@
               >My themes
             </a>
           </li>
-          <li>
+          <!-- <li>
             <form action="/logout" method="post">
               <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
               <button type="submit">Logout</button>
             </form>
-          </li>
+          </li> -->
         </ul>
       </div>
     </li>
+
     <% } %> <% if (!isAuthenticated) { %>
     <li class="mobile-nav__item">
       <a class="<%= path === '/login' ? 'active' : '' %>" href="/login"
@@ -138,6 +144,13 @@
         >Signup</a
       >
     </li>
-    <% }  %> 
+    <% } %>
   </ul>
+
+  <% if (isAuthenticated) { %>
+  <form action="/logout" method="post">
+    <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
+    <button class="logout-btn" type="submit">Logout</button>
+  </form>
+  <% } %>
 </nav>
