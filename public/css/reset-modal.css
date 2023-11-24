@@ -15,7 +15,7 @@
 /* Modal Content/Box */
 .reset-modal-content {
   display: none;
-  position: fixed;
+  position: absolute;
   top: 15vh;
   width: 50%;
   left: 25%;
