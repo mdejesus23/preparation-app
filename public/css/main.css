@@ -374,7 +374,8 @@ li {
   position: fixed;
   right: 0;
   top: 4rem;
-  height: 100vh;
+  bottom: 0;
+  /* height: 100vh; */
   background: var(--primary-color);
   z-index: 98;
   transform: translateX(100%);
