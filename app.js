@@ -78,6 +78,7 @@ app.use((req, res, next) => {
   res.locals.nonce8 = crypto.randomBytes(16).toString("hex");
   res.locals.nonce9 = crypto.randomBytes(16).toString("hex");
   res.locals.nonce10 = crypto.randomBytes(16).toString("hex");
+  res.locals.nonce11 = crypto.randomBytes(16).toString("hex");
   next();
 });
 
@@ -89,6 +90,7 @@ app.use(
         defaultSrc: ["'self'"],
         scriptSrc: [
           "'self'",
+          "https://kit.fontawesome.com/372429fb46.js",
           (req, res) => `'nonce-${res.locals.nonce1}'`, // admin.js
           (req, res) => `'nonce-${res.locals.nonce2}'`, // main.js
           (req, res) => `'nonce-${res.locals.nonce3}'`, // prep.js
@@ -99,6 +101,7 @@ app.use(
           (req, res) => `'nonce-${res.locals.nonce8}'`, // scroll.js
           (req, res) => `'nonce-${res.locals.nonce9}'`, // footer.js
           (req, res) => `'nonce-${res.locals.nonce10}'`, // reset-votes
+          (req, res) => `'nonce-${res.locals.nonce11}'`, // reset-votes
         ],
         scriptSrcAttr: ["'self'", "'unsafe-inline'"],
         styleSrc: [
@@ -107,9 +110,10 @@ app.use(
           "fonts.googleapis.com",
           "https://kit.fontawesome.com/372429fb46.js",
         ],
-        connectSrc: ["'self'"], // Allow connections to the same origin
+        connectSrc: ["'self'", "https://*.fontawesome.com"], // Allow connections to the same origin and to fontawesome.
         frameSrc: ["'self'"], // Allow frames from the same origin
-        imgSrc: ["*"], // allow image source
+        imgSrc: ["*"], // allow image source.
+        // requireTrustedTypesFor: ["'script'"],
       },
     },
   })
@@ -163,7 +167,7 @@ if (process.env.NODE_ENV === "production") {
       cookie: {
         maxAge: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
         httpOnly: true,
-        secure: false, 
+        secure: false,
       },
     })
   );
