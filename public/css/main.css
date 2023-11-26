@@ -676,6 +676,10 @@ li {
   }
 }
 
+.btn-delete {
+  color: rgb(231, 23, 23);
+}
+
 .scroll-top {
   display: none;
   position: fixed;
