@@ -206,6 +206,11 @@ exports.postResetPassword = (req, res, next) => {
         }
 
         user.resetToken = token;
+        // const passwordResetUrl =
+        //   process.env.NODE_ENV === development
+        //     ? `http://localhost:3002/reset/${token}`
+        //     : `https://preparation-app.onrender.com/reset/${token}`;
+
         // The result will be a new timestamp representing the time one hour from the current moment.
         user.resetTokenExpiration = Date.now() + 3600000;
         return user.save();
@@ -232,7 +237,11 @@ exports.postResetPassword = (req, res, next) => {
           html: `
           <h1>Preparation App Password Resetting</h1>
           <p>You requested password reset</p>
-          <p>Click this <a href='http://localhost:3002/reset/${token}'>link</a> to set a new password</p>
+          <p>Click this <a href=${
+            process.env.NODE_ENV === "development"
+              ? `http://localhost:3002/reset/${token}`
+              : `https://preparation-app.onrender.com/reset/${token}`
+          }>link</a> to set a new password</p>
           `,
         };
 

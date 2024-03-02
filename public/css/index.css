@@ -4,9 +4,10 @@
 }
 
 .hero {
-  margin-top: 4rem;
+  /* margin-top: 5rem; */
   height: 100vh;
   background-image: url(..//images/bible2.jpg);
+
   background-size: cover;
   background-position-x: 50%;
   background-position-y: 50%;
