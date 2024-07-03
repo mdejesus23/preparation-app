@@ -1,21 +1,27 @@
 footer {
+  background-color: var(--primary-color);
+  color: var(--fourth-color);
+  text-align: center;
+  padding: 20px;
   position: fixed;
   bottom: 0;
-  left: 0;
   width: 100%;
-  height: 50px;
-  background-color: var(--primary-color);
-  color: var(--primary-font-color);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  column-gap: 0.5rem;
-  font-size: 1rem;
+}
+
+footer p {
+  margin: 5px 0;
 }
 
 footer a {
+  color: var(--secondary-color);
   text-decoration: none;
-  color: var(--primary-font-color);
-  color: white;
+}
+
+footer a:hover {
+  color: var(--third-color);
+  text-decoration: underline;
+}
+
+.footer-text {
+  font-style: italic;
 }

@@ -2,18 +2,20 @@
 
 /* CSS variable definition */
 :root {
-  --primary-color: rgb(51, 110, 106);
-  --secondary-color: rgb(200, 176, 46);
-  --third-color: rgb(156, 156, 156);
+  --primary-color: #193c3e;
+  --secondary-color: #b8855f;
+  --third-color: #a69e97;
+
   --fourth-color: rgb(240, 240, 240);
-  --danger-color: red;
-  --vote-count-color: red;
-  --primary-font-color: rgb(228, 223, 223);
-  --secondary-font-color: rgb(48, 46, 46);
+  --danger-color: #ef6461;
+  --vote-count-color: #ef6461;
+
+  --primary-font-color: #a69e97;
+  --secondary-font-color: #193c3e;
+
   --background-color: rgb(58, 51, 51);
   --bg-color-reading: rgb(237, 239, 250);
 }
-
 * {
   margin: 0;
   padding: 0;
@@ -21,7 +23,7 @@
 }
 
 body {
-  font-size: 16px;
+  font-size: 100%;
   padding: 0;
   margin: 0;
   font-family: "Open Sans", sans-serif;
@@ -30,9 +32,12 @@ body {
 
 main {
   padding: 2rem 0;
-  margin: auto;
-  margin-top: 4rem;
-  min-height: 80vh;
+ 
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
@@ -394,6 +399,7 @@ li {
   list-style: none;
   display: flex;
   flex-direction: column;
+  
   margin: 0;
   padding: 0;
   /* border-top: 1px solid white;

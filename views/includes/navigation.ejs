@@ -1,14 +1,5 @@
 <div class="backdrop"></div>
 <header class="main-header">
-  <li class="main-header__item logo-header">
-    <a id="logo" class="logo" href="/"
-      ><span class="highlight-letter">Word</span>of<span
-        class="highlight-letter"
-        >God</span
-      ></a
-    >
-    <span class="tooltip">Home</span>
-  </li>
   <button id="side-menu-toggle">Menu</button>
   <nav class="main-header__nav">
     <ul class="main-header__item-list">
@@ -19,14 +10,15 @@
       <% if (!isAuthenticated) { %>
 
       <li class="main-header__item">
+        <a href="/">Home</a>
+      </li>
+      <li class="main-header__item">
         <a class="<%= path === '/login' ? 'active' : '' %>" href="/login">
-          <i class="fa-solid fa-right-to-bracket"></i>
           Login
         </a>
       </li>
       <li class="main-header__item">
         <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">
-          <i class="fa-solid fa-user-plus"></i>
           Signup
         </a>
       </li>
@@ -40,9 +32,6 @@
       </li>
       <li class="main-header__item">
         <div class="username-container">
-          <!-- <div class="user-icon-container"> -->
-          <!-- <img src="/images/user-icon.png" /> -->
-          <!-- </div> -->
           <button class="dropbtn" id="dropdown-btn">
             <i class="fa-solid fa-user"></i>
 
@@ -141,12 +130,6 @@
               >My themes
             </a>
           </li>
-          <!-- <li>
-            <form action="/logout" method="post">
-              <input type="hidden" name="csrfToken" value="<%= csrfToken%>" />
-              <button type="submit">Logout</button>
-            </form>
-          </li> -->
         </ul>
       </div>
     </li>

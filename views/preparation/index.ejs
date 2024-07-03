@@ -3,20 +3,31 @@
 <link rel="stylesheet" href="/css/main.css" />
 
   </head>
-
+  
   <body>
     <%- include('../includes/navigation.ejs') %>
       
+
       <div class="hero">
-          <div class="banner-container">
-              <h1 id="quotes"></h1>
-              <h2 id="author"></h2>
+        <div class="hero-image-container">
+          <img src="/images/hero-image-2.jpg" alt="book of psalm"/>
+        </div>
+        <div class="quotes-container">
+          <div>
+            <h1 id="quotes"></h1>
+            <h2 id="author"></h2>
           </div>
+        </div>
       </div>
-      <div id="loader"></div>
+ 
+    
+
+    <div id="loader"></div>
    
     <script nonce="<%= nonce5%>" src="/js/index.js"></script>
     <%- include('../includes/end.ejs') %>
+
+
 
 
 
