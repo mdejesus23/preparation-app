@@ -10,37 +10,41 @@
   --danger-color: #ef6461;
   --vote-count-color: #ef6461;
 
-  --primary-font-color: #a69e97;
+  --primary-font-color: rgb(240, 240, 240);
   --secondary-font-color: #193c3e;
 
   --background-color: rgb(58, 51, 51);
   --bg-color-reading: rgb(237, 239, 250);
+
+  --font-style01: "Open Sans", sans-serif;
 }
+
 * {
   margin: 0;
   padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 100%;
   box-sizing: border-box;
 }
 
 body {
-  font-size: 100%;
-  padding: 0;
-  margin: 0;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--font-style01);
   color: var(--secondary-font-color);
-  height: 100%;
-  min-height: 100vh;
 }
 
 main {
   padding: 5rem 0;
   width: 100%;
-  height: 100%; 
+  min-height: calc(100vh - 4rem);
 }
 
 h1 {
   text-align: center;
   z-index: 1;
+  font-size: 2.5rem;
 }
 
 form {
@@ -482,6 +486,7 @@ li {
   z-index: 5;
   display: none;
 }
+
 
 .grid {
   display: flex;

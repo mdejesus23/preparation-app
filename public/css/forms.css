@@ -1,7 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
 
-
-
 .user-message {
   width: 100%;
   padding: 1rem;
@@ -32,7 +30,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 2rem;
   width: 100%;
-  max-width: 400px;
+  max-width: 30rem;
   text-align: left;
 
   margin: 2rem auto;
@@ -40,9 +38,9 @@
 
 .card-form h1 {
   color: var(--secondary-color);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   text-align: center;
-}
+}s
 
 .form-control {
   margin-bottom: 1.5rem;
@@ -51,6 +49,7 @@
 .form-control label {
   display: block;
   margin-bottom: 0.5rem;
+  font-size: 1.12rem;
 }
 
 .form-control input {
@@ -58,7 +57,7 @@
   padding: 0.8rem;
   border: 1px solid var(--third-color);
   border-radius: 5px;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
 }
 
 .form-control input.invalid {
@@ -72,9 +71,9 @@
   border-radius: 5px;
   padding: 0.8rem 1.5rem;
   cursor: pointer;
-  font-size: 1.6rem;
+  font-size: 1.2rem;
   width: 100%;
-  margin-top: 1rem;
+  margin-top: 3rem;
   transition: background-color 0.3s ease;
 }
 
@@ -94,4 +93,14 @@
 
 .centered a:hover {
   text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .card-form {
+    font-size: 12px;
+    width: 90%;
+    margin: 2rem auto;
+  }
+
+
 }

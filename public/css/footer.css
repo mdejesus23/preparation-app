@@ -3,9 +3,12 @@ footer {
   color: var(--fourth-color);
   text-align: center;
   padding: 20px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 1rem;
 }
 
 footer p {
