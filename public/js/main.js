@@ -39,7 +39,7 @@ const showDropDown = () => {
   dropDown.classList.toggle("show");
 };
 
-dropdownBtn.addEventListener("click", showDropDown);
+dropdownBtn?.addEventListener("click", showDropDown);
 
 // mobile dropdown
 const mobileDdContet = document.querySelector(".mobile-dropdown-content");
