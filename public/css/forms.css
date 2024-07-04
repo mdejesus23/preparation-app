@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,700");
 
 .user-message {
-  width: 100%;
+  width: 60%;
+  min-width: 390px;
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 5px;
@@ -20,7 +21,7 @@
 }
 
 #loader {
-  display: none; /* Hide loader by default */
+  display: block; /* Hide loader by default */
   margin: auto;
 }
 

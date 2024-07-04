@@ -4,7 +4,9 @@
 :root {
   --primary-color: #193c3e;
   --secondary-color: #b8855f;
-  --third-color: #a69e97;
+  --third-color: #d8d4d1;
+  /* --third-color: #a69e97; */
+
 
   --fourth-color: rgb(240, 240, 240);
   --danger-color: #ef6461;
@@ -52,6 +54,12 @@ h2 {
   text-align: center;
   z-index: 1;
   font-size: 3rem;
+}
+
+h3 {
+  text-align: center;
+  z-index: 1;
+  font-size: 2rem;
 }
 
 p, a li {
@@ -190,19 +198,16 @@ li {
   color: white;
 }
 
-.voted p {
-  color: green;
-}
 
 /* Center the loader */
 #loader {
   position: absolute;
-  left: 50%;
-  top: 50%;
+  left: 45%;
+  top: 40%;
   z-index: 1;
+
   width: 120px;
   height: 120px;
-  margin: -76px 0 0 -76px;
   border: 16px solid #f3f3f3;
   border-radius: 50%;
   opacity: 0.8;
@@ -255,4 +260,11 @@ li {
   html {
     font-size: 56%;
   }
+
+  #loader {
+    position: absolute;
+    left: 40%;
+    top: 40%;
+  }
+  
 }

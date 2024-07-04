@@ -22,11 +22,13 @@ menuToggle.addEventListener("click", menuToggleClickHandler);
 // page loader
 window.addEventListener("load", () => {
   // Hide the loader when the page is fully loaded
+  backdrop.style.display = "none"
   document.getElementById("loader").style.display = "none";
 });
 
 window.addEventListener("beforeunload", () => {
   // Show the loader when the page is unloading (going to a new page)
+  backdrop.style.display = "block"
   document.getElementById("loader").style.display = "block";
 });
 

@@ -27,8 +27,8 @@
   padding: 1rem;
   display: flex;
   justify-content: center;
-  background-color: var(--primary-color);
-  color: var(--secondary-color);
+  /* background-color: var(--primary-color); */
+  color: var(--primary-color);
 }
 
 .final-reading-control {
@@ -56,9 +56,9 @@
 
 @media (max-width: 768px) {
   .modal-content {
-    top: 15vh;
+    top: 12vh;
     width: 90%;
     left: 5%;
-    bottom: 5%;
+    bottom: 8%;
   }
 }
