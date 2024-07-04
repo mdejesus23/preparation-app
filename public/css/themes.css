@@ -1,27 +1,123 @@
-.themes-header {
-  text-align: center;
+.flex-themes-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  max-width: 500px;
+  margin: 2rem auto;
 }
 
-.themes-form {
-  width: 20rem;
-  max-width: 90%;
-  margin: auto;
-  display: block;
+.card.theme-item {
+  width: 100%;
+  border: 1px solid var(--secondary-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: var(--primary-font-color);
+  font-family: var(--font-style01);
+  margin: 20px 0;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.theme-item {
-  width: 20rem;
-  max-width: 95%;
-  margin: 1rem;
+.card.theme-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+  /* background-color: var(--primary-color); */
+  color: var(--primary-color);
+  padding: 10px 20px;
 }
 
 .theme-title {
-  font-size: 1.2rem;
-  text-align: center;
+  margin: 0;
+  font-size: 2rem;
+}
+
+.card-content {
+  padding: 20px;
+  background-color: var(--bg-color-reading);
+  color: var(--secondary-font-color);
+  height: 120px;
+  overflow: auto;
 }
 
 .theme-description {
-  text-align: center;
+  margin: 0;
+}
+
+.card-actions {
+  padding: 10px 20px;
+  text-align: right;
+}
+
+.card-actions input {
+  display: none;
+}
+
+.btn {
+  background-color: var(--secondary-color);
+  border: none;
+  border-radius: 5px;
+  color: var(--primary-font-color);
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: var(--danger-color);
+}
+
+
+
+/* Specific styles for the themes form */
+.themes-control  {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 80%;
+  margin: 2rem auto;
+}
+
+
+.themes-control .form-control input,
+.themes-control .form-control textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--third-color);
+  border-radius: 5px;
+  font-size: 1.4rem; /* Adjust input and textarea font size */
+}
+
+.themes-control .form-control input.invalid {
+  border-color: var(--danger-color);
+}
+
+.themes-control .btn {
+  background-color: var(--secondary-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  font-size: 1.4rem; /* Adjust button font size */
+  width: 100%;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+  text-decoration: none;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.themes-control .btn:hover {
+  background-color: var(--primary-color);
 }
 
 #reset-votes-error {

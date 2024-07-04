@@ -3,7 +3,6 @@
   <button id="side-menu-toggle">Menu</button>
   <nav class="main-header__nav">
     <ul class="main-header__item-list">
-      <% if (isAuthenticated) { %> <% } %>
     </ul>
     <!--login/logout-->
     <ul class="main-header__item-list">
@@ -25,6 +24,9 @@
 
       <% } else { %>
       <!-- if user authenticated -->
+      <li class="main-header__item">
+        <a href="/">Home</a>
+      </li>
       <li class="main-header__item">
         <a class="<%= path === '/themes' ? 'active' : '' %>" href="/themes"
           >All Themes</a

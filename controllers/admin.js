@@ -1,34 +1,34 @@
 const Theme = require("../models/themes");
 
-const fileHelper = require("../util/file");
+
 
 const { validationResult } = require("express-validator");
-const sharp = require("sharp");
 
-const {
-  S3Client,
-  PutObjectCommand,
-  GetObjectCommand,
-  DeleteObjectCommand,
-} = require("@aws-sdk/client-s3");
+// const sharp = require("sharp");
+// const {
+//   S3Client,
+//   PutObjectCommand,
+//   GetObjectCommand,
+//   DeleteObjectCommand,
+// } = require("@aws-sdk/client-s3");
 
-const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+// const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 const dotenv = require("dotenv");
 dotenv.config();
 
-const bucketName = process.env.AWS_BUCKET_NAME;
-const region = process.env.AWS_BUCKET_REGION;
-const accessKeyId = process.env.AWS_ACCESS_KEY;
-const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
+// const bucketName = process.env.AWS_BUCKET_NAME;
+// const region = process.env.AWS_BUCKET_REGION;
+// const accessKeyId = process.env.AWS_ACCESS_KEY;
+// const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
-const s3Client = new S3Client({
-  region,
-  credentials: {
-    accessKeyId,
-    secretAccessKey,
-  },
-});
+// const s3Client = new S3Client({
+//   region,
+//   credentials: {
+//     accessKeyId,
+//     secretAccessKey,
+//   },
+// });
 
 const ITEMS_PER_PAGE = 5;
 
@@ -52,28 +52,28 @@ exports.getAddTheme = (req, res, next) => {
 
 exports.postAddTheme = async (req, res, next) => {
   const title = req.body.title;
-  const image = req.file;
+  // const image = req.file;
   const description = req.body.description;
   const passcode = req.body.passcode;
   const readings = [];
 
   // validate if image is not the required image type.
-  if (!image) {
-    return res.status(422).render("admin/edit-theme", {
-      pageTitle: "Add Themes",
-      path: "/admin/add-themes",
-      editing: false,
-      hasError: true,
-      theme: {
-        title: title,
-        description: description,
-        readings: readings,
-      },
-      errorMessage: "Attached file is not an image",
-      validationErrors: [],
-      username: req.user.username,
-    });
-  }
+  // if (!image) {
+  //   return res.status(422).render("admin/edit-theme", {
+  //     pageTitle: "Add Themes",
+  //     path: "/admin/add-themes",
+  //     editing: false,
+  //     hasError: true,
+  //     theme: {
+  //       title: title,
+  //       description: description,
+  //       readings: readings,
+  //     },
+  //     errorMessage: "Attached file is not an image",
+  //     validationErrors: [],
+  //     username: req.user.username,
+  //   });
+  // }
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -95,26 +95,26 @@ exports.postAddTheme = async (req, res, next) => {
   }
 
   // resize image
-  const buffer = await sharp(image.buffer).resize(300, 250).toBuffer();
+  // const buffer = await sharp(image.buffer).resize(300, 250).toBuffer();
 
   // image name
-  const imageName =
-    new Date().toISOString().replace(/:/g, "-") + image.originalname;
+  // const imageName =
+  //   new Date().toISOString().replace(/:/g, "-") + image.originalname;
 
-  const uploadParams = {
-    Bucket: bucketName, // s3 bucket name
-    Key: imageName, // image file name
-    Body: buffer, // image buffer data
-    ContentType: image.mimetype,
-  };
+  // const uploadParams = {
+  //   Bucket: bucketName, // s3 bucket name
+  //   Key: imageName, // image file name
+  //   Body: buffer, // image buffer data
+  //   ContentType: image.mimetype,
+  // };
 
   try {
     // Send the upload to S3
-    await s3Client.send(new PutObjectCommand(uploadParams));
+    // await s3Client.send(new PutObjectCommand(uploadParams));
 
     const theme = new Theme({
       title: title,
-      imageName: imageName,
+      // imageName: imageName,
       description: description,
       passcode: passcode,
       readings: readings,
@@ -188,19 +188,19 @@ exports.getThemes = async (req, res, next) => {
       .limit(ITEMS_PER_PAGE); // Limit
 
     // For each theme, generate a signed URL and save it to the theme object
-    for (let theme of themes) {
-      const imageUrl = await getSignedUrl(
-        s3Client,
-        new GetObjectCommand({
-          Bucket: bucketName,
-          Key: theme.imageName,
-        }),
-        { expiresIn: 3600 } // 1 hour
-      );
+    // for (let theme of themes) {
+    //   const imageUrl = await getSignedUrl(
+    //     s3Client,
+    //     new GetObjectCommand({
+    //       Bucket: bucketName,
+    //       Key: theme.imageName,
+    //     }),
+    //     { expiresIn: 3600 } // 1 hour
+    //   );
 
-      theme.imageUrl = imageUrl;
-      await theme.save();
-    }
+    //   theme.imageUrl = imageUrl;
+    //   await theme.save();
+    // }
 
     res.render("admin/themes", {
       themes: themes,
