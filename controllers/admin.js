@@ -1,7 +1,5 @@
 const Theme = require("../models/themes");
 
-
-
 const { validationResult } = require("express-validator");
 
 // const sharp = require("sharp");
@@ -304,14 +302,6 @@ exports.deleteTheme = async (req, res, next) => {
     if (!theme) {
       return next(new Error("Theme not found!"));
     }
-
-    // set params to delete image in s3
-    const deleteParams = {
-      Bucket: bucketName,
-      Key: theme.imageName,
-    };
-    //
-    await s3Client.send(new DeleteObjectCommand(deleteParams));
 
     await Theme.deleteOne({ _id: themeId, userId: req.user._id });
     res.status(200).json({ message: "Success" });
