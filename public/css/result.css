@@ -1,21 +1,58 @@
 .result-item {
-  padding: 1rem;
+  padding: 2rem;
   margin: 1.5rem 0;
+  border: 1px solid var(--third-color); /* Use third color for border */
+  background-color: var(--fourth-color); /* Use fourth color for background */
+  color: var(--secondary-font-color); /* Use secondary font color */
+  font-family: var(--font-style01);
+  border-radius: 8px; /* Add a slight border-radius for a softer look */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 .result-content {
   display: flex;
-  border: 1px solid black;
+  align-items: center;
   padding: 0.5rem;
+  border-bottom: 1px solid var(--third-color); /* Add a border between items */
 }
 
 .result-item div:last-child {
   margin-top: 1.5rem;
   display: flex;
   justify-content: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--third-color); /* Separate the last child section */
 }
 
 .result-content p:first-child {
   font-weight: bold;
   margin-right: 1.5rem;
+  color: var(--primary-color); /* Primary color for bold text */
+}
+
+.btn {
+  background-color: var(--primary-color); /* Use primary color for buttons */
+  color: var(--primary-font-color); /* Use primary font color for text */
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color); /* Change color on hover */
+}
+
+.modal-content {
+  background-color: var(--fourth-color); /* Light background for modal */
+  color: var(--secondary-font-color);
+  border: 1px solid var(--third-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.close {
+  color: var(--danger-color); /* Danger color for the close button */
+  cursor: pointer;
 }

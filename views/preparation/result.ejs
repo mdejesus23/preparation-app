@@ -36,7 +36,21 @@
 
             <div class="result-content">
                 <p>Preparation Date:</p>
-                <p class=""><%= result.createdAt%></p>
+                <p>
+                    <% 
+                      // Create a new Date object from result.createdAt
+                      const date = new Date(result.createdAt);
+                      // Define an array of month names
+                      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                      // Get the day, month, and year
+                      const day = date.getDate();
+                      const month = monthNames[date.getMonth()];
+                      const year = date.getFullYear();
+                      // Format the date as "Jul 10 2024"
+                      const formattedDate = `${month} ${day}, ${year}`;
+                    %>
+                    <%= formattedDate %>
+                  </p>
             </div>
 
             <div class="result-content">

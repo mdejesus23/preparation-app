@@ -3,7 +3,6 @@ footer {
   color: var(--fourth-color);
   text-align: center;
   padding: 20px;
-  font-size: 1.6rem;
 
   display: flex;
   flex-direction: row;
@@ -15,6 +14,7 @@ footer {
 
 footer p {
   margin: 0.7rem 0;
+  font-size: 1.2rem;
 }
 
 footer a {

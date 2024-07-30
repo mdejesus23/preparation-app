@@ -5,7 +5,6 @@ const User = require("../models/user");
 const dotenv = require("dotenv");
 dotenv.config();
 
-
 const { validationResult, cookie } = require("express-validator");
 
 const ITEMS_PER_PAGE = 5;

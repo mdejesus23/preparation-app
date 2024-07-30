@@ -35,7 +35,7 @@
 
     <div class="form-control">
       <label for="description">Description</label>
-      <textarea name="description" id="description" rows="5"><% if (editing || hasError) { %><%= theme.description%><% } %></textarea>
+      <textarea class="<%= validationErrors.find(err => err.path === 'description') ? 'invalid' : ''%>"  name="description" id="description" rows="5"><% if (editing || hasError) { %><%= theme.description%><% } %></textarea>
     </div>
 
     <div class="form-control">

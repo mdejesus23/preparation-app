@@ -18,6 +18,8 @@ const cookieParser = require("cookie-parser");
 const errorController = require("./controllers/error"); //import error controller
 
 const app = express();
+// parsing middleware. it is use to parse data form the request
+app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
 
@@ -124,9 +126,6 @@ app.use(compression());
 
 // middleware for logging HTTP request information.
 app.use(morgan("combined", { stream: accessLogStream }));
-
-// parsing middleware. it is use to parse data from form the request
-app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json()); // Middleware to parse JSON request bodies
 

@@ -224,7 +224,6 @@ exports.getThemes = async (req, res, next) => {
 exports.postEditThemes = async (req, res, next) => {
   const themeId = req.body.themeId;
   const updatedTitle = req.body.title;
-  const image = req.file;
   const updatedDescription = req.body.description;
   const updatedPasscode = req.body.passcode;
 
@@ -258,34 +257,6 @@ exports.postEditThemes = async (req, res, next) => {
     existingTheme.description = updatedDescription;
     existingTheme.passcode = updatedPasscode;
 
-    // if user attached file image to change current image.
-    if (image) {
-      // delete old image on s3
-      const deleteParams = {
-        Bucket: bucketName,
-        Key: existingTheme.imageName,
-      };
-      await s3Client.send(new DeleteObjectCommand(deleteParams));
-
-      // then upload updated image on s3.
-      // resize image
-      const buffer = await sharp(image.buffer).resize(300, 250).toBuffer();
-
-      // image name
-      const imageName =
-        new Date().toISOString().replace(/:/g, "-") + image.originalname;
-
-      const uploadParams = {
-        Bucket: bucketName, // s3 bucket name
-        Key: imageName, // image file name
-        Body: buffer, // image buffer data
-        ContentType: image.mimetype,
-      };
-      // Send the updated image to S3
-      await s3Client.send(new PutObjectCommand(uploadParams));
-
-      existingTheme.imageName = imageName;
-    }
     await existingTheme.save();
     res.redirect("/admin/themes");
   } catch (err) {
