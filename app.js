@@ -209,7 +209,7 @@ app.use(errorController.get404);
 
 // next error handling middleware.
 app.use((err, req, res, next) => {
-  console.log(err);
+
 
   res.status(500).render("500", {
     pageTitle: "Error",

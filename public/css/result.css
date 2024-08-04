@@ -1,6 +1,12 @@
+.results {
+  width: 100%;
+  margin: 2rem auto;
+}
+
 .result-item {
+  width: 40rem;
   padding: 2rem;
-  margin: 1.5rem 0;
+  margin: 1.5rem auto;
   border: 1px solid var(--third-color); /* Use third color for border */
   background-color: var(--fourth-color); /* Use fourth color for background */
   color: var(--secondary-font-color); /* Use secondary font color */
