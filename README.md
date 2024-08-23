@@ -24,6 +24,4 @@ This full-stack web application is designed for our church organization. Built w
 - **Helmet** 🪖
 - **CSRF Protection** ❌🛡️
 
-  ```
-
-  ```
+Melnard
