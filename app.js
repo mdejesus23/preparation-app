@@ -12,7 +12,7 @@ const User = require("./models/user");
 require("dotenv").config();
 const helmet = require("helmet");
 const compression = require("compression");
-const morgan = require("morgan");
+// const morgan = require("morgan");
 const crypto = require("crypto");
 const cookieParser = require("cookie-parser");
 const errorController = require("./controllers/error"); //import error controller
@@ -63,10 +63,10 @@ const adminRoutes = require("./routes/admin");
 const preparationRoutes = require("./routes/preparation");
 const authRoutes = require("./routes/auth");
 
-const accessLogStream = fs.createWriteStream(
-  path.join(__dirname, "access.log"),
-  { flags: "a" }
-);
+// const accessLogStream = fs.createWriteStream(
+//   path.join(__dirname, "access.log"),
+//   { flags: "a" }
+// );
 
 // create nonce as local variables for CSP
 app.use((req, res, next) => {
@@ -125,7 +125,7 @@ app.use(
 app.use(compression());
 
 // middleware for logging HTTP request information.
-app.use(morgan("combined", { stream: accessLogStream }));
+// app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(express.json()); // Middleware to parse JSON request bodies
 
@@ -209,8 +209,6 @@ app.use(errorController.get404);
 
 // next error handling middleware.
 app.use((err, req, res, next) => {
-
-
   res.status(500).render("500", {
     pageTitle: "Error",
     path: "/500",
