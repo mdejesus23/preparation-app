@@ -217,6 +217,8 @@ app.use((err, req, res, next) => {
   });
 });
 
+console.log(`Running Node.js version: ${process.version}`);
+
 mongoose
   .connect(MONGODB_URI)
   .then((result) => {
